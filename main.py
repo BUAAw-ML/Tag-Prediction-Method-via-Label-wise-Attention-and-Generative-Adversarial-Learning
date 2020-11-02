@@ -72,21 +72,19 @@ def multiLabel_text_classify():
 
     bert = BertModel.from_pretrained('bert-base-uncased')
 
-    if args.model_type == 'GCNBert':
-        model = GCNBert(bert, num_classes=len(dataset.tag2id), t=0.4, co_occur_mat=dataset.co_occur_mat, bert_trainable=True)
-    elif args.model_type == 'MLPBert':
-        model = MLPBert(bert, num_classes=len(dataset.tag2id), hidden_dim=512, hidden_layer_num=1, bert_trainable=True)
-    elif args.model_type == 'MABert':
-        model = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True)
+    model = {}
+    model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
+    model['Generator'] = Generator()
+    model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
 
     # define loss function (criterion)
     criterion = nn.MultiLabelSoftMarginLoss() #weight=torch.from_numpy(np.array(tag_weight)).float().cuda(0)
 
     # define optimizer
-    optimizer = torch.optim.SGD(model.get_config_optim(args.lr, args.lrp),
-                                lr=args.lr,
-                                momentum=args.momentum,
-                                weight_decay=args.weight_decay)
+    optimizer = {}
+    optimizer['Discriminator'] = torch.optim.SGD(model['Discriminator'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer['Generator'] = torch.optim.SGD(model['Generator'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer['Encoder'] = torch.optim.SGD(model['Encoder'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
     state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
              'num_classes': dataset.get_tags_num(), 'difficult_examples': False,

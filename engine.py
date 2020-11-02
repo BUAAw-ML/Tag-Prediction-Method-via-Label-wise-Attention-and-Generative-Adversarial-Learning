@@ -46,6 +46,7 @@ class Engine(object):
         if self._state('epoch_step') is None:
             self.state['epoch_step'] = []
 
+
         # meters
         self.state['meter_loss'] = tnt.meter.AverageValueMeter()
         # time measure
@@ -148,25 +149,16 @@ class Engine(object):
                                                  batch_size=self.state['batch_size'], shuffle=False,
                                                  num_workers=self.state['workers'], collate_fn=dataset.collate_fn)
 
-        # optionally resume from a checkpoint
-        if self._state('resume') is not None:
-            if os.path.isfile(self.state['resume']):
-                print("=> loading checkpoint '{}'".format(self.state['resume']))
-                checkpoint = torch.load(self.state['resume'])
-                self.state['start_epoch'] = checkpoint['epoch']
-                self.state['best_score'] = checkpoint['best_score']
-                model.load_state_dict(checkpoint['state_dict'])
-                print("=> loaded checkpoint '{}' (epoch {})"
-                      .format(self.state['evaluate'], checkpoint['epoch']))
-            else:
-                print("=> no checkpoint found at '{}'".format(self.state['resume']))
-
         if self.state['use_gpu']:
             # train_loader.pin_memory = True
             # val_loader.pin_memory = True
             # cudnn.benchmark = True
 
-            model = model.cuda(self.state['device_ids'][0])
+            model['Discriminator'] = model['Discriminator'].cuda(self.state['device_ids'][0])
+            model['Generator'] = model['Generator'].cuda(self.state['device_ids'][0])
+            model['Encoder'] = model['Encoder'].cuda(self.state['device_ids'][0])
+
+
             # model = torch.nn.DataParallel(model, device_ids=self.state['device_ids'])
             if 'encoded_tag' in self.state:
                 self.state['encoded_tag'] = self.state['encoded_tag'].cuda(self.state['device_ids'][0])
@@ -182,8 +174,8 @@ class Engine(object):
 
         for epoch in range(self.state['start_epoch'], self.state['max_epochs']):
             self.state['epoch'] = epoch
-            lr = self.adjust_learning_rate(optimizer)
-            print('lr:', lr)
+            # lr = self.adjust_learning_rate(optimizer)
+            # print('lr:', lr)
 
             # train for one epoch
             self.train(train_loader, model, criterion, optimizer, epoch)
@@ -194,12 +186,6 @@ class Engine(object):
             # remember best prec@1 and save checkpoint
             is_best = prec1 > self.state['best_score']
             self.state['best_score'] = max(prec1, self.state['best_score'])
-            self.save_checkpoint({
-                'epoch': epoch + 1,
-                'arch': self._state('arch'),
-                'state_dict': model.state_dict() if self.state['use_gpu'] else model.state_dict(),
-                'best_score': self.state['best_score'],
-            }, is_best)
 
             print(' *** best={best:.3f}'.format(best=self.state['best_score']))
         return self.state['best_score']
@@ -427,9 +413,35 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
 
         # compute output
-        self.state['output'] = model(ids, token_type_ids, attention_mask, self.state['encoded_tag'],
-                                     self.state['tag_mask'])
-        self.state['loss'] = criterion(self.state['output'], target_var)
+        output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
+
+        D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+
+        logits = D_real_logits[:, 1:]
+        self.state['output'] = nn.softmax(logits, axis=-1)
+        log_probs = nn.log_softmax(logits, axis=-1)
+
+        # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
+
+        per_example_loss = -torch.sum(target_var * log_probs, axis=-1)
+        D_L_Supervised = torch.mean(per_example_loss)
+
+        z = torch.rand(self.state['batch_size'], 3000, dtype=tf.float32)
+
+        x_g = model['Generator'](z)
+
+        D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+
+        D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
+        D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
+        d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+
+        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+        G_feat_match = torch.mean(
+            torch.square(torch.mean(D_real_features, axis=0) - torch.mean(D_fake_features, axis=0)))
+        g_loss = g_loss + G_feat_match
+
+        self.state['loss'] = d_loss + g_loss
 
         if training:
             self.state['train_iters'] += 1
@@ -437,10 +449,21 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             self.state['eval_iters'] += 1
 
         if training:
-            optimizer.zero_grad()
-            self.state['loss'].backward()
-            nn.utils.clip_grad_norm_(model.parameters(), max_norm=10.0)
-            optimizer.step()
+            optimizer['Discriminator'].zero_grad()
+            d_loss.backward()
+            nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+            optimizer['Discriminator'].step()
+
+            optimizer['Encoder'].zero_grad()
+            d_loss.backward()
+            nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
+            optimizer['Encoder'].step()
+
+            optimizer['Generator'].zero_grad()
+            g_loss.backward()
+            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            optimizer['Generator'].step()
+
         else:
             return self.state['output']
 
