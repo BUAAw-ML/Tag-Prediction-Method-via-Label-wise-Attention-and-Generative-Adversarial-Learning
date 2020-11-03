@@ -448,7 +448,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
         g_loss = g_loss + G_feat_match
 
-        self.state['loss'] = d_loss + g_loss
+        self.state['loss'] = 0#d_loss + g_loss
 
         if training:
             self.state['train_iters'] += 1
@@ -461,7 +461,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         if training:
             optimizer['enc'].zero_grad()
-            d_loss.backward(retain_graph=True)
+            d_loss.backward() #retain_graph=True
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
@@ -476,7 +476,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             # optimizer['Encoder'].step()
 
             optimizer['Generator'].zero_grad()
-            g_loss.backward(retain_graph=True)
+            g_loss.backward()
             nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
             optimizer['Generator'].step()
 
