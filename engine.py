@@ -423,7 +423,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
 
-        D_rea_features = D_real_features.detach()
+
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
         log_probs = F.log_softmax(logits, dim=-1)
@@ -433,8 +433,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         D_L_Supervised = torch.mean(per_example_loss)
 
         z = torch.rand(self.state['batch_size'], 3000).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-        # z = torch.rand(size=(self.state['batch_size'], 3000), dtype=torch.FloatTensor)
-
 
         x_g = model['Generator'](z)
 
@@ -444,9 +442,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
         d_loss = D_L_Supervised + D_L_unsupervised1U #+ D_L_unsupervised2U
 
-        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob.detach()[:, 0] + 1e-8))
         G_feat_match = torch.mean(
-            torch.sqrt(torch.mean(D_rea_features, dim=0) - torch.mean(D_fake_features, dim=0)))
+            torch.sqrt(torch.mean(D_real_features.detach(), dim=0) - torch.mean(D_fake_features.detach(), dim=0)))
         g_loss = g_loss + G_feat_match
 
         self.state['loss'] = d_loss + g_loss
