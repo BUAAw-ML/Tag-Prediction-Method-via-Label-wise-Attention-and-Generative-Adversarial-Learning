@@ -458,23 +458,24 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(model['Discriminator'].parameters())
         # enc_var = [para for para in model['Discriminator'].parameters()]
         # enc_var += [para for para in model['Encoder'].parameters()]
-        # optimizer['enc'] = torch.optim.SGD(enc_var, lr=0.001)
+        optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 1e-4},
+                {'params': optimizer['Encoder'].parameters(), 'lr': 1e-4}], lr=0.001)
 
         if training:
-            # optimizer['enc'].zero_grad()
-            # d_loss.backward()
-            # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-            # optimizer['enc'].step()
-
-            optimizer['Discriminator'].zero_grad()
+            optimizer['enc'].zero_grad()
             d_loss.backward(retain_graph=True)
-            nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
-            optimizer['Discriminator'].step()
+            nn.utils.clip_grad_norm_(optimizer['enc'].parameters(), max_norm=10.0)
+            optimizer['enc'].step()
 
-            optimizer['Encoder'].zero_grad()
-            d_loss.backward(retain_graph=True)
-            nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
-            optimizer['Encoder'].step()
+            # optimizer['Discriminator'].zero_grad()
+            # d_loss.backward(retain_graph=True)
+            # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+            # optimizer['Discriminator'].step()
+            #
+            # optimizer['Encoder'].zero_grad()
+            # d_loss.backward(retain_graph=True)
+            # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
+            # optimizer['Encoder'].step()
 
             optimizer['Generator'].zero_grad()
             g_loss.backward(retain_graph=True)
