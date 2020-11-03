@@ -444,9 +444,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         d_loss = D_L_Supervised + D_L_unsupervised1U #+ D_L_unsupervised2U
 
         g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
-        # G_feat_match = torch.mean(
-        #     torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
-        # g_loss = g_loss + G_feat_match
+        G_feat_match = torch.mean(
+            torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
+        g_loss = g_loss + G_feat_match
 
         self.state['loss'] = d_loss + g_loss
 
