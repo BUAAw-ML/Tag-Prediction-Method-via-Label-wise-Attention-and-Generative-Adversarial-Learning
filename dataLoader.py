@@ -344,6 +344,7 @@ def load_allData(data_path=None):
 
         encoded_tag, tag_mask = torch.load(os.path.join('cache', cache_file_head + '.encoded_tag')), \
                                 torch.load(os.path.join('cache', cache_file_head + '.tag_mask'))
+        tag_weight = 0
 
     else:
 
