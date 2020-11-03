@@ -458,7 +458,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(model['Discriminator'].parameters())
         # enc_var = [para for para in model['Discriminator'].parameters()]
         # enc_var += [para for para in model['Encoder'].parameters()]
-
+        output_layer.detach()
         if training:
             optimizer['enc'].zero_grad()
             d_loss.backward() #retain_graph=True
