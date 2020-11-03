@@ -422,7 +422,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
-        log_probs = nn.log_softmax(logits, dim=-1)
+        log_probs = F.log_softmax(logits, dim=-1)
 
         # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
         print(target_var)
