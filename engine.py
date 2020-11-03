@@ -232,7 +232,10 @@ class Engine(object):
     @torch.no_grad()
     def validate(self, data_loader, model, criterion, epoch):
         # switch to evaluate mode
-        model.eval()
+
+        model['Discriminator'].eval()
+        model['Generator'].eval()
+        model['Encoder'].eval()
 
         self.on_start_epoch(False, model, criterion, data_loader)
 
@@ -457,12 +460,16 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # enc_var += [para for para in model['Encoder'].parameters()]
         # optimizer['enc'] = torch.optim.SGD(enc_var, lr=0.001)
 
-        # print(enc_var)
         if training:
             # optimizer['enc'].zero_grad()
             # d_loss.backward()
             # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             # optimizer['enc'].step()
+
+            optimizer['Discriminator'].zero_grad()
+            d_loss.backward(retain_graph=True)
+            nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+            optimizer['Discriminator'].step()
 
             optimizer['Encoder'].zero_grad()
             d_loss.backward(retain_graph=True)

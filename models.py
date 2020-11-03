@@ -61,7 +61,7 @@ class Discriminator(nn.Module):
             self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_discriminator))
 
         self.Linear = nn.Linear(hidden_dim_discriminator, (num_classes + 1))
-        self.output = nn.Softmax()
+        self.output = nn.Softmax(dim=-1)
 
     def forward(self, feat):
         x = self.dropout(feat)
