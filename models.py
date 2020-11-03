@@ -66,7 +66,7 @@ class Discriminator(nn.Module):
     def forward(self, feat):
         x = self.dropout(feat)
         for i in range(self.num_hidden_discriminator):
-            x = self.hidden_list[i](x)
+            x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
             x = self.dropout(x)
 
@@ -100,7 +100,7 @@ class Generator(nn.Module):
     def forward(self, feat):
 
         for i in range(self.num_hidden_generator):
-            x = self.hidden_list[i](feat)
+            x = self.hidden_list_generator[i](feat)
             x = self.act(x)
             x = self.dropout(x)
         y = self.output(x)
