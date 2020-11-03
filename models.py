@@ -46,6 +46,7 @@ class MABert(nn.Module):
             {'params': self.class_weight, 'lr': lr},
         ]
 
+
 class Discriminator(nn.Module):
     def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=1, hidden_dim_discriminator=400):
         super(Discriminator, self).__init__()
@@ -60,7 +61,7 @@ class Discriminator(nn.Module):
             self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_discriminator))
 
         self.Linear = nn.Linear(hidden_dim_discriminator, (num_classes + 1))
-        self.output = nn.softmax()
+        self.output = nn.Softmax()
 
     def forward(self, feat):
         x = self.dropout(feat)
@@ -71,12 +72,13 @@ class Discriminator(nn.Module):
 
         flatten = x
         logit = self.Linear(x)
-        prob = self.output(x)
+        prob = self.output(logit)
         return flatten, logit, prob
 
     def get_config_optim(self, lr, lrp):
         return [
-            {'params': self.hidden_list.parameters(), 'lr': lr},
+            {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
+            {'params': self.Linear.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
         ]
 
@@ -106,14 +108,14 @@ class Generator(nn.Module):
 
     def get_config_optim(self, lr, lrp):
         return [
-            {'params': self.hidden_list.parameters(), 'lr': lr},
+            {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
         ]
 
 
 class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
-        super(MLPBert_encoder, self).__init__()
+        super(Bert_Encoder, self).__init__()
 
         self.add_module('bert', bert)
         if not bert_trainable:

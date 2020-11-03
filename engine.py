@@ -418,11 +418,11 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
 
         logits = D_real_logits[:, 1:]
-        self.state['output'] = nn.softmax(logits, axis=-1)
-        log_probs = nn.log_softmax(logits, axis=-1)
+        self.state['output'] = nn.Softmax(logits, axis=-1)
+        log_probs = nn.Log_Softmax(logits, axis=-1)
 
         # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
-
+        print(target_var)
         per_example_loss = -torch.sum(target_var * log_probs, axis=-1)
         D_L_Supervised = torch.mean(per_example_loss)
 

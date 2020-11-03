@@ -62,7 +62,7 @@ def multiLabel_text_classify():
 
     use_gpu = torch.cuda.is_available()
 
-    print("The type of model to train: {} \nData path: {}".format(args.model_type, args.data_path))
+    # print("The type of model to train: {} \nData path: {}".format(args.model_type, args.data_path))
 
     if args.data_type == 'allData':
         dataset, encoded_tag, tag_mask, tag_weight = load_allData(args.data_path)
