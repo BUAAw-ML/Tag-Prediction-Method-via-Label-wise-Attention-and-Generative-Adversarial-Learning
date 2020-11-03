@@ -423,6 +423,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
 
+        D_rea_features = D_real_features.detach()
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
         log_probs = F.log_softmax(logits, dim=-1)
@@ -445,7 +446,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
         G_feat_match = torch.mean(
-            torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
+            torch.sqrt(torch.mean(D_rea_features, dim=0) - torch.mean(D_fake_features, dim=0)))
         g_loss = g_loss + G_feat_match
 
         self.state['loss'] = d_loss + g_loss
@@ -458,7 +459,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(model['Discriminator'].parameters())
         # enc_var = [para for para in model['Discriminator'].parameters()]
         # enc_var += [para for para in model['Encoder'].parameters()]
-        output_layer.detach()
+
         if training:
             optimizer['enc'].zero_grad()
             d_loss.backward() #retain_graph=True
