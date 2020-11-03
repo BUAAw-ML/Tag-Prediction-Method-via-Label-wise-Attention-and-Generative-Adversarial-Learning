@@ -90,16 +90,16 @@ class Generator(nn.Module):
         self.dropout = nn.Dropout(p=0.5)
         self.act = nn.ReLU()
 
-        self.num_hidden_discriminator = num_hidden_discriminator
-        self.hidden_list_discriminator = nn.ModuleList()
+        self.num_hidden_generator = num_hidden_generator
+        self.hidden_list_generator = nn.ModuleList()
         for i in range(num_hidden_generator):
             dim = input_dim if i == 0 else hidden_dim_generator
-            self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_generator))
-        self.output = nn.Linear(hidden_dim_discriminator, hidden_dim)
+            self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
+        self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
     def forward(self, feat):
 
-        for i in range(self.num_hidden_discriminator):
+        for i in range(self.num_hidden_generator):
             x = self.hidden_list[i](feat)
             x = self.act(x)
             x = self.dropout(x)
@@ -108,7 +108,7 @@ class Generator(nn.Module):
 
     def get_config_optim(self, lr, lrp):
         return [
-            {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
+            {'params': self.hidden_list_generator.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
         ]
 
