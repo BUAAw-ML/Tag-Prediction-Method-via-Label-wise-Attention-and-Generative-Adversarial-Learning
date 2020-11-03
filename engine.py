@@ -456,13 +456,13 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         if training:
             optimizer['Discriminator'].zero_grad()
             d_loss.backward()
-            nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+            nn.utils.clip_grad_norm_(model['Discriminator'].parameters() + model['Encoder'].parameters(), max_norm=10.0)
             optimizer['Discriminator'].step()
 
-            optimizer['Encoder'].zero_grad()
-            d_loss.backward()
-            nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
-            optimizer['Encoder'].step()
+            # optimizer['Encoder'].zero_grad()
+            # d_loss.backward()
+            # nn.utils.clip_grad_norm_(, max_norm=10.0)
+            # optimizer['Encoder'].step()
 
             optimizer['Generator'].zero_grad()
             g_loss.backward()
