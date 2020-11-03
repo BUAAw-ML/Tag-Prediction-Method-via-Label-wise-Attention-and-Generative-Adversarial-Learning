@@ -448,7 +448,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         #     torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
         # g_loss = g_loss + G_feat_match
 
-        self.state['loss'] = 0#d_loss + g_loss
+        self.state['loss'] = d_loss + g_loss
 
         if training:
             self.state['train_iters'] += 1
