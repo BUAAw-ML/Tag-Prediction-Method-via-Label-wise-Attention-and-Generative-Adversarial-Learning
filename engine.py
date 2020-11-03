@@ -193,7 +193,9 @@ class Engine(object):
     def train(self, data_loader, model, criterion, optimizer, epoch):
 
         # switch to train mode
-        model.train()
+        model['Discriminator'].train()
+        model['Generator'].train()
+        model['Encoder'].train()
 
         self.on_start_epoch(True, model, criterion, data_loader, optimizer)
 
