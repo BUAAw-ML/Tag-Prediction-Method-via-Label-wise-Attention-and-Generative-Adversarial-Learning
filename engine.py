@@ -7,7 +7,6 @@ import torch.utils.data
 import torchnet as tnt
 import torch.nn as nn
 import torch.nn.functional as F
-from torch import square
 from torch.utils.tensorboard import SummaryWriter
 from sampler import MultilabelBalancedRandomSampler
 
@@ -444,7 +443,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
         G_feat_match = torch.mean(
-            torch.square(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
+            torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
         g_loss = g_loss + G_feat_match
 
         self.state['loss'] = d_loss + g_loss
