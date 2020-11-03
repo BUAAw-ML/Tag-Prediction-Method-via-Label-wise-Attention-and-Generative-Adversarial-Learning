@@ -458,8 +458,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(model['Discriminator'].parameters())
         # enc_var = [para for para in model['Discriminator'].parameters()]
         # enc_var += [para for para in model['Encoder'].parameters()]
-        optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 1e-4},
-                {'params': model['Encoder'].parameters(), 'lr': 1e-4}], lr=0.001)
 
         if training:
             optimizer['enc'].zero_grad()
