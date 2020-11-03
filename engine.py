@@ -7,6 +7,7 @@ import torch.utils.data
 import torchnet as tnt
 import torch.nn as nn
 import torch.nn.functional as F
+from torch import square
 from torch.utils.tensorboard import SummaryWriter
 from sampler import MultilabelBalancedRandomSampler
 
