@@ -429,8 +429,8 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         per_example_loss = -torch.sum(target_var * log_probs, dim=-1)
         D_L_Supervised = torch.mean(per_example_loss)
 
-        z = torch.rand(self.state['batch_size'], 3000).type(torch.FloatTensor)
-        z = torch.rand(size=(self.state['batch_size'], 3000), dtype=torch.FloatTensor)
+        z = torch.rand(self.state['batch_size'], 3000).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        # z = torch.rand(size=(self.state['batch_size'], 3000), dtype=torch.FloatTensor)
 
 
         x_g = model['Generator'](z)
