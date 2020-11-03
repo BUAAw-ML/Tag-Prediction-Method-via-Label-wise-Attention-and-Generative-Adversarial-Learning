@@ -453,10 +453,12 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
+        print(model['Discriminator'].parameters())
+        print(model['Encoder'].parameters())
         if training:
             optimizer['Discriminator'].zero_grad()
             d_loss.backward()
-            nn.utils.clip_grad_norm_(model['Discriminator'].parameters() + model['Encoder'].parameters(), max_norm=10.0)
+            nn.utils.clip_grad_norm_(model['Discriminator'].parameters().extend(model['Encoder'].parameters()), max_norm=10.0)
             optimizer['Discriminator'].step()
 
             # optimizer['Encoder'].zero_grad()
