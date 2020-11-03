@@ -425,7 +425,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         log_probs = F.log_softmax(logits, dim=-1)
 
         # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
-        print(torch.sum(target_var,-1))
         per_example_loss = -torch.sum(target_var * log_probs, dim=-1)
         D_L_Supervised = torch.mean(per_example_loss)
 
@@ -453,8 +452,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
-        enc_var = [para for _,para in model['Discriminator'].parameters()]
-        enc_var += [para for _,para in model['Encoder'].parameters()]
+        print(model['Discriminator'].parameters())
+        enc_var = [para for para in model['Discriminator'].parameters()]
+        enc_var += [para for para in model['Encoder'].parameters()]
         optimizer['enc'] = torch.optim.SGD(enc_var, lr=0.001)
 
         print(enc_var)
