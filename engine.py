@@ -465,12 +465,12 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             # optimizer['enc'].step()
 
             optimizer['Encoder'].zero_grad()
-            d_loss.backward()
+            d_loss.backward(retain_graph=True)
             nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
             optimizer['Encoder'].step()
 
             optimizer['Generator'].zero_grad()
-            g_loss.backward()
+            g_loss.backward(retain_graph=True)
             nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
             optimizer['Generator'].step()
 
