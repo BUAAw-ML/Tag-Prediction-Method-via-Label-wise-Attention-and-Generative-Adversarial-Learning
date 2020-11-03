@@ -425,11 +425,11 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         log_probs = F.log_softmax(logits, dim=-1)
 
         # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
-        print(target_var)
+        print(torch.sum(target_var,-1))
         per_example_loss = -torch.sum(target_var * log_probs, dim=-1)
         D_L_Supervised = torch.mean(per_example_loss)
 
-        z = torch.rand(self.state['batch_size'], 3000, dtype=tf.float32)
+        z = torch.rand((self.state['batch_size'], 3000), dtype=tf.float32)
 
         x_g = model['Generator'](z)
 
