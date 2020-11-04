@@ -86,8 +86,8 @@ def multiLabel_text_classify():
     optimizer['Generator'] = torch.optim.SGD(model['Generator'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
     optimizer['Encoder'] = torch.optim.SGD(model['Encoder'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 1e-4},
-                                        {'params': model['Encoder'].parameters(), 'lr': 1e-4}], lr=0.001)
+    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
+                                        {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.001)
 
     state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
              'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
