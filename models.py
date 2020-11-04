@@ -120,9 +120,9 @@ class Generator(nn.Module):
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
     def forward(self, feat):
-
+        x = feat
         for i in range(self.num_hidden_generator):
-            x = self.hidden_list_generator[i](feat)
+            x = self.hidden_list_generator[i](x)
             x = self.act(x)
             # x = self.dropout(x)
         y = self.output(x)
