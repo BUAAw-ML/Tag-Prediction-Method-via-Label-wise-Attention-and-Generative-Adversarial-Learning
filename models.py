@@ -124,7 +124,7 @@ class Generator(nn.Module):
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
         y = self.output(x)
         return y
 
