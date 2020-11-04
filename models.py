@@ -65,6 +65,7 @@ class Discriminator(nn.Module):
 
     def forward(self, feat):
         # x = self.dropout(feat)
+        x = feat
         for i in range(self.num_hidden_discriminator):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
