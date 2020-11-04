@@ -432,24 +432,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_L_Supervised = torch.mean(per_example_loss)
 
-        z = torch.rand(self.state['batch_size'], 500).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-
-        x_g = model['Generator'](z)
-
-        D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-
-        DU_fake_prob2 = DU_fake_prob.detach()
-
         D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-        D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
-        d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
-
-        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob2[:, 0] + 1e-8))
-        feature_error = torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)
-        G_feat_match = torch.mean(feature_error * feature_error)
-        g_loss = g_loss #+ G_feat_match
-
-        self.state['loss'] = g_loss#d_loss #+
+        # D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
+        d_loss = D_L_Supervised + D_L_unsupervised1U #+ D_L_unsupervised2U
 
         if training:
             self.state['train_iters'] += 1
@@ -460,29 +445,41 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # enc_var = [para for para in model['Discriminator'].parameters()]
         # enc_var += [para for para in model['Encoder'].parameters()]
 
-        if training:
-            optimizer['enc'].zero_grad()
-            d_loss.backward() #
-            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-            optimizer['enc'].step()
-
-            # optimizer['Discriminator'].zero_grad()
-            # d_loss.backward(retain_graph=True)
-            # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
-            # optimizer['Discriminator'].step()
-            #
-            # optimizer['Encoder'].zero_grad()
-            # d_loss.backward(retain_graph=True)
-            # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
-            # optimizer['Encoder'].step()
-
-            optimizer['Generator'].zero_grad()
-            g_loss.backward()
-            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            optimizer['Generator'].step()
-
-        else:
+        if not training:
             return self.state['output']
+
+        optimizer['enc'].zero_grad()
+        d_loss.backward()  #retain_graph=True
+        nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+        optimizer['enc'].step()
+
+        # optimizer['Discriminator'].zero_grad()
+        # d_loss.backward(retain_graph=True)
+        # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+        # optimizer['Discriminator'].step()
+        #
+        # optimizer['Encoder'].zero_grad()
+        # d_loss.backward(retain_graph=True)
+        # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
+        # optimizer['Encoder'].step()
+
+        z = torch.rand(self.state['batch_size'], 500).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+
+        x_g = model['Generator'](z)
+
+        D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+
+        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+        feature_error = torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)
+        G_feat_match = torch.mean(feature_error * feature_error)
+        g_loss = g_loss #+ G_feat_match
+
+        self.state['loss'] = g_loss  # d_loss #+
+
+        optimizer['Generator'].zero_grad()
+        g_loss.backward()
+        nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+        optimizer['Generator'].step()
 
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
@@ -493,6 +490,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # input = self.state['input']
         # self.state['feature'] = input[0]
         # self.state['input'] = input[2]
+
+
+
 
     # def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True):
     #     target_var = self.state['target']
@@ -515,15 +515,24 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     #
     #     D_L_Supervised = torch.mean(per_example_loss)
     #
-    #     z = torch.rand(self.state['batch_size'], 3000).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+    #     z = torch.rand(self.state['batch_size'], 500).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
     #
     #     x_g = model['Generator'](z)
     #
     #     D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
     #
+    #     DU_fake_prob2 = DU_fake_prob.detach()
+    #
     #     D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
     #     D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
     #     d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+    #
+    #     g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob2[:, 0] + 1e-8))
+    #     feature_error = torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)
+    #     G_feat_match = torch.mean(feature_error * feature_error)
+    #     g_loss = g_loss #+ G_feat_match
+    #
+    #     self.state['loss'] = g_loss#d_loss #+
     #
     #     if training:
     #         self.state['train_iters'] += 1
@@ -534,32 +543,26 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     #     # enc_var = [para for para in model['Discriminator'].parameters()]
     #     # enc_var += [para for para in model['Encoder'].parameters()]
     #
-    #     if not training:
+    #     if training:
+    #         optimizer['enc'].zero_grad()
+    #         d_loss.backward() #
+    #         nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+    #         optimizer['enc'].step()
+    #
+    #         # optimizer['Discriminator'].zero_grad()
+    #         # d_loss.backward(retain_graph=True)
+    #         # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
+    #         # optimizer['Discriminator'].step()
+    #         #
+    #         # optimizer['Encoder'].zero_grad()
+    #         # d_loss.backward(retain_graph=True)
+    #         # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
+    #         # optimizer['Encoder'].step()
+    #
+    #         optimizer['Generator'].zero_grad()
+    #         g_loss.backward()
+    #         nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+    #         optimizer['Generator'].step()
+    #
+    #     else:
     #         return self.state['output']
-    #
-    #     optimizer['enc'].zero_grad()
-    #     d_loss.backward(retain_graph=True)  #
-    #     nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-    #     optimizer['enc'].step()
-    #
-    #     # optimizer['Discriminator'].zero_grad()
-    #     # d_loss.backward(retain_graph=True)
-    #     # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
-    #     # optimizer['Discriminator'].step()
-    #     #
-    #     # optimizer['Encoder'].zero_grad()
-    #     # d_loss.backward(retain_graph=True)
-    #     # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
-    #     # optimizer['Encoder'].step()
-    #
-    #     g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
-    #     feature_error = torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)
-    #     G_feat_match = torch.mean(feature_error * feature_error)
-    #     g_loss = g_loss + G_feat_match
-    #
-    #     self.state['loss'] = g_loss  # d_loss #+
-    #
-    #     optimizer['Generator'].zero_grad()
-    #     g_loss.backward()
-    #     nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-    #     optimizer['Generator'].step()
