@@ -489,7 +489,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_L_Supervised = torch.mean(per_example_loss)
 
-        z = torch.rand(self.state['batch_size'], 2000).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
         D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
