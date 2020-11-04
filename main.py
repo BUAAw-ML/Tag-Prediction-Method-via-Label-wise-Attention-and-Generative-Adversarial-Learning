@@ -78,7 +78,7 @@ def multiLabel_text_classify():
     model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
 
     # define loss function (criterion)
-    criterion = nn.MultiLabelSoftMarginLoss() #weight=torch.from_numpy(np.array(tag_weight)).float().cuda(0)
+    criterion = nn.BCELoss()#nn.MultiLabelSoftMarginLoss() #weight=torch.from_numpy(np.array(tag_weight)).float().cuda(0)
 
     # define optimizer
     optimizer = {}
@@ -86,7 +86,7 @@ def multiLabel_text_classify():
     optimizer['Generator'] = torch.optim.SGD(model['Generator'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
     # optimizer['Encoder'] = torch.optim.SGD(model['Encoder'].get_config_optim(args.lr, args.lrp), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.05},
+    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
                                         {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.001, momentum=args.momentum, weight_decay=args.weight_decay)
     print(optimizer['enc'])
 

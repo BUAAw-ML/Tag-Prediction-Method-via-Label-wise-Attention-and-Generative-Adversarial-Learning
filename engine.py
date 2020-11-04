@@ -446,7 +446,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         #     torch.sqrt(torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)))
         # g_loss = g_loss + G_feat_match
 
-        self.state['loss'] = d_loss #+ g_loss
+        self.state['loss'] = criterion(self.state['output'], target_var)#d_loss #+ g_loss
 
         if training:
             self.state['train_iters'] += 1
@@ -459,7 +459,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         if training:
             optimizer['enc'].zero_grad()
-            d_loss.backward() #retain_graph=True
+            self.state['loss'].backward() #retain_graph=True
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
