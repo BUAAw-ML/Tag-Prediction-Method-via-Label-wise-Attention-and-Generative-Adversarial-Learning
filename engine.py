@@ -479,6 +479,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
         D_real_features2 = D_real_features.detach()
+
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
         log_probs = F.log_softmax(logits, dim=-1)
@@ -489,21 +490,20 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         D_L_Supervised = torch.mean(per_example_loss)
 
         z = torch.rand(self.state['batch_size'], 500).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-
         x_g = model['Generator'](z)
 
         D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
         DU_fake_prob2 = DU_fake_prob.detach()
         D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
         D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob2[:, 0] + 1e-8))
-        d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+        d_loss = D_L_Supervised #+ D_L_unsupervised1U + D_L_unsupervised2U
 
         g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
         feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
         G_feat_match = torch.mean(feature_error * feature_error)
         g_loss = g_loss + G_feat_match
 
-        self.state['loss'] = g_loss#d_loss #+
+        self.state['loss'] = d_loss #+g_loss#
 
         if training:
             self.state['train_iters'] += 1
@@ -520,24 +520,13 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
-            # optimizer['Discriminator'].zero_grad()
-            # d_loss.backward(retain_graph=True)
-            # nn.utils.clip_grad_norm_(model['Discriminator'].parameters(), max_norm=10.0)
-            # optimizer['Discriminator'].step()
-            #
-            # optimizer['Encoder'].zero_grad()
-            # d_loss.backward(retain_graph=True)
-            # nn.utils.clip_grad_norm_(model['Encoder'].parameters(), max_norm=10.0)
-            # optimizer['Encoder'].step()
-
-            optimizer['Generator'].zero_grad()
-            g_loss.backward()
-            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            optimizer['Generator'].step()
+            # optimizer['Generator'].zero_grad()
+            # g_loss.backward()
+            # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            # optimizer['Generator'].step()
 
         else:
             return self.state['output']
-
 
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
