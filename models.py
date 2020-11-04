@@ -64,11 +64,11 @@ class Discriminator(nn.Module):
         self.output = nn.Softmax(dim=-1)
 
     def forward(self, feat):
-        x = self.dropout(feat)
+        # x = self.dropout(feat)
         for i in range(self.num_hidden_discriminator):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
 
         flatten = x
         logit = self.Linear(x)
