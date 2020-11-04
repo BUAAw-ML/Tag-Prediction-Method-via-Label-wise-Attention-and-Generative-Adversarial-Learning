@@ -46,6 +46,28 @@ class MABert(nn.Module):
             {'params': self.class_weight, 'lr': lr},
         ]
 
+class Bert_Encoder(nn.Module):
+    def __init__(self, bert, bert_trainable=True):
+        super(Bert_Encoder, self).__init__()
+
+        self.add_module('bert', bert)
+        if not bert_trainable:
+            for m in self.bert.parameters():
+                m.requires_grad = False
+
+    def forward(self, ids, token_type_ids, attention_mask):
+        token_feat = self.bert(ids,
+                               token_type_ids=token_type_ids,
+                               attention_mask=attention_mask)[0]
+        sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
+                        / torch.sum(attention_mask, dim=1, keepdim=True)
+
+        return sentence_feat
+
+    def get_config_optim(self, lr, lrp):
+        return [
+            {'params': self.bert.parameters(), 'lr': lrp},
+        ]
 
 class Discriminator(nn.Module):
     def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=1, hidden_dim_discriminator=400):
@@ -81,30 +103,6 @@ class Discriminator(nn.Module):
             {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
             {'params': self.Linear.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
-        ]
-
-
-class Bert_Encoder(nn.Module):
-    def __init__(self, bert, bert_trainable=True):
-        super(Bert_Encoder, self).__init__()
-
-        self.add_module('bert', bert)
-        if not bert_trainable:
-            for m in self.bert.parameters():
-                m.requires_grad = False
-
-    def forward(self, ids, token_type_ids, attention_mask):
-        token_feat = self.bert(ids,
-                               token_type_ids=token_type_ids,
-                               attention_mask=attention_mask)[0]
-        sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
-                        / torch.sum(attention_mask, dim=1, keepdim=True)
-
-        return sentence_feat
-
-    def get_config_optim(self, lr, lrp):
-        return [
-            {'params': self.bert.parameters(), 'lr': lrp},
         ]
 
 class Generator(nn.Module):
