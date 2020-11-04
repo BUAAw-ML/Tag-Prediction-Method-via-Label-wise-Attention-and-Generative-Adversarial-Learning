@@ -426,13 +426,11 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
         log_probs = F.log_softmax(logits, dim=-1)
-        print(log_probs.shape)
+
         # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
         per_example_loss = -torch.sum(target_var * log_probs, dim=-1)
-        print(per_example_loss.shape)
         D_L_Supervised = torch.mean(per_example_loss)
-        print(D_L_Supervised.shape)
-        exit()
+
 
         # z = torch.rand(self.state['batch_size'], 3000).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         #
@@ -450,7 +448,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         # g_loss = g_loss + G_feat_match
 
         self.state['loss'] = criterion(self.state['output'], target_var)#d_loss #+ g_loss
-
+        print(d_loss)
+        print(self.state['loss'])
+        exit()
         if training:
             self.state['train_iters'] += 1
         else:
