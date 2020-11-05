@@ -70,7 +70,7 @@ class Bert_Encoder(nn.Module):
         ]
 
 class Discriminator(nn.Module):
-    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=2, hidden_dim_discriminator=600):
+    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=3, hidden_dim_discriminator=400):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
