@@ -74,7 +74,7 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.ReLU()
+        self.act = nn.LeakyReLU(0.2)#ReLU()
 
         self.num_hidden_discriminator = num_hidden_discriminator
         self.hidden_list_discriminator = nn.ModuleList()
@@ -91,7 +91,7 @@ class Discriminator(nn.Module):
         for i in range(self.num_hidden_discriminator):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
 
         flatten = x
         logit = self.Linear(x)
