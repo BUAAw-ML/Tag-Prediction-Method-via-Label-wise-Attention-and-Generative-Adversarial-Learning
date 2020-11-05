@@ -74,7 +74,7 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.LeakyReLU(0.2)#ReLU()
+        self.act = ReLU()#nn.LeakyReLU(0.2)#
 
         self.num_hidden_discriminator = num_hidden_discriminator
         self.hidden_list_discriminator = nn.ModuleList()
