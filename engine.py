@@ -499,7 +499,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         DU_fake_prob2 = DU_fake_prob.detach()
         D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
         D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob2[:, 0] + 1e-8))
-        d_loss = D_L_Supervised #+ D_L_unsupervised1U + D_L_unsupervised2U
+        d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
 
         g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
         feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
@@ -519,10 +519,10 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         if training:
 
-            # optimizer['Generator'].zero_grad()
-            # g_loss.backward(retain_graph=True)
-            # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            # optimizer['Generator'].step()
+            optimizer['Generator'].zero_grad()
+            g_loss.backward()
+            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            optimizer['Generator'].step()
 
             optimizer['enc'].zero_grad()
             d_loss.backward() #
