@@ -95,7 +95,7 @@ class Discriminator(nn.Module):
         for i in range(self.num_hidden_discriminator):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
 
         # x = self.Linear1(x)
         # x = self.act(x)
