@@ -70,17 +70,17 @@ class Bert_Encoder(nn.Module):
         ]
 
 class Discriminator(nn.Module):
-    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=3, hidden_dim_discriminator=400):
+    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=2, hidden_dim_discriminator=400):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
         self.act = nn.ReLU()#nn.LeakyReLU(0.2)#
 
         self.num_hidden_discriminator = num_hidden_discriminator
-        # self.hidden_list_discriminator = nn.ModuleList()
-        # for i in range(num_hidden_discriminator):
-        #     dim = input_dim if i == 0 else hidden_dim_discriminator
-        #     self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_discriminator))
+        self.hidden_list_discriminator = nn.ModuleList()
+        for i in range(num_hidden_discriminator):
+            dim = input_dim if i == 0 else hidden_dim_discriminator
+            self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_discriminator))
 
         self.Linear1 = nn.Linear(input_dim, 2000)
         self.Linear2 = nn.Linear(2000, 1000)
@@ -92,15 +92,15 @@ class Discriminator(nn.Module):
     def forward(self, feat):
         # x = self.dropout(feat)
         x = feat
-        # for i in range(self.num_hidden_discriminator):
-        #     x = self.hidden_list_discriminator[i](x)
-        #     x = self.act(x)
-            # x = self.dropout(x)
+        for i in range(self.num_hidden_discriminator):
+            x = self.hidden_list_discriminator[i](x)
+            x = self.act(x)
+            x = self.dropout(x)
 
-        x = self.Linear1(x)
-        x = self.act(x)
-        x = self.Linear2(x)
-        x = self.act(x)
+        # x = self.Linear1(x)
+        # x = self.act(x)
+        # x = self.Linear2(x)
+        # x = self.act(x)
         # x = self.Linear3(x)
         # x = self.act(x)
 
