@@ -498,6 +498,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         logits = D_real_logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
 
+        print("hhh")
+        print(semi_supervised)
+
         if semi_supervised == False:
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
@@ -505,7 +508,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             print("D_L_Supervised=0")
             D_L_Supervised = 0.
-
+        exit()
         z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
         D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
