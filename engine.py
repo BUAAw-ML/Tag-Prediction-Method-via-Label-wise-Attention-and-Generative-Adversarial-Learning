@@ -185,7 +185,7 @@ class Engine(object):
             # print('lr:', lr)
 
             # train for one epoch
-            self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+            # self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
             # train for one epoch
             self.train(train_loader, model, criterion, optimizer, epoch)
