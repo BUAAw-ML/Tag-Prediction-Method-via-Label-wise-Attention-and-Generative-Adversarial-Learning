@@ -185,9 +185,11 @@ class Engine(object):
             # print('lr:', lr)
 
             # train for one epoch
+            print("Train with unlabeled data:")
             self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
             # train for one epoch
+            print("Train with labeled data:")
             self.train(train_loader, model, criterion, optimizer, epoch)
 
             # evaluate on validation set
