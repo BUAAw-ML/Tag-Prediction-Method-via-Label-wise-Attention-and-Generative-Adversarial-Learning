@@ -18,7 +18,7 @@ token_table = {'ecommerce': 'electronic commerce'}
 # All data in one excel
 class allData(Dataset):
     tag_weight = []
-    def __init__(self, unlabeled_train_data=None, test_data=None, co_occur_mat=None, tag2id=None, id2tag=None, tfidf_dict=None):
+    def __init__(self, train_data=None,unlabeled_train_data=None, test_data=None, co_occur_mat=None, tag2id=None, id2tag=None, tfidf_dict=None):
         self.train_data = train_data
         self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
