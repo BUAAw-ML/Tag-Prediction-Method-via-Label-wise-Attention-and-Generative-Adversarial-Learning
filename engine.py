@@ -191,7 +191,7 @@ class Engine(object):
 
             # train for one epoch
             print("Train with labeled data:")
-            self.train(train_loader, model, criterion, optimizer, epoch, False)
+            self.train(train_loader, model, criterion, optimizer, epoch)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -269,7 +269,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            output = self.on_forward(False, model, criterion, data_loader)
+            output = self.on_forward(False, model, criterion, data_loader,semi_supervised=False)
 
             if epoch == self.state['max_epochs'] - 1:
                 self.recordResult(target, output)
