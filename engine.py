@@ -184,10 +184,10 @@ class Engine(object):
             # lr = self.adjust_learning_rate(optimizer)
             # print('lr:', lr)
 
-            if utilize_unlabeled_data:
-                # train for one epoch
-                print("Train with unlabeled data:")
-                self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+            # if utilize_unlabeled_data:
+            #     # train for one epoch
+            #     print("Train with unlabeled data:")
+            #     self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
             # train for one epoch
             print("Train with labeled data:")
