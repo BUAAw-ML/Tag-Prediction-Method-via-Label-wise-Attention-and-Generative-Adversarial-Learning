@@ -102,7 +102,7 @@ def multiLabel_text_classify():
         state['evaluate'] = True
 
     engine = GCNMultiLabelMAPEngine(state)
-    engine.learning(model, criterion, dataset, optimizer, utilize_unlabeled_data)
+    engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
 
 
 if __name__ == '__main__':
