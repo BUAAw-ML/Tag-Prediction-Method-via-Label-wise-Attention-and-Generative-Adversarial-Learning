@@ -548,12 +548,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
         self.state['target_gt'] = self.state['target'].clone()
-        # self.state['target'][self.state['target'] == 0] = 1
-        # self.state['target'][self.state['target'] == -1] = 0
-
-        # input = self.state['input']
-        # self.state['feature'] = input[0]
-        # self.state['input'] = input[2]
 
 
 
