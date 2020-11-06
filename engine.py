@@ -230,7 +230,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            self.on_forward(True, model, criterion, data_loader, optimizer, semi_supervised)
+            self.on_forward(True, model, criterion, data_loader, semi_supervised, optimizer)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
@@ -482,7 +482,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     #     nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
     #     optimizer['Generator'].step()
 
-    def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
+    def on_forward(self, training, model, criterion, data_loader, semi_supervised, optimizer=None, display=True):
         target_var = self.state['target']
         ids, token_type_ids, attention_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
