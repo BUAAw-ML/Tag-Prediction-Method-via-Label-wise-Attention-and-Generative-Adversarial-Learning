@@ -135,7 +135,7 @@ class Engine(object):
             self.state['loss'].backward()
             optimizer.step()
 
-    def learning(self, model, criterion, dataset, optimizer=None, utilize_unlabeled_data=False):
+    def learning(self, model, criterion, dataset, semi_supervised, optimizer=None):
         # data loading code
 
         # train_sampler = MultilabelBalancedRandomSampler(dataset.train_data)
@@ -184,14 +184,14 @@ class Engine(object):
             # lr = self.adjust_learning_rate(optimizer)
             # print('lr:', lr)
 
-            # if utilize_unlabeled_data:
-            #     # train for one epoch
-            #     print("Train with unlabeled data:")
-            #     self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+            if utilize_unlabeled_data:
+                # train for one epoch
+                print("Train with unlabeled data:")
+                self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, semi_supervised)
 
             # train for one epoch
             print("Train with labeled data:")
-            self.train(train_loader, model, criterion, optimizer, epoch)
+            self.train(train_loader, model, criterion, optimizer, epoch, semi_supervised)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -203,7 +203,7 @@ class Engine(object):
             print(' *** best={best:.3f}'.format(best=self.state['best_score']))
         return self.state['best_score']
 
-    def train(self, data_loader, model, criterion, optimizer, epoch, semi_supervised=False):
+    def train(self, data_loader, model, criterion, optimizer, epoch, semi_supervised):
 
         # switch to train mode
         model['Discriminator'].train()
@@ -230,7 +230,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            self.on_forward(True, model, criterion, data_loader, semi_supervised, optimizer)
+            self.on_forward(True, model, criterion, data_loader, optimizer, semi_supervised=semi_supervised)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
@@ -269,7 +269,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            output = self.on_forward(False, model, criterion, data_loader,semi_supervised=False)
+            output = self.on_forward(False, model, criterion, data_loader)
 
             if epoch == self.state['max_epochs'] - 1:
                 self.recordResult(target, output)
@@ -482,7 +482,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     #     nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
     #     optimizer['Generator'].step()
 
-    def on_forward(self, training, model, criterion, data_loader, semi_supervised, optimizer=None, display=True):
+    def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']
         ids, token_type_ids, attention_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
@@ -503,7 +503,10 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             D_L_Supervised = torch.mean(per_example_loss)
         else:
+            print(semi_supervised)
             D_L_Supervised = 0.
+
+        exit()
 
         z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
