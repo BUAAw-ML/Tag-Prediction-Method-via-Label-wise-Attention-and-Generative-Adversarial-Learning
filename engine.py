@@ -530,8 +530,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             if torch.any(torch.isnan(D_L_unsupervised2U)):
                 print("D_L_unsupervised2U")
                 print(DU_fake_prob[:, 0])
+                exit()
 
-            exit()
+
 
 
             if semi_supervised == False:
