@@ -516,6 +516,8 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             self.state['output'] = F.softmax(logits, dim=-1)
 
             z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+            print(z)
+            exit()
             x_g = model['Generator'](z)
             D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
 
