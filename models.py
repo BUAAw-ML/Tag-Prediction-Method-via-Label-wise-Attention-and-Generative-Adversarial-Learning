@@ -121,7 +121,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.ReLU()
+        self.act = nn.LeakyReLU(0.2)
 
         self.num_hidden_generator = num_hidden_generator
         self.hidden_list_generator = nn.ModuleList()
@@ -135,7 +135,7 @@ class Generator(nn.Module):
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
             x = self.act(x)
-            # x = self.dropout(x)
+            x = self.dropout(x)
         y = self.output(x)
         return y
 
