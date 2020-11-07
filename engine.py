@@ -550,27 +550,27 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             #-----------
 
-            # optimizer['Generator'].zero_grad()
-            #
-            # # compute output
-            # output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
-            # D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-            # D_real_features2 = D_real_features.detach()
-            #
-            # z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-            # x_g = model['Generator'](z)
-            # D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-            #
-            # g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0]))
-            # feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
-            # G_feat_match = torch.mean(feature_error * feature_error)
-            # g_loss = g_loss #+ G_feat_match
-            #
-            # g_loss.backward()
-            # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            # optimizer['Generator'].step()
+            optimizer['Generator'].zero_grad()
 
-            self.state['loss'] = [d_loss, d_loss]  # +#g_loss#
+            # compute output
+            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
+            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+            D_real_features2 = D_real_features.detach()
+
+            z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+            x_g = model['Generator'](z)
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+
+            g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0]))
+            feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
+            G_feat_match = torch.mean(feature_error * feature_error)
+            g_loss = g_loss + G_feat_match
+
+            g_loss.backward()
+            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            optimizer['Generator'].step()
+
+            self.state['loss'] = [d_loss, g_loss]  # +#g_loss#
 
         else:
             # compute output
