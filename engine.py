@@ -523,13 +523,13 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0]))
 
             if torch.any(torch.isnan(D_L_unsupervised1U)):
-                print(D_real_prob[:, 0])
+                print(D_real_prob)
                 print("D_L_unsupervised1U")
 
 
             if torch.any(torch.isnan(D_L_unsupervised2U)):
                 print("D_L_unsupervised2U")
-                print(DU_fake_prob[:, 0])
+                print(DU_fake_prob)
                 exit()
 
 
