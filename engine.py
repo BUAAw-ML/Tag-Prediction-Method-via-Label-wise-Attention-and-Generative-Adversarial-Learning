@@ -571,7 +571,11 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
 
-            self.state['loss'] = [0., 0.]
+            log_probs = F.log_softmax(logits, dim=-1)
+            per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
+            D_L_Supervised = torch.mean(per_example_loss)
+
+            self.state['loss'] = [D_L_Supervised, D_L_Supervised]
 
             return self.state['output']
 
