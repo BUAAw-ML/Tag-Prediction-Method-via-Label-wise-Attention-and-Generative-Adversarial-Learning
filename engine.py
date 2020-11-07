@@ -198,7 +198,7 @@ class Engine(object):
             self.train(train_loader, model, criterion, optimizer, epoch, False)
 
             # evaluate on validation set
-            prec1 = self.validate(val_loader, model, criterion, optimizer, epoch)
+            prec1 = self.validate(val_loader, model, criterion, epoch)
 
             # remember best prec@1 and save checkpoint
             is_best = prec1 > self.state['best_score']
@@ -246,7 +246,7 @@ class Engine(object):
         self.on_end_epoch(True, model, criterion, data_loader, optimizer)
     
     @torch.no_grad()
-    def validate(self, data_loader, model, criterion, optimizer, epoch):
+    def validate(self, data_loader, model, criterion, epoch):
         # switch to evaluate mode
 
         model['Discriminator'].eval()
@@ -273,7 +273,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            output = self.on_forward(False, model, criterion, data_loader, optimizer)
+            output = self.on_forward(False, model, criterion, data_loader)
 
             if epoch == self.state['max_epochs'] - 1:
                 self.recordResult(target, output)
@@ -507,62 +507,73 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
-        # if training:
+        if training:
 
-        optimizer['enc'].zero_grad()
+            optimizer['enc'].zero_grad()
 
-        # compute output
-        output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
+            # compute output
+            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
 
-        D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
 
-        logits = D_real_logits[:, 1:]
-        self.state['output'] = F.softmax(logits, dim=-1)
+            logits = D_real_logits[:, 1:]
+            self.state['output'] = F.softmax(logits, dim=-1)
 
-        if semi_supervised == False:
-            log_probs = F.log_softmax(logits, dim=-1)
-            per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
-            D_L_Supervised = torch.mean(per_example_loss)
+            if semi_supervised == False:
+                log_probs = F.log_softmax(logits, dim=-1)
+                per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
+                D_L_Supervised = torch.mean(per_example_loss)
+            else:
+                D_L_Supervised = 0.
+
+            z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+            x_g = model['Generator'](z)
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+
+            D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
+            D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
+            d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+
+            d_loss.backward()  #
+            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+            optimizer['enc'].step()
+
+            #-----------
+
+            optimizer['Generator'].zero_grad()
+
+            # compute output
+            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
+            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+            D_real_features2 = D_real_features.detach()
+
+            z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+            x_g = model['Generator'](z)
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+
+            g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+            feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
+            G_feat_match = torch.mean(feature_error * feature_error)
+            g_loss = g_loss + G_feat_match
+
+            g_loss.backward()
+            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            optimizer['Generator'].step()
+
+            self.state['loss'] = [d_loss, g_loss]  # +#g_loss#
+
         else:
-            D_L_Supervised = 0.
+            # compute output
+            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
 
-        z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-        x_g = model['Generator'](z)
-        D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
 
-        D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-        D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
-        d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+            logits = D_real_logits[:, 1:]
+            self.state['output'] = F.softmax(logits, dim=-1)
 
-        d_loss.backward()  #
-        nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-        optimizer['enc'].step()
+            self.state['loss'] = [0., 0.]
 
-        #-----------
-
-        optimizer['Generator'].zero_grad()
-
-        # compute output
-        output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
-        D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-        D_real_features2 = D_real_features.detach()
-
-        z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-        x_g = model['Generator'](z)
-        D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-
-        g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
-        feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
-        G_feat_match = torch.mean(feature_error * feature_error)
-        g_loss = g_loss + G_feat_match
-
-        g_loss.backward()
-        nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-        optimizer['Generator'].step()
-
-        self.state['loss'] = [d_loss, g_loss]  # +#g_loss#
-
-        return self.state['output']
+            return self.state['output']
 
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
