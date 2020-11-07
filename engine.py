@@ -88,12 +88,12 @@ class Engine(object):
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
         # record loss
-        self.state['loss_batch'] = self.state['loss'].item()
+        self.state['loss_batch'] = self.state['loss'][0].item() + self.state['loss'][1].item()
         self.state['meter_loss'].add(self.state['loss_batch'])
         if training:
-            self.writer.add_scalar('loss/train_batch_loss', self.state['loss'].item(), self.state['train_iters'] - 1)
+            self.writer.add_scalar('loss/train_batch_loss', self.state['loss_batch'], self.state['train_iters'] - 1)
         else:
-            self.writer.add_scalar('loss/eval_batch_loss', self.state['loss'].item(), self.state['eval_iters'] - 1)
+            self.writer.add_scalar('loss/eval_batch_loss', self.state['loss_batch'], self.state['eval_iters'] - 1)
 
         if display and self.state['print_freq'] != 0 and self.state['iteration'] % self.state['print_freq'] == 0:
             loss = self.state['meter_loss'].value()[0]
@@ -102,20 +102,24 @@ class Engine(object):
             if training:
                 print('Epoch: [{0}][{1}/{2}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
-                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {loss_current:.4f} ({loss:.4f})\t'
+                      'g_Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['epoch'], self.state['iteration'], len(data_loader),
                     batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
-                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item(),
+                    loss=loss))
             else:
                 print('Test: [{0}/{1}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
-                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {loss_current:.4f} ({loss:.4f})\t'
+                      'g_Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
-                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item(),
+                    loss=loss))
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True):
         input_var = self.state['input']
@@ -406,81 +410,27 @@ class MultiLabelMAPEngine(Engine):
             if training:
                 print('Epoch: [{0}][{1}/{2}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
-                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {loss_current:.4f} ({loss:.4f})\t'
+                      'g_Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['epoch'], self.state['iteration'], len(data_loader),
                     batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
-                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item(),
+                    loss=loss))
             else:
                 print('Test: [{0}/{1}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
-                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {loss_current:.4f} ({loss:.4f})\t'
+                      'g_Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
-                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item(),
+                    loss=loss))
 
 
 class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
-    # def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True):
-    #     target_var = self.state['target']
-    #     ids, token_type_ids, attention_mask = self.state['input']
-    #     ids = ids.cuda(self.state['device_ids'][0])
-    #     token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
-    #     attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-    #
-    #     # compute output
-    #     output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
-    #     D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-    #
-    #     logits = D_real_logits[:, 1:]
-    #     self.state['output'] = F.softmax(logits, dim=-1)
-    #     log_probs = F.log_softmax(logits, dim=-1)
-    #
-    #     # one_hot_labels = target_var  #[batch,label_num] #tf.one_hot(labels, depth=num_labels, dtype=tf.float32)
-    #     per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
-    #     D_L_Supervised = torch.mean(per_example_loss)
-    #
-    #     z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-    #     x_g = model['Generator'](z)
-    #     D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-    #
-    #     D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-    #     D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
-    #     d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
-    #
-    #     if training:
-    #         self.state['train_iters'] += 1
-    #     else:
-    #         self.state['eval_iters'] += 1
-    #
-    #     if not training:
-    #         return self.state['output']
-    #
-    #     optimizer['enc'].zero_grad()
-    #     d_loss.backward()  #retain_graph=True
-    #     nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-    #     optimizer['enc'].step()
-    #
-    #     output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
-    #     D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-    #
-    #     z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-    #     x_g = model['Generator'](z)
-    #     D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-    #
-    #     g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
-    #     feature_error = torch.mean(D_real_features, dim=0) - torch.mean(D_fake_features, dim=0)
-    #     G_feat_match = torch.mean(feature_error * feature_error)
-    #     g_loss = g_loss + G_feat_match
-    #
-    #     self.state['loss'] =  d_loss #+g_loss  #
-    #
-    #     optimizer['Generator'].zero_grad()
-    #     g_loss.backward()
-    #     nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-    #     optimizer['Generator'].step()
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']
@@ -519,7 +469,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         G_feat_match = torch.mean(feature_error * feature_error)
         g_loss = g_loss #+ G_feat_match
 
-        self.state['loss'] = d_loss #+#g_loss#
+        self.state['loss'] = [d_loss, g_loss] #+#g_loss#
 
         if training:
             self.state['train_iters'] += 1
