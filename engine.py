@@ -557,23 +557,23 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
     #         optimizer['Generator'].step()
     #
     #         self.state['loss'] = [d_loss, g_loss]  # +#g_loss#
-
-        else:
-            # compute output
-            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
-
-            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-
-            logits = D_real_logits[:, 1:]
-            self.state['output'] = F.softmax(logits, dim=-1)
-
-            log_probs = F.log_softmax(logits, dim=-1)
-            per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
-            D_L_Supervised = torch.mean(per_example_loss)
-
-            self.state['loss'] = [D_L_Supervised, D_L_Supervised]
-
-            return self.state['output']
+    #
+    #     else:
+    #         # compute output
+    #         output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
+    #
+    #         D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+    #
+    #         logits = D_real_logits[:, 1:]
+    #         self.state['output'] = F.softmax(logits, dim=-1)
+    #
+    #         log_probs = F.log_softmax(logits, dim=-1)
+    #         per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
+    #         D_L_Supervised = torch.mean(per_example_loss)
+    #
+    #         self.state['loss'] = [D_L_Supervised, D_L_Supervised]
+    #
+    #         return self.state['output']
 
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
