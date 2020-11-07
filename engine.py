@@ -482,10 +482,10 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         if training:
 
-            optimizer['Generator'].zero_grad()
-            g_loss.backward()  #retain_graph=True
-            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            optimizer['Generator'].step()
+            # optimizer['Generator'].zero_grad()
+            # g_loss.backward()  #retain_graph=True
+            # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            # optimizer['Generator'].step()
 
             optimizer['enc'].zero_grad()
             d_loss.backward() #
