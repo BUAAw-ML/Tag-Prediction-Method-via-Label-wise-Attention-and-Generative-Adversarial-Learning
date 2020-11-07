@@ -555,7 +555,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             x_g = model['Generator'](z)
             D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
 
-            g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+            g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0]))
             feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
             G_feat_match = torch.mean(feature_error * feature_error)
             g_loss = g_loss #+ G_feat_match
