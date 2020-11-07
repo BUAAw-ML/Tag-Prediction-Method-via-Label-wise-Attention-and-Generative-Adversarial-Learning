@@ -198,7 +198,7 @@ class Engine(object):
             self.train(train_loader, model, criterion, optimizer, epoch, False)
 
             # evaluate on validation set
-            prec1 = self.validate(val_loader, model, criterion, epoch)
+            prec1 = self.validate(val_loader, model, criterion, optimizer, epoch)
 
             # remember best prec@1 and save checkpoint
             is_best = prec1 > self.state['best_score']
@@ -246,7 +246,7 @@ class Engine(object):
         self.on_end_epoch(True, model, criterion, data_loader, optimizer)
     
     @torch.no_grad()
-    def validate(self, data_loader, model, criterion, epoch):
+    def validate(self, data_loader, model, criterion, optimizer, epoch):
         # switch to evaluate mode
 
         model['Discriminator'].eval()
@@ -273,7 +273,7 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            output = self.on_forward(False, model, criterion, data_loader)
+            output = self.on_forward(False, model, criterion, data_loader, optimizer)
 
             if epoch == self.state['max_epochs'] - 1:
                 self.recordResult(target, output)
@@ -501,8 +501,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-
-
 
         if training:
             self.state['train_iters'] += 1
