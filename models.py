@@ -138,8 +138,8 @@ class Generator(nn.Module):
         x = feat
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
-            x = self.m1(x)
-            x = self.act(x)
+            # x = self.m1(x)
+            # x = self.act(x)
             # x = self.dropout(x)
         y = x#self.output(x)
         return y
