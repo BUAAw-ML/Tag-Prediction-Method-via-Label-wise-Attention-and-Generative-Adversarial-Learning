@@ -137,7 +137,8 @@ class Generator(nn.Module):
             x = self.hidden_list_generator[i](x)
             x = self.act(x)
             # x = self.dropout(x)
-        y = self.output(x)
+        x = self.output(x)
+        y = self.act(x)
         return y
 
     def get_config_optim(self, lr, lrp):
