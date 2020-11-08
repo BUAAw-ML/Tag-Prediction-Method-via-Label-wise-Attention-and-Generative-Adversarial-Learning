@@ -132,13 +132,13 @@ class Generator(nn.Module):
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
-        self.m1 = nn.BatchNorm1d(768)
+        self.m1 = nn.BatchNorm1d(2000)
 
     def forward(self, feat):
         x = feat
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
-            # x = self.m1(x)
+            x = self.m1(x)
             x = self.act(x)
             x = self.dropout(x)
         y = self.output(x)
