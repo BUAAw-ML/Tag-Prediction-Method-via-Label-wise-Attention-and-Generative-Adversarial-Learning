@@ -69,6 +69,7 @@ class Bert_Encoder(nn.Module):
             {'params': self.bert.parameters(), 'lr': lrp},
         ]
 
+
 class Discriminator(nn.Module):
     def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=1, hidden_dim_discriminator=400):
         super(Discriminator, self).__init__()
@@ -122,7 +123,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.Sigmoid()#nn.LeakyReLU(0.2)
+        self.act = nn.LeakyReLU(0.2) #nn.Sigmoid()#
 
         self.num_hidden_generator = num_hidden_generator
         self.hidden_list_generator = nn.ModuleList()
@@ -131,14 +132,16 @@ class Generator(nn.Module):
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
+        self.m1 = nn.BatchNorm1d(2000)
+
     def forward(self, feat):
         x = feat
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
+            x = self.m1(x)
             x = self.act(x)
             # x = self.dropout(x)
-        x = self.output(x)
-        y = self.act(x)
+        y = self.output(x)
         return y
 
     def get_config_optim(self, lr, lrp):
