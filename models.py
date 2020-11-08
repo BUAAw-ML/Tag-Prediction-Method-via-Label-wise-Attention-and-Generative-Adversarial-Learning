@@ -119,7 +119,7 @@ class Discriminator(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=1, hidden_dim_generator=2000):
+    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=1, hidden_dim_generator=768):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -132,7 +132,7 @@ class Generator(nn.Module):
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
-        self.m1 = nn.BatchNorm1d(2000)
+        self.m1 = nn.BatchNorm1d(768)
 
     def forward(self, feat):
         x = feat
@@ -141,7 +141,7 @@ class Generator(nn.Module):
             x = self.m1(x)
             x = self.act(x)
             # x = self.dropout(x)
-        y = self.output(x)
+        y = x#self.output(x)
         return y
 
     def get_config_optim(self, lr, lrp):
