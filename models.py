@@ -122,7 +122,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.LeakyReLU(0.2)
+        self.act = nn.ReLU()#nn.LeakyReLU(0.2)
 
         self.num_hidden_generator = num_hidden_generator
         self.hidden_list_generator = nn.ModuleList()
