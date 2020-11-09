@@ -436,7 +436,7 @@ class TrainTestData(Dataset):
                 tag_ids = [tag2id[t] for t in tag]
 
                 data.append({
-                    'id': int(id),
+                    'id': 0,
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
