@@ -398,9 +398,6 @@ class TrainTestData(Dataset):
     def load(self, file):
         data = []
 
-        tag2id = {}
-        id2tag = {}
-
         document = []
         tag_occurance = {}
 
@@ -443,7 +440,7 @@ class TrainTestData(Dataset):
                     'dscp': dscp
                 })
 
-        print("The number of tags for training: {}".format(len(tag2id)))
+        print("The number of tags for training: {}".format(len(self.tag2id)))
         os.makedirs('cache', exist_ok=True)
 
         return data
@@ -541,7 +538,7 @@ def load_TrainTestData(data_path):
         torch.save(tag_mask, os.path.join('cache', cache_file_head + '.tag_mask'))
 
     print("train_data_size: {}".format(len(dataset.train_data)))
-    print("train_data_size: {}".format(len(dataset.unlabeled_train_data)))
+    print("unlabeled_train_data_size: {}".format(len(dataset.unlabeled_train_data)))
     print("val_data_size: {}".format(len(dataset.test_data)))
 
     return dataset, encoded_tag, tag_mask
