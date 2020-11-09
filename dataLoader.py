@@ -419,7 +419,7 @@ class TrainTestData(Dataset):
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-                if t not in self.tag2id:
+                if tag not in self.tag2id:
                     tag_id = len(self.tag2id)
                     self.tag2id[t] = tag_id
                     self.id2tag[tag_id] = t
