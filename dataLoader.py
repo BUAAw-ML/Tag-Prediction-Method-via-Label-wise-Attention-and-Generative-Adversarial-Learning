@@ -434,8 +434,6 @@ class TrainTestData(Dataset):
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
         os.makedirs('cache', exist_ok=True)
-        print(self.tag2id)
-        exit()
 
         return data
 
@@ -520,7 +518,6 @@ def load_TrainTestData(data_path):
         dataset.train_data = dataset.load(file)
 
         print( dataset.train_data)
-        exit()
 
         file = os.path.join(data_path, 'unlabeled.tsv')
         dataset.unlabeled_train_data = dataset.load(file)
