@@ -525,13 +525,13 @@ def load_TrainTestData(data_path):
 
         dataset = TrainTestData()
 
-        file = os.path.join(data_path, 'labeled.txt')
+        file = os.path.join(data_path, 'labeled.tsv')
         dataset.train_data = dataset.load(file)
 
-        file = os.path.join(data_path, 'unlabeled.txt')
+        file = os.path.join(data_path, 'unlabeled.tsv')
         dataset.unlabeled_train_data = dataset.load(file)
 
-        file = os.path.join(data_path, 'test.txt')
+        file = os.path.join(data_path, 'test.tsv')
         dataset.test_data = dataset.load(file)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
