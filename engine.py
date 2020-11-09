@@ -102,24 +102,24 @@ class Engine(object):
             if training:
                 print('Epoch: [{0}][{1}/{2}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f} ({loss:.4f})\t'
-                      'g_Loss {g_loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
                     self.state['epoch'], self.state['iteration'], len(data_loader),
                     batch_time_current=self.state['batch_time_current'],
                     batch_time=batch_time,
                     d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item(),
-                    loss=loss))
+                    g_loss_current=self.state['loss'][1].item()
+                    ))
             else:
                 print('Test: [{0}/{1}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f} ({loss:.4f})\t'
-                      'g_Loss {g_loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
                     self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
                     batch_time=batch_time,
                     d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item(),
-                    loss=loss))
+                    g_loss_current=self.state['loss'][1].item()
+                    ))
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True):
         input_var = self.state['input']
@@ -410,24 +410,24 @@ class MultiLabelMAPEngine(Engine):
             if training:
                 print('Epoch: [{0}][{1}/{2}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f} ({loss:.4f})\t'
-                      'g_Loss {g_loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
                     self.state['epoch'], self.state['iteration'], len(data_loader),
                     batch_time_current=self.state['batch_time_current'],
                     batch_time=batch_time,
                     d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item(),
-                    loss=loss))
+                    g_loss_current=self.state['loss'][1].item()
+                ))
             else:
                 print('Test: [{0}/{1}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f} ({loss:.4f})\t'
-                      'g_Loss {g_loss_current:.4f} ({loss:.4f})'.format(
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
                     self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
                     batch_time=batch_time,
                     d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item(),
-                    loss=loss))
+                    g_loss_current=self.state['loss'][1].item()
+                ))
 
 
 class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
