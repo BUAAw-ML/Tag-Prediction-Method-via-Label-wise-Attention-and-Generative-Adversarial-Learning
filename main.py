@@ -20,7 +20,7 @@ parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('-b', '--batch-size', default=4, type=int,
+parser.add_argument('-b', '--batch-size', default=10, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--lr', '--learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
@@ -90,9 +90,9 @@ def multiLabel_text_classify():
     #                                     {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 0.1}], lr=0.1)
-    optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.01},
-                                        {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1)
+    optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-5}], lr=5e-5)
+    optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 5e-5},
+                                        {'params': model['Encoder'].parameters(), 'lr': 5e-5}], lr=5e-5)
 
     state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
              'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
