@@ -91,7 +91,7 @@ def multiLabel_text_classify():
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
     optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 0.1}], lr=0.1)
-    optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
+    optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.01},
                                         {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1)
 
     state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
