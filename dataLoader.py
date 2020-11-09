@@ -428,12 +428,12 @@ class TrainTestData(Dataset):
                     continue
 
                 for t in tag:
-                    if t not in tag2id:
-                        tag_id = len(tag2id)
-                        tag2id[t] = tag_id
-                        id2tag[tag_id] = t
+                    if t not in self.tag2id:
+                        tag_id = len(self.tag2id)
+                        self.tag2id[t] = tag_id
+                        self.id2tag[tag_id] = t
 
-                tag_ids = [tag2id[t] for t in tag]
+                tag_ids = [self.tag2id[t] for t in tag]
 
                 data.append({
                     'id': 0,
