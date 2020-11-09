@@ -538,9 +538,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
                 D_L_Supervised = torch.mean(per_example_loss)
                 if torch.any(torch.isnan(D_L_Supervised)):
                     print("D_L_Supervised")
-                d_loss = D_L_Supervised + D_L_unsupervised1U #+ D_L_unsupervised2U
+                d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
             else:
-                d_loss = D_L_unsupervised1U #+ D_L_unsupervised2U
+                d_loss = D_L_unsupervised1U + D_L_unsupervised2U
 
             d_loss.backward()  #
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
