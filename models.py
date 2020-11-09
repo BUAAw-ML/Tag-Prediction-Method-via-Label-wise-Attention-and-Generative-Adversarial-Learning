@@ -119,7 +119,7 @@ class Discriminator(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=3, hidden_dim_generator=2000):
+    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=1, hidden_dim_generator=768):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -138,9 +138,9 @@ class Generator(nn.Module):
         x = feat
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
-            x = self.m1(x)
+            # x = self.m1(x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
         y = self.output(x)
         return y
 
