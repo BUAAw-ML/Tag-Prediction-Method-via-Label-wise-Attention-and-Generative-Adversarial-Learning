@@ -410,8 +410,7 @@ class TrainTestData(Dataset):
 
                 inn_split = split[0].split(":")
                 tag = inn_split[0] + "_" + inn_split[1]
-                print(tag)
-                exit()
+
                 dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
                     continue
@@ -420,29 +419,23 @@ class TrainTestData(Dataset):
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-                tag = [t for t in tag if t != '']
-
-                if len(tag) == 0:
-                    continue
-
-                for t in tag:
-                    if t not in self.tag2id:
-                        tag_id = len(self.tag2id)
-                        self.tag2id[t] = tag_id
-                        self.id2tag[tag_id] = t
-
-                tag_ids = [self.tag2id[t] for t in tag]
+                if t not in self.tag2id:
+                    tag_id = len(self.tag2id)
+                    self.tag2id[t] = tag_id
+                    self.id2tag[tag_id] = t
 
                 data.append({
                     'id': 0,
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
+                    'tag_ids': tag_id,
                     'dscp': dscp
                 })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
         os.makedirs('cache', exist_ok=True)
+        print(self.tag2id)
+        exit()
 
         return data
 
