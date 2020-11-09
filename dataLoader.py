@@ -423,6 +423,8 @@ class TrainTestData(Dataset):
                     tag_id = len(self.tag2id)
                     self.tag2id[tag] = tag_id
                     self.id2tag[tag_id] = tag
+                else:
+                    tag_id = self.tag2id[tag]
 
                 data.append({
                     'id': 0,
