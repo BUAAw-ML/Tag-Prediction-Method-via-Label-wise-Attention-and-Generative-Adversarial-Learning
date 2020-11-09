@@ -410,7 +410,8 @@ class TrainTestData(Dataset):
 
                 inn_split = split[0].split(":")
                 tag = inn_split[0] + "_" + inn_split[1]
-
+                print(tag)
+                exit()
                 dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
                     continue
