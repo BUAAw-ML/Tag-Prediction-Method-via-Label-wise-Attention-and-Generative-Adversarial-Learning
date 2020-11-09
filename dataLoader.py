@@ -409,12 +409,12 @@ class TrainTestData(Dataset):
             file_as_list = contents.splitlines()
             for line in file_as_list[1:]:
                 split = line.split(" ")
-                question = ' '.join(split[1:])
+                dscp = ' '.join(split[1:])
 
                 inn_split = split[0].split(":")
                 tag = inn_split[0] + "_" + inn_split[1]
 
-                dscp_tokens = tokenizer.tokenize(question.strip())
+                dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
                     continue
 
