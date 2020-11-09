@@ -46,6 +46,7 @@ class MABert(nn.Module):
             {'params': self.class_weight, 'lr': lr},
         ]
 
+
 class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
         super(Bert_Encoder, self).__init__()

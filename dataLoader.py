@@ -525,6 +525,9 @@ def load_TrainTestData(data_path):
         file = os.path.join(data_path, 'labeled.tsv')
         dataset.train_data = dataset.load(file)
 
+        print( dataset.train_data)
+        exit()
+
         file = os.path.join(data_path, 'unlabeled.tsv')
         dataset.unlabeled_train_data = dataset.load(file)
 
