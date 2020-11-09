@@ -422,7 +422,7 @@ class TrainTestData(Dataset):
                 if tag in self.tag2id:
                     tag_id = self.tag2id[tag]
                 elif tag == 'UNK_UNK':
-                    tag_id = 100
+                    tag_id = 0
                 else:
                     tag_id = len(self.tag2id)
                     self.tag2id[tag] = tag_id
