@@ -40,9 +40,9 @@ parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
 parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
-parser.add_argument('--data_type', default='allData', type=str,
+parser.add_argument('--data_type', default='TrainTestData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
+parser.add_argument('--data_path', default='../datasets/ProgrammerWeb', type=str,
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
                     help='utilize_unlabeled_data')
@@ -82,15 +82,15 @@ def multiLabel_text_classify():
 
     # define optimizer
     optimizer = {}
-    # optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.0001}], lr=0.001,
-    #                                          momentum=args.momentum, weight_decay=args.weight_decay)
-    # optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
-    #                                     {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1,
-    #                                    momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.0001}], lr=0.001,
+                                             momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
+                                        {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1,
+                                       momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
-    optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
-                                        {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1)
+    # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
+    # optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
+    #                                     {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1)
 
     state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
              'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
