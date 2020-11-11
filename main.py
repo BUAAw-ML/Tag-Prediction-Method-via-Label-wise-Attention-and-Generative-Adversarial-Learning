@@ -40,9 +40,7 @@ parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
 parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
-parser.add_argument('--model_type', default='MLPBert', type=str,
-                    help='The type of model to train')
-parser.add_argument('--data_type', default='TrainTestData', type=str,
+parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/ProgrammerWeb', type=str,
                     help='path of data')
