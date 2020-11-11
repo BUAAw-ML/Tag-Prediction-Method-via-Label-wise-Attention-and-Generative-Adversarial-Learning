@@ -44,7 +44,7 @@ parser.add_argument('--data_type', default='TrainTestData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/ProgrammerWeb', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
 #/programweb-data.csv
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
@@ -82,7 +82,7 @@ def multiLabel_text_classify():
 
     # define optimizer
     optimizer = {}
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.0001}], lr=0.001,
+    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.001}], lr=0.001,
                                              momentum=args.momentum, weight_decay=args.weight_decay)
     optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
                                         {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1,
