@@ -524,8 +524,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
 
             if semi_supervised == False:
-                print("hhh")
-                exit()
                 log_probs = F.log_softmax(logits, dim=-1)
                 per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
                 D_L_Supervised = torch.mean(per_example_loss)
