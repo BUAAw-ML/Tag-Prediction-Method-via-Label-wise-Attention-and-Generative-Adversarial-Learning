@@ -44,7 +44,7 @@ parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/ProgrammerWeb', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
 #/programweb-data.csv
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
