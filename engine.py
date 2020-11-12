@@ -460,7 +460,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             D_L_Supervised = torch.mean(per_example_loss)
-            d_loss = D_L_Supervised #+ D_L_unsupervised1U + D_L_unsupervised2U
+            d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
         else:
             d_loss = D_L_unsupervised1U + D_L_unsupervised2U
 
