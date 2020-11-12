@@ -554,7 +554,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
             # optimizer['Generator'].step()
             # #
-            # self.state['loss'] = [d_loss, d_loss]  # +#g_loss#
+            self.state['loss'] = [d_loss, d_loss]  # +#g_loss#
 
         else:
             # compute output
