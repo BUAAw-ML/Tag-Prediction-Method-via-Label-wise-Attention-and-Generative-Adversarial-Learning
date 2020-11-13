@@ -117,8 +117,6 @@ class allData(Dataset):
 
         return data, tag2id, id2tag, document
 
-
-
     @classmethod
     def load_programWeb(cls, f):
         data = []
@@ -149,7 +147,7 @@ class allData(Dataset):
         ignored_tags = set()
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service','Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if tag_occurance[tag] > 100:
+            if tag_occurance[tag] > 200:
                 ignored_tags.add(tag)
 
         print(ignored_tags)
