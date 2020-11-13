@@ -515,8 +515,8 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
             x_g = model['Generator'](z)
-            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g.detach())
-            # DU_fake_prob2 = DU_fake_prob.detach()
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
+            DU_fake_prob2 = DU_fake_prob.detach()
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
             D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
 
@@ -524,9 +524,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
                 log_probs = F.log_softmax(logits, dim=-1)
                 per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
                 D_L_Supervised = torch.mean(per_example_loss)
-                d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
+                d_loss = D_L_Supervised + D_L_unsupervised1U #+ D_L_unsupervised2U
             else:
-                d_loss = D_L_unsupervised1U + D_L_unsupervised2U
+                d_loss = D_L_unsupervised1U #+ D_L_unsupervised2U
 
             d_loss.backward()  #
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
