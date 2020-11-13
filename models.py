@@ -51,7 +51,6 @@ class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
         super(Bert_Encoder, self).__init__()
 
-        bert_trainable = False
         self.add_module('bert', bert)
         if not bert_trainable:
             for m in self.bert.parameters():
@@ -73,7 +72,7 @@ class Bert_Encoder(nn.Module):
 
 
 class Discriminator(nn.Module):
-    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=1, hidden_dim_discriminator=400):
+    def __init__(self, num_classes, input_dim=768, num_hidden_discriminator=2, hidden_dim_discriminator=400):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -98,7 +97,7 @@ class Discriminator(nn.Module):
         for i in range(self.num_hidden_discriminator):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
-            # x = self.dropout(x)
+            x = self.dropout(x)
 
         # x = self.Linear1(x)
         # x = self.act(x)
