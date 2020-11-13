@@ -51,6 +51,7 @@ class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
         super(Bert_Encoder, self).__init__()
 
+        bert_trainable = False
         self.add_module('bert', bert)
         if not bert_trainable:
             for m in self.bert.parameters():
