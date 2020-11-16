@@ -23,7 +23,7 @@ class MABert(nn.Module):
 
         self.output = nn.Softmax(dim=-1)
 
-    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat=None, f=False):
+    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat, f=False):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0]
