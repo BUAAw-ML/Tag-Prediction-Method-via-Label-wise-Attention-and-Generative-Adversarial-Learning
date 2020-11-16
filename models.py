@@ -10,7 +10,7 @@ import torch.nn.functional as F
 class MABert(nn.Module):
     def __init__(self, bert, num_classes, bert_trainable=True):
         super(MABert, self).__init__()
-        bert_trainable = False
+
         self.add_module('bert', bert)
         if not bert_trainable:
             for m in self.bert.parameters():
@@ -23,11 +23,14 @@ class MABert(nn.Module):
 
         self.output = nn.Softmax(dim=-1)
 
-    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask):
+    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat = None):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0]
         sentence_feat = torch.sum(token_feat, dim=1, keepdim=True)#N, hidden_size
+
+        if not feat:
+            feat = sentence_feat
 
         embed = self.bert.get_input_embeddings()
         tag_embedding = embed(encoded_tag)
@@ -38,11 +41,11 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(1 - masks.byte(), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        attention_out = torch.cat((attention_out, sentence_feat), 1) * self.class_weight
+        attention_out = torch.cat((feat, attention_out), 1) * self.class_weight
 
         pred = torch.sum(attention_out, -1)
 
-        flatten = sentence_feat
+        flatten = feat
         logit = pred
         prob = self.output(logit)
         return flatten, logit, prob
@@ -70,7 +73,7 @@ class Bert_Encoder(nn.Module):
         sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(attention_mask, dim=1, keepdim=True)
 
-        return sentence_feat
+        return sentence_feat, token_feat
 
     def get_config_optim(self, lr, lrp):
         return [
