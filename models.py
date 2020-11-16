@@ -29,7 +29,7 @@ class MABert(nn.Module):
                                attention_mask=attention_mask)[0]
         sentence_feat = torch.sum(token_feat, dim=1, keepdim=True)#N, hidden_size
 
-        if f:#torch.Size([]):
+        if not f:#torch.Size([]):
             feat = sentence_feat
 
         embed = self.bert.get_input_embeddings()
