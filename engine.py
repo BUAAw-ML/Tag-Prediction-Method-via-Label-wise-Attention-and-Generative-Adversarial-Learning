@@ -505,23 +505,23 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         z = torch.rand(self.state['batch_size'], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
-        # x_g2 = x_g.detach()
+        x_g2 = x_g.detach()
 
         if training:
 
             # compute output
             output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
             D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
-            D_real_features2 = D_real_features.detach()
+            # D_real_features2 = D_real_features.detach()
 
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
 
-            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
-            DU_fake_prob2 = DU_fake_prob.detach()
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g2)
+            # DU_fake_prob2 = DU_fake_prob.detach()
 
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-            D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob2[:, 0] + 1e-8))
+            D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
 
             if semi_supervised == False:
                 log_probs = F.log_softmax(logits, dim=-1)
