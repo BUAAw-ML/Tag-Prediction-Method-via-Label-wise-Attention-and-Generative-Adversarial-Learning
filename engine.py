@@ -517,7 +517,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
 
-            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g2)
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
             # DU_fake_prob2 = DU_fake_prob.detach()
 
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
