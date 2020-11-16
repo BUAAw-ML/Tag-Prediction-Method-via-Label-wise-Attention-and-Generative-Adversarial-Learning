@@ -10,7 +10,7 @@ import torch.nn.functional as F
 class MABert(nn.Module):
     def __init__(self, bert, num_classes, bert_trainable=True):
         super(MABert, self).__init__()
-
+        bert_trainable = False
         self.add_module('bert', bert)
         if not bert_trainable:
             for m in self.bert.parameters():
