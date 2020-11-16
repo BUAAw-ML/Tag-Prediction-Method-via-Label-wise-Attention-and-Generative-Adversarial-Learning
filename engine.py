@@ -532,6 +532,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
                 d_loss = D_L_unsupervised1U + D_L_unsupervised2U
 
             d_loss.backward()  #
+
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
