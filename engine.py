@@ -634,9 +634,10 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
         else:
             # compute output
-            output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
 
-            D_real_features, D_real_logits, D_real_prob = model['Discriminator'](output_layer)
+            D_real_features, D_real_logits, D_real_prob =  model['MABert'](ids, token_type_ids, attention_mask,
+                                                                          self.state['encoded_tag'],
+                                                                          self.state['tag_mask'], x_g, True)
 
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
