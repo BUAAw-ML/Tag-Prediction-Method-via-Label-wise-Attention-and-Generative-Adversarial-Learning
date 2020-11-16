@@ -76,6 +76,7 @@ def multiLabel_text_classify():
     model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
     model['Generator'] = Generator()
     model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
+    model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True)
 
     # define loss function (criterion)
     criterion = nn.BCELoss()#nn.MultiLabelSoftMarginLoss() #weight=torch.from_numpy(np.array(tag_weight)).float().cuda(0)
@@ -88,9 +89,8 @@ def multiLabel_text_classify():
     #                                     {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
-                                        {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1,
-                                       momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer = torch.optim.SGD(model['MABert'].get_config_optim(0.1, 0.01),
+                                lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
     # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
     # optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
