@@ -47,7 +47,6 @@ class MABert(nn.Module):
         prob = self.output(logit)
         return flatten, logit, prob
 
-
     def get_config_optim(self, lr, lrp):
         return [
             {'params': self.bert.parameters(), 'lr': lr * lrp},
