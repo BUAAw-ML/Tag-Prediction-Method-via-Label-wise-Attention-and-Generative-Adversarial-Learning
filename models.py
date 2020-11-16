@@ -84,10 +84,6 @@ class Discriminator(nn.Module):
             dim = input_dim if i == 0 else hidden_dim_discriminator
             self.hidden_list_discriminator.append(nn.Linear(dim, hidden_dim_discriminator))
 
-        self.Linear1 = nn.Linear(input_dim, 2000)
-        self.Linear2 = nn.Linear(2000, 1000)
-        # self.Linear3 = nn.Linear(1000, (num_classes + 1))
-
         self.Linear = nn.Linear(hidden_dim_discriminator, (num_classes + 1))
         self.output = nn.Softmax(dim=-1)
 
@@ -98,13 +94,6 @@ class Discriminator(nn.Module):
             x = self.hidden_list_discriminator[i](x)
             x = self.act(x)
             # x = self.dropout(x)
-
-        # x = self.Linear1(x)
-        # x = self.act(x)
-        # x = self.Linear2(x)
-        # x = self.act(x)
-        # x = self.Linear3(x)
-        # x = self.act(x)
 
         flatten = x
         logit = self.Linear(x)
