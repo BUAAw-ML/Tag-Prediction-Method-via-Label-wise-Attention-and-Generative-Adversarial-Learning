@@ -23,13 +23,13 @@ class MABert(nn.Module):
 
         self.output = nn.Softmax(dim=-1)
 
-    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat = None):
+    def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat=None):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0]
         sentence_feat = torch.sum(token_feat, dim=1, keepdim=True)#N, hidden_size
 
-        if not feat:
+        if feat == torch.Size([]):
             feat = sentence_feat
 
         embed = self.bert.get_input_embeddings()
