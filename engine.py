@@ -588,7 +588,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         if training:
             D_real_features, D_real_logits, D_real_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'])
+                                                                          self.state['tag_mask'], False)
             D_real_features2 = D_real_features.detach()
 
             logits = D_real_logits[:, 1:]
@@ -596,7 +596,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g2)
+                                                                          self.state['tag_mask'], x_g2, True)
 
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
             D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
@@ -618,7 +618,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g)
+                                                                          self.state['tag_mask'], x_g, True)
 
             g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
             feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
