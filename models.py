@@ -41,8 +41,8 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(1 - masks.byte(), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        print(feat.shape)
-        print(attention_out.shape)
+        if attention_out.shape[0] == 3:
+            feat = feat[:3,:,:]
         attention_out = torch.cat((feat, attention_out), 1) * self.class_weight
 
         pred = torch.sum(attention_out, -1)
