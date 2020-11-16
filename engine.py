@@ -508,7 +508,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         x_g2 = x_g.detach()
 
         if training:
-            optimizer['enc'].zero_grad()
 
             # compute output
             output_layer = model['Encoder'](ids, token_type_ids, attention_mask)
@@ -531,14 +530,13 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             else:
                 d_loss = D_L_unsupervised1U + D_L_unsupervised2U
 
+            optimizer['enc'].zero_grad()
             d_loss.backward()  #
 
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
             #-----------
-
-            optimizer['Generator'].zero_grad()
 
             D_fake_features, DU_fake_logits, DU_fake_prob = model['Discriminator'](x_g)
 
@@ -547,6 +545,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             G_feat_match = torch.mean(feature_error * feature_error)
             g_loss = g_loss + G_feat_match
 
+            optimizer['Generator'].zero_grad()
             g_loss.backward()
             nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
             optimizer['Generator'].step()
