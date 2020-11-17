@@ -603,7 +603,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
                 D_L_Supervised = torch.mean(per_example_loss)
                 d_loss = D_L_Supervised + D_L_unsupervised1U + D_L_unsupervised2U
             else:
-                d_loss = D_L_unsupervised1U #+ D_L_unsupervised2U
+                d_loss = D_L_unsupervised2U #+ D_L_unsupervised2U
 
             optimizer['enc'].zero_grad()
             d_loss.backward()  #
