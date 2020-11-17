@@ -39,12 +39,10 @@ class MABert(nn.Module):
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # torch.cat((, attention_out), 1)
-        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1)
+        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         attention_out = attention_out * self.class_weight
 
         pred = torch.sum(attention_out, -1)
-        print(discrimate.shape)
-        print(pred.shape)
         pred = torch.cat((discrimate, pred), -1)
 
         flatten = sentence_feat
