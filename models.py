@@ -18,7 +18,7 @@ class MABert(nn.Module):
 
         self.num_classes = num_classes
 
-        self.class_weight = Parameter(torch.Tensor(1 + num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(0) #
+        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(0) #
         self.class_weight.requires_grad = True
 
         self.output = nn.Softmax(dim=-1)
@@ -38,10 +38,12 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(1 - masks.byte(), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-
-        attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1) * self.class_weight
+        # torch.cat((, attention_out), 1)
+        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1)
+        attention_out = attention_out * self.class_weight
 
         pred = torch.sum(attention_out, -1)
+        pred = torch.cat((discrimate, pred), -1)
 
         flatten = sentence_feat
         logit = pred
