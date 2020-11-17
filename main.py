@@ -5,6 +5,10 @@ from util import *
 from dataLoader import *
 from transformers import BertModel
 
+import warnings
+
+warnings.filterwarnings('ignore')
+
 
 parser = argparse.ArgumentParser(description='Training Super-parameters')
 
