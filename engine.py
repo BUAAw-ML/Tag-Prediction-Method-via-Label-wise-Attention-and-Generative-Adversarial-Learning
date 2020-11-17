@@ -581,25 +581,21 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
-        z = torch.rand(self.state['batch_size'],1, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape(0), 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
         x_g2 = x_g.detach()
 
         if training:
             D_real_features, D_real_logits, D_real_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g2, False)
+                                                                          self.state['tag_mask'], x_g2)
             D_real_features2 = D_real_features.detach()
 
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
 
-            D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
-                                                                          self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g2, True)
-
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-            D_L_unsupervised2U = -1 * torch.mean(torch.log(DU_fake_prob[:, 0] + 1e-8))
+            D_L_unsupervised2U = -1 * torch.mean(torch.log(D_real_prob[:, 0] + 1e-8))
 
             if semi_supervised == False:
                 log_probs = F.log_softmax(logits, dim=-1)
@@ -618,7 +614,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g, True)
+                                                                          self.state['tag_mask'], x_g)
 
             g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
             feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
