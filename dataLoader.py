@@ -478,7 +478,7 @@ class TrainTestData(Dataset):
 
         lengths = np.array([len(e) for e in inputs])
         max_len = np.max(lengths)
-        inputs = [tokenizer.prepare_for_model(e, max_length=max_len+2, padding=True) for e in inputs]
+        inputs = [tokenizer.prepare_for_model(e, max_length=max_len+2, padding=max_len+2) for e in inputs]
 
         ids = torch.LongTensor([e['input_ids'] for e in inputs])
         token_type_ids = torch.LongTensor([e['token_type_ids'] for e in inputs])
