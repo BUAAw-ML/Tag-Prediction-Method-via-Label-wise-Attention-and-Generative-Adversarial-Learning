@@ -595,7 +595,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             self.state['output'] = F.softmax(logits, dim=-1)
 
             D_L_unsupervised1U = -1 * torch.mean(torch.log(1 - D_real_prob[:, 0] + 1e-8))
-            D_L_unsupervised2U = -1 * torch.mean(torch.log(D_real_prob[:, 0] + 1e-4))
+            D_L_unsupervised2U = -1 * torch.mean(torch.log(D_real_prob[:, 0]))
 
             if semi_supervised == False:
                 log_probs = F.log_softmax(logits, dim=-1)
