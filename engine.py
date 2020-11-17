@@ -633,7 +633,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             D_real_features, D_real_logits, D_real_prob =  model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g, True)
+                                                                          self.state['tag_mask'], x_g)
 
             logits = D_real_logits[:, 1:]
             self.state['output'] = F.softmax(logits, dim=-1)
