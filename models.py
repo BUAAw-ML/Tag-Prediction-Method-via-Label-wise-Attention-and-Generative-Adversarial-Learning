@@ -43,6 +43,8 @@ class MABert(nn.Module):
         attention_out = attention_out * self.class_weight
 
         pred = torch.sum(attention_out, -1)
+        print(discrimate.shape)
+        print(pred.shape)
         pred = torch.cat((discrimate, pred), -1)
 
         flatten = sentence_feat
