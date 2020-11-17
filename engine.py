@@ -601,10 +601,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
                 log_probs = F.log_softmax(logits, dim=-1)
                 per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
                 D_L_Supervised = torch.mean(per_example_loss)
-                d_loss = D_L_Supervised #+ D_L_unsupervised2U #D_L_unsupervised1U +
+                d_loss = D_L_Supervised + D_L_unsupervised2U #D_L_unsupervised1U +
             else:
                 d_loss = D_L_unsupervised2U
-                exit()
 
             optimizer['enc'].zero_grad()
             d_loss.backward()  #
@@ -613,19 +612,19 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
 
             # -----------
 
-            # D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
-            #                                                               self.state['encoded_tag'],
-            #                                                               self.state['tag_mask'], x_g)
-            #
-            # g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
-            # feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
-            # G_feat_match = torch.mean(feature_error * feature_error)
-            # g_loss = g_loss #+ G_feat_match
-            #
-            # optimizer['Generator'].zero_grad()
-            # g_loss.backward()
-            # nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            # optimizer['Generator'].step()
+            D_fake_features, DU_fake_logits, DU_fake_prob = model['MABert'](ids, token_type_ids, attention_mask,
+                                                                          self.state['encoded_tag'],
+                                                                          self.state['tag_mask'], x_g)
+
+            g_loss = -1 * torch.mean(torch.log(1 - DU_fake_prob[:, 0] + 1e-8))
+            feature_error = torch.mean(D_real_features2, dim=0) - torch.mean(D_fake_features, dim=0)
+            G_feat_match = torch.mean(feature_error * feature_error)
+            g_loss = g_loss #+ G_feat_match
+
+            optimizer['Generator'].zero_grad()
+            g_loss.backward()
+            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+            optimizer['Generator'].step()
             # #
             self.state['loss'] = [d_loss, d_loss]  # +#g_loss#
 
