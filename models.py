@@ -35,7 +35,7 @@ class MABert(nn.Module):
                         / torch.sum(tag_mask, dim=1, keepdim=True)
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L
-        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(1 - masks.byte(), torch.tensor(-np.inf))
+        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_filled((1 - masks.byte()).bool(), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # torch.cat((, attention_out), 1)
