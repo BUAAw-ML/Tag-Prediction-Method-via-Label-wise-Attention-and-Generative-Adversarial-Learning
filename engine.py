@@ -588,7 +588,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         if training:
             D_real_features, D_real_logits, D_real_prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                           self.state['encoded_tag'],
-                                                                          self.state['tag_mask'], x_g2)
+                                                                          self.state['tag_mask'], z)
             D_real_features2 = D_real_features.detach()
 
             logits = D_real_logits[:, 1:]
@@ -626,7 +626,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
             optimizer['Generator'].step()
             # #
-            self.state['loss'] = [d_loss, d_loss]  # +#g_loss#
+            self.state['loss'] = [d_loss, g_loss]  # +#g_loss#
 
         else:
             # compute output
