@@ -90,7 +90,7 @@ def multiLabel_text_classify():
     #                                     {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(0.1, 0.001),
+    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(0.1, 0.01),
                                 lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
     # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
