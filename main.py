@@ -37,7 +37,7 @@ parser.add_argument('--print-freq', '-p', default=200, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
-parser.add_argument('--evaluate', default=True, type=bool,
+parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
@@ -100,6 +100,9 @@ def multiLabel_text_classify():
              'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
              'epoch_step': args.epoch_step, 'lr': args.lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
              'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag}
+
+    if args.evaluate:
+        state['evaluate'] = True
 
     engine = GCNMultiLabelMAPEngine(state)
     engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
