@@ -52,8 +52,8 @@ class MABert(nn.Module):
 
     def get_config_optim(self, lr, lrp):
         return [
-            {'params': self.bert.parameters(), 'lr': lrp},
             {'params': self.class_weight, 'lr': lr},
+            {'params': self.bert.parameters(), 'lr': lrp},
         ]
 
 
