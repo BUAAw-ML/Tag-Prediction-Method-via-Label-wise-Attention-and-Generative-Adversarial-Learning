@@ -15,10 +15,11 @@ from word_embedding import *
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 token_table = {'ecommerce': 'electronic commerce'}
 
+
 # All data in one excel
 class allData(Dataset):
-    tag_weight = []
-    def __init__(self, train_data=None,unlabeled_train_data=None, test_data=None, co_occur_mat=None, tag2id=None, id2tag=None, tfidf_dict=None):
+    def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None, co_occur_mat=None,
+                 tag2id=None, id2tag=None, tfidf_dict=None):
         self.train_data = train_data
         self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
@@ -32,18 +33,22 @@ class allData(Dataset):
     @classmethod
     def from_dict(cls, data_dict):
         return allData(data_dict.get('train_data'),
-                                 data_dict.get('test_data'),
-                                 data_dict.get('co_occur_mat'),
-                                 data_dict.get('tag2id'),
-                                 data_dict.get('id2tag'))
+                       data_dict.get('unlabeled_train_data'),
+                       data_dict.get('test_data'),
+                       data_dict.get('co_occur_mat'),
+                       data_dict.get('tag2id'),
+                       data_dict.get('id2tag'),
+                       data_dict.get('tfidf_dict'))
 
     def to_dict(self):
         data_dict = {
             'train_data': self.train_data,
+            'unlabeled_train_data': self.unlabeled_train_data,
             'test_data': self.test_data,
             'co_occur_mat': self.co_occur_mat,
             'tag2id': self.tag2id,
-            'id2tag': self.id2tag
+            'id2tag': self.id2tag,
+            'tfidf_dict': self.tfidf_dict
         }
         return data_dict
 
@@ -63,7 +68,7 @@ class allData(Dataset):
         co_occur_mat = allData.stat_cooccurence(data, len(tag2id))
         tfidf_dict = allData.get_tfidf_dict(document)
 
-        return allData(train_data, unlabeled_train_data, test_data, co_occur_mat, tag2id, id2tag, tfidf_dict), allData.tag_weight
+        return allData(train_data, unlabeled_train_data, test_data, co_occur_mat, tag2id, id2tag, tfidf_dict)
 
     @classmethod
     def load_news_group20(cls, f):
@@ -120,7 +125,6 @@ class allData(Dataset):
     @classmethod
     def load_programWeb(cls, f):
         data = []
-        zeroshot_data = []
         tag2id = {}
         id2tag = {}
 
@@ -145,7 +149,8 @@ class allData(Dataset):
                     tag_occurance[t] += 1
 
         ignored_tags = set()
-        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service','Data-as-a-Service'])  #
+        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
+        # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
             if tag_occurance[tag] > 200:
                 ignored_tags.add(tag)
@@ -156,7 +161,7 @@ class allData(Dataset):
             reader = csv.reader(csvfile)
             next(reader)
             for row in reader:
-                zeroshot_data = False
+
                 if len(row) != 4:
                     continue
                 id, title, dscp, tag = row
@@ -200,7 +205,7 @@ class allData(Dataset):
                 })
 
         print("The number of tags for training: {}".format(len(tag2id)))
-        os.makedirs('cache', exist_ok=True)
+        # os.makedirs('cache', exist_ok=True)
 
         return data, tag2id, id2tag, document
 
@@ -232,6 +237,7 @@ class allData(Dataset):
 
         return co_occur_mat
 
+    #directly input relations between tags
     @classmethod
     def similar_net(cls, csvfile, tag2id):
 
@@ -278,6 +284,7 @@ class allData(Dataset):
             padded_tag_ids[i, :len(tag_ids[i])] = torch.tensor(tag_ids[i])
         return padded_tag_ids, mask
 
+    #directly obtain pretrained-embeddings for tags
     def obtain_tag_embedding(self, wv='glove', model_path='data'):
 
         if wv == 'glove':
@@ -302,7 +309,6 @@ class allData(Dataset):
         return save_file
 
     def collate_fn(self, batch):
-        result = {}
         # construct input
         inputs = [e['dscp_ids'] for e in batch]  #e['title_ids'] +
 
@@ -317,7 +323,6 @@ class allData(Dataset):
         tags = torch.zeros(size=(len(batch), self.get_tags_num()))
         for i in range(len(batch)):
             tags[i, batch[i]['tag_ids']] = 1.
-            # tags[i] *= torch.from_numpy(np.array(allData.tag_weight)).float()
 
         dscp = [e['dscp'] for e in batch]
 
@@ -334,11 +339,10 @@ def load_allData(data_path=None):
 
         print("load dataset from cache")
 
-        dataset = TrainTestData.from_dict(torch.load(os.path.join('cache', cache_file_head + '.dataset')))
+        dataset = allData.from_dict(torch.load(os.path.join('cache', cache_file_head + '.dataset')))
 
         encoded_tag, tag_mask = torch.load(os.path.join('cache', cache_file_head + '.encoded_tag')), \
                                 torch.load(os.path.join('cache', cache_file_head + '.tag_mask'))
-        tag_weight = 0
 
     else:
 
@@ -346,11 +350,8 @@ def load_allData(data_path=None):
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset, tag_weight = allData.from_csv(data_path)
+        dataset = allData.from_csv(data_path)
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
-
-        # dataset.stat_cooccurence()
-
         encoded_tag, tag_mask = dataset.encode_tag()
         torch.save(encoded_tag, os.path.join('cache', cache_file_head + '.encoded_tag'))
         torch.save(tag_mask, os.path.join('cache', cache_file_head + '.tag_mask'))
@@ -359,9 +360,7 @@ def load_allData(data_path=None):
     print("unlabeled_train_data: {}".format(len(dataset.unlabeled_train_data)))
     print("val_data_size: {}".format(len(dataset.test_data)))
 
-    # tag_embedding_file = dataset.obtain_tag_embedding()
-
-    return dataset, encoded_tag, tag_mask, tag_weight
+    return dataset, encoded_tag, tag_mask
 
 
 #Training and test data are in different files
@@ -369,7 +368,6 @@ class TrainTestData(Dataset):
     def __init__(self, train_data=None, test_data=None, co_occur_mat=None, tag2id={}, id2tag={}):
         self.train_data = train_data
         self.test_data = test_data
-        self.co_occur_mat = co_occur_mat
         self.tag2id = tag2id
         # if id2tag is None:
         #     id2tag = {v: k for k, v in tag2id.items()}
@@ -379,7 +377,6 @@ class TrainTestData(Dataset):
     def from_dict(cls, data_dict):
         return TrainTestData(data_dict.get('train_data'),
                                  data_dict.get('test_data'),
-                                 data_dict.get('co_occur_mat'),
                                  data_dict.get('tag2id'),
                                  data_dict.get('id2tag'))
 
@@ -387,7 +384,6 @@ class TrainTestData(Dataset):
         data_dict = {
             'train_data': self.train_data,
             'test_data': self.test_data,
-            'co_occur_mat': self.co_occur_mat,
             'tag2id': self.tag2id,
             'id2tag': self.id2tag
         }
@@ -440,16 +436,6 @@ class TrainTestData(Dataset):
 
         return data
 
-
-    def stat_cooccurence(self):
-
-        self.co_occur_mat = torch.zeros(size=(len(self.tag2id), len(self.tag2id)))
-        for i in range(len(self.train_data)):
-            tag_ids = self.train_data[i]['tag_ids']
-            for t1 in range(len(tag_ids)):
-                for t2 in range(len(tag_ids)):
-                    self.co_occur_mat[tag_ids[t1], tag_ids[t2]] += 1
-
     def get_tags_num(self):
         return len(self.tag2id)
 
@@ -471,7 +457,6 @@ class TrainTestData(Dataset):
         return padded_tag_ids, mask
 
     def collate_fn(self, batch):
-        result = {}
         # construct input
 
         inputs = [e['dscp_ids'] for e in batch]  #e['title_ids'] +

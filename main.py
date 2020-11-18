@@ -6,7 +6,6 @@ from dataLoader import *
 from transformers import BertModel
 
 import warnings
-
 warnings.filterwarnings('ignore')
 
 
@@ -38,7 +37,7 @@ parser.add_argument('--print-freq', '-p', default=200, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
-parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
+parser.add_argument('--evaluate', default=True, type=bool,
                     help='evaluate model on validation set')
 parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
@@ -50,15 +49,12 @@ parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
-#/programweb-data.csv
+
 #../datasets/ProgrammerWeb/programweb-data.csv
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
 #../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv
 #../../datasets/multiLabel_text_classification/EUR-Lex
-#reuters
-#Yahoo! Answers Topic
-#DBPedia
-#
+
 
 def multiLabel_text_classify():
 
@@ -67,10 +63,10 @@ def multiLabel_text_classify():
 
     use_gpu = torch.cuda.is_available()
 
-    # print("The type of model to train: {} \nData path: {}".format(args.model_type, args.data_path))
+    print("device_ids: {} \nbatch-size: {}".format(args.device_ids, args.batch-size))
 
     if args.data_type == 'allData':
-        dataset, encoded_tag, tag_mask, tag_weight = load_allData(args.data_path)
+        dataset, encoded_tag, tag_mask = load_allData(args.data_path)
 
     elif args.data_type == 'TrainTestData':
         dataset, encoded_tag, tag_mask = load_TrainTestData(args.data_path)
@@ -81,10 +77,10 @@ def multiLabel_text_classify():
     model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
     model['Generator'] = Generator()
     model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
-    model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True)
+    model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True, device=args.device_ids[0])
 
     # define loss function (criterion)
-    criterion = nn.BCELoss()#nn.MultiLabelSoftMarginLoss() #weight=torch.from_numpy(np.array(tag_weight)).float().cuda(0)
+    criterion = nn.BCELoss()
 
     # define optimizer
     optimizer = {}
@@ -94,21 +90,16 @@ def multiLabel_text_classify():
     #                                     {'params': model['Encoder'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(0.1, 0.01),
+    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(lr=0.1, lrp=0.01),
                                 lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
     # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
-    # optimizer['enc'] = torch.optim.Adam([{'params': model['Discriminator'].parameters(), 'lr': 0.1},
-    #                                     {'params': model['Encoder'].parameters(), 'lr': 0.1}], lr=0.1)
 
-    state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate, 'resume': args.resume,
-             'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
+    state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
+             'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
              'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
              'epoch_step': args.epoch_step, 'lr': args.lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
              'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag}
-
-    if args.evaluate:
-        state['evaluate'] = True
 
     engine = GCNMultiLabelMAPEngine(state)
     engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)

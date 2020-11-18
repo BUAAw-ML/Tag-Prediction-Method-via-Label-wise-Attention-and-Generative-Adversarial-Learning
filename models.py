@@ -8,7 +8,7 @@ import torch.nn.functional as F
 
 
 class MABert(nn.Module):
-    def __init__(self, bert, num_classes, bert_trainable=True):
+    def __init__(self, bert, num_classes, bert_trainable=True, device=0):
         super(MABert, self).__init__()
 
         self.add_module('bert', bert)
@@ -18,7 +18,7 @@ class MABert(nn.Module):
 
         self.num_classes = num_classes
 
-        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(0) #
+        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
         self.output = nn.Softmax(dim=-1)
@@ -26,8 +26,8 @@ class MABert(nn.Module):
     def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
-                               attention_mask=attention_mask)[0]
-        sentence_feat = torch.sum(token_feat, dim=1, keepdim=True)#N, hidden_size
+                               attention_mask=attention_mask)[0] #N, L, hidden_size
+        sentence_feat = torch.sum(token_feat, dim=1)#N, hidden_size
 
         embed = self.bert.get_input_embeddings()
         tag_embedding = embed(encoded_tag)
@@ -38,7 +38,7 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        # torch.cat((, attention_out), 1)
+
         discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         attention_out = attention_out * self.class_weight
 
@@ -52,7 +52,7 @@ class MABert(nn.Module):
 
     def get_config_optim(self, lr, lrp):
         return [
-            {'params': self.bert.parameters(), 'lr': lr * lrp},
+            {'params': self.bert.parameters(), 'lr': lrp},
             {'params': self.class_weight, 'lr': lr},
         ]
 
@@ -75,7 +75,7 @@ class Bert_Encoder(nn.Module):
 
         return sentence_feat, token_feat
 
-    def get_config_optim(self, lr, lrp):
+    def get_config_optim(self, lrp):
         return [
             {'params': self.bert.parameters(), 'lr': lrp},
         ]
@@ -86,7 +86,7 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.LeakyReLU(0.2)#nn.ReLU()#n
+        self.act = nn.LeakyReLU(0.2)#nn.ReLU()
 
         self.num_hidden_discriminator = num_hidden_discriminator
         self.hidden_list_discriminator = nn.ModuleList()
@@ -110,7 +110,7 @@ class Discriminator(nn.Module):
         prob = self.output(logit)
         return flatten, logit, prob
 
-    def get_config_optim(self, lr, lrp):
+    def get_config_optim(self, lr):
         return [
             {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
             {'params': self.Linear.parameters(), 'lr': lr},
@@ -144,7 +144,7 @@ class Generator(nn.Module):
         y = self.output(x)
         return y
 
-    def get_config_optim(self, lr, lrp):
+    def get_config_optim(self, lr):
         return [
             {'params': self.hidden_list_generator.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
