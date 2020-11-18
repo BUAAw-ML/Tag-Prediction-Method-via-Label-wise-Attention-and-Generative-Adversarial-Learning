@@ -465,8 +465,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             d_loss = D_L_unsupervised
 
         if training:
-            print("---")
-            exit()
             optimizer['enc'].zero_grad()
             d_loss.backward()
             nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
