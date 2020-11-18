@@ -47,7 +47,7 @@ parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
                     help='utilize_unlabeled_data')
 
 #../datasets/ProgrammerWeb/programweb-data.csv
@@ -84,7 +84,7 @@ def multiLabel_text_classify():
 
     # define optimizer
     optimizer = {}
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.1}], lr=0.001,
+    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.001}], lr=0.001,
                                              momentum=args.momentum, weight_decay=args.weight_decay)
     # optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
