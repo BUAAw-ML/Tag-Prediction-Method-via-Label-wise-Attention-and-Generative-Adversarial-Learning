@@ -59,10 +59,10 @@ class allData(Dataset):
 
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
-        split = int(len(data) * 0.7)
+        split = int(len(data) * 0.05)
         split2 = int(len(data) * 0.7)
         train_data = data[ind[:split]].tolist()
-        unlabeled_train_data = []#data[ind[split:split2]].tolist()
+        unlabeled_train_data = data[ind[split:split2]].tolist()
         test_data = data[ind[split2:]].tolist()
 
         co_occur_mat = allData.stat_cooccurence(data, len(tag2id))
@@ -484,7 +484,7 @@ def load_TrainTestData(data_path):
 
     if os.path.isfile(os.path.join('cache', cache_file_head + '.dataset')) \
             and os.path.isfile(os.path.join('cache', cache_file_head + '.encoded_tag')) \
-            and os.path.isfile(os.path.join('cache', cache_file_head + '.tag_mask')) and False:
+            and os.path.isfile(os.path.join('cache', cache_file_head + '.tag_mask')):
 
         print("load dataset from cache")
 
