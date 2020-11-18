@@ -450,7 +450,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         #-----------train enc-----------
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())
+                                                                      self.state['tag_mask'], z)#x_g.detach()
         logits = logits[:, 1:]
         self.state['output'] = F.softmax(logits, dim=-1)
 
@@ -460,7 +460,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             D_L_Supervised = torch.mean(per_example_loss)
-            d_loss = D_L_Supervised #+ D_L_unsupervised
+            d_loss = D_L_Supervised + D_L_unsupervised
         else:
             d_loss = D_L_unsupervised
 
