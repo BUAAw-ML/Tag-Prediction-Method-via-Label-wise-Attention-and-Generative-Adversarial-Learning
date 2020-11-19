@@ -57,6 +57,38 @@ class MABert(nn.Module):
         ]
 
 
+class Generator(nn.Module):
+    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=3, hidden_dim_generator=2000):
+        super(Generator, self).__init__()
+
+        self.dropout = nn.Dropout(p=0.5)
+        self.act = nn.LeakyReLU(0.2) #nn.Sigmoid()#
+
+        self.num_hidden_generator = num_hidden_generator
+        self.hidden_list_generator = nn.ModuleList()
+        for i in range(num_hidden_generator):
+            dim = input_dim if i == 0 else hidden_dim_generator
+            self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
+        self.output = nn.Linear(hidden_dim_generator, hidden_dim)
+
+        self.m1 = nn.BatchNorm1d(2000)
+
+    def forward(self, feat):
+        x = feat
+        for i in range(self.num_hidden_generator):
+            x = self.hidden_list_generator[i](x)
+            # x = self.m1(x)
+            x = self.act(x)
+            # x = self.dropout(x)
+        y = self.output(x)
+        return y
+
+    def get_config_optim(self, lr):
+        return [
+            {'params': self.hidden_list_generator.parameters(), 'lr': lr},
+            {'params': self.output.parameters(), 'lr': lr},
+        ]
+
 class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
         super(Bert_Encoder, self).__init__()
@@ -114,38 +146,5 @@ class Discriminator(nn.Module):
         return [
             {'params': self.hidden_list_discriminator.parameters(), 'lr': lr},
             {'params': self.Linear.parameters(), 'lr': lr},
-            {'params': self.output.parameters(), 'lr': lr},
-        ]
-
-
-class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=1, hidden_dim_generator=2000):
-        super(Generator, self).__init__()
-
-        self.dropout = nn.Dropout(p=0.5)
-        self.act = nn.LeakyReLU(0.2) #nn.Sigmoid()#
-
-        self.num_hidden_generator = num_hidden_generator
-        self.hidden_list_generator = nn.ModuleList()
-        for i in range(num_hidden_generator):
-            dim = input_dim if i == 0 else hidden_dim_generator
-            self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
-        self.output = nn.Linear(hidden_dim_generator, hidden_dim)
-
-        self.m1 = nn.BatchNorm1d(2000)
-
-    def forward(self, feat):
-        x = feat
-        for i in range(self.num_hidden_generator):
-            x = self.hidden_list_generator[i](x)
-            # x = self.m1(x)
-            x = self.act(x)
-            # x = self.dropout(x)
-        y = self.output(x)
-        return y
-
-    def get_config_optim(self, lr):
-        return [
-            {'params': self.hidden_list_generator.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
         ]
