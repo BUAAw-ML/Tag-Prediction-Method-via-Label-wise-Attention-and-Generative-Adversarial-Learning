@@ -66,7 +66,7 @@ def multiLabel_text_classify():
     use_gpu = torch.cuda.is_available()
 
     print("device_ids: {} \t batch-size: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
-        args.device_ids, args.batch_size, args.G-lr, args.D-lr, args.B-lr))
+        args.device_ids, args.batch_size, args.G_lr, args.D_lr, args.B_lr))
 
     if args.data_type == 'allData':
         dataset, encoded_tag, tag_mask = load_allData(args.data_path)
@@ -87,12 +87,12 @@ def multiLabel_text_classify():
 
     # define optimizer
     optimizer = {}
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G-lr}],
+    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
                                              momentum=args.momentum, weight_decay=args.weight_decay)
     # optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D-lr, args.B-lr),
+    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, args.B_lr),
                                 momentum=args.momentum, weight_decay=args.weight_decay)
 
     # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
