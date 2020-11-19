@@ -35,7 +35,7 @@ class MABert(nn.Module):
                         / torch.sum(tag_mask, dim=1, keepdim=True)
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
-        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()).bool(), torch.tensor(-np.inf))
+        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
 
@@ -58,7 +58,7 @@ class MABert(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=2, hidden_dim_generator=1000):
+    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=2, hidden_dim_generator=2000):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -79,7 +79,7 @@ class Generator(nn.Module):
             x = self.hidden_list_generator[i](x)
             # x = self.m1(x)
             x = self.act(x)
-            # x = self.dropout(x)
+            x = self.dropout(x)
         y = self.output(x)
         return y
 

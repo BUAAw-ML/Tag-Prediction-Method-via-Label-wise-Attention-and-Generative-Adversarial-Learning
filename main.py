@@ -19,7 +19,7 @@ parser.add_argument('--epochs', default=50, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--epoch_step', default=[20], type=int, nargs='+',
                     help='number of epochs to change learning rate')
-parser.add_argument('--device_ids', default=[1], type=int, nargs='+',
+parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
@@ -47,7 +47,7 @@ parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
 parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv', type=str,
+parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
