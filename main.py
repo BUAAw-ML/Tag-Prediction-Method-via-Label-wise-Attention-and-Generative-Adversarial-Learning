@@ -27,7 +27,7 @@ parser.add_argument('-b', '--batch-size', default=4, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
-parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.1, type=float,
+parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.01, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')

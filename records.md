@@ -21,3 +21,4 @@
 另外，进行了其它试验，包括：
 - 模型在Gnerator学习率为0.0001，0.01下效果不好;
 - Gnerator用了G_feat_match效果不好；
+- Gnerator设置3层不好，使用dropout不好；
