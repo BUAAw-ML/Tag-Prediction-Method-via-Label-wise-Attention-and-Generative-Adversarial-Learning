@@ -71,7 +71,7 @@ class Generator(nn.Module):
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
-        self.m1 = nn.BatchNorm1d(2000)
+        self.m1 = nn.BatchNorm1d(1,2000)
 
     def forward(self, feat):
         x = feat
