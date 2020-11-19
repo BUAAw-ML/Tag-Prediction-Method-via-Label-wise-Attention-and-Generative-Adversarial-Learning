@@ -25,9 +25,11 @@ parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
 parser.add_argument('-b', '--batch-size', default=4, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
-parser.add_argument('--lr', '--learning-rate', default=0.001, type=float,
+parser.add_argument('--G-lr', '--learning-rate', default=0.0001, type=float,
                     metavar='LR', help='initial learning rate')
-parser.add_argument('--lrp', '--learning-rate-pretrained', default=0.01, type=float,
+parser.add_argument('--D-lr', '--learning-rate-pretrained', default=0.1, type=float,
+                    metavar='LR', help='learning rate for pre-trained layers')
+parser.add_argument('--B-lr', '--learning-rate-pretrained', default=0.001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
@@ -63,7 +65,8 @@ def multiLabel_text_classify():
 
     use_gpu = torch.cuda.is_available()
 
-    print("device_ids: {} \nbatch-size: {}".format(args.device_ids, args.batch_size))
+    print("device_ids: {} \t batch-size: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
+        args.device_ids, args.batch_size, args.G-lr, args.D-lr, args.B-lr))
 
     if args.data_type == 'allData':
         dataset, encoded_tag, tag_mask = load_allData(args.data_path)
@@ -84,13 +87,13 @@ def multiLabel_text_classify():
 
     # define optimizer
     optimizer = {}
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': 0.001}], lr=0.001,
+    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G-lr}],
                                              momentum=args.momentum, weight_decay=args.weight_decay)
     # optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
     #                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(0.1, 0.001),
-                                lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D-lr, args.B-lr),
+                                momentum=args.momentum, weight_decay=args.weight_decay)
 
     # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
 
