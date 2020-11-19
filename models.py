@@ -77,9 +77,9 @@ class Generator(nn.Module):
         x = feat
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
-            # x = self.m1(x)
+            x = self.m1(x)
             x = self.act(x)
-            x = self.dropout(x)
+            # x = self.dropout(x)
         y = self.output(x)
         return y
 
@@ -88,6 +88,7 @@ class Generator(nn.Module):
             {'params': self.hidden_list_generator.parameters(), 'lr': lr},
             {'params': self.output.parameters(), 'lr': lr},
         ]
+
 
 class Bert_Encoder(nn.Module):
     def __init__(self, bert, bert_trainable=True):
