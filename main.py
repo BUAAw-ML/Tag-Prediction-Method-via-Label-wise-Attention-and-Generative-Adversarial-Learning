@@ -27,7 +27,7 @@ parser.add_argument('-b', '--batch-size', default=4, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
-parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.001, type=float,
+parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.1, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
@@ -47,9 +47,9 @@ parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
 parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
+parser.add_argument('--data_path', default='../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
                     help='utilize_unlabeled_data')
 
 #../datasets/ProgrammerWeb/programweb-data.csv
