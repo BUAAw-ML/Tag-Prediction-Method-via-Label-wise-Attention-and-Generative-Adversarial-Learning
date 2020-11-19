@@ -479,7 +479,7 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         g_loss = -1 * torch.mean(torch.log(1 - prob[:, 0] + 1e-8))
         feature_error = torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0)
         G_feat_match = torch.mean(feature_error * feature_error)
-        g_loss = g_loss + G_feat_match
+        g_loss = g_loss + 0.5 * G_feat_match
 
         if training:
             optimizer['Generator'].zero_grad()
