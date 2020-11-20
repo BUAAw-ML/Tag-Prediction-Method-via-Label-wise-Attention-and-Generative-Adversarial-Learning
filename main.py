@@ -77,8 +77,8 @@ def multiLabel_text_classify():
     bert = BertModel.from_pretrained('bert-base-uncased')
 
     model = {}
-    # model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
-    # model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
+    model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
+    model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
     model['Generator'] = Generator()
     model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True, device=args.device_ids[0])
 

@@ -168,6 +168,7 @@ class Engine(object):
             model['Discriminator'] = model['Discriminator'].cuda(self.state['device_ids'][0])
             model['Generator'] = model['Generator'].cuda(self.state['device_ids'][0])
             model['Encoder'] = model['Encoder'].cuda(self.state['device_ids'][0])
+            model['MABert'] = model['MABert'].cuda(self.state['device_ids'][0])
 
 
             # model = torch.nn.DataParallel(model, device_ids=self.state['device_ids'])
@@ -213,6 +214,7 @@ class Engine(object):
         model['Discriminator'].train()
         model['Generator'].train()
         model['Encoder'].train()
+        model['MABert'].train()
 
         self.on_start_epoch(True, model, criterion, data_loader, optimizer)
 
@@ -252,6 +254,7 @@ class Engine(object):
         model['Discriminator'].eval()
         model['Generator'].eval()
         model['Encoder'].eval()
+        model['MABert'].eval()
 
         self.on_start_epoch(False, model, criterion, data_loader)
 
