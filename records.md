@@ -2,7 +2,7 @@
 
 实验结果
 
-tag频率<200的数据集
+###tag频率<200的数据集
 
 |实验环境|数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|---|
@@ -28,7 +28,7 @@ tag频率<200的数据集
 - Gnerator用了G_feat_match效果不好；
 - Gnerator设置3层不好，使用dropout不好；
 
-全部数据集：
+###全部数据集
 
 |实验环境|数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|---|
@@ -36,12 +36,13 @@ tag频率<200的数据集
 |苏州服务器|label,unlabel,test:8579,0,1226(split:0.7,0.9,未加title_ids)|Bert微调+多注意力|epoch:50;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|59.774|
 |苏州服务器|label,unlabel,test:11030,0,1226(split:0.7,0.9,未加title_ids)|Bert微调+多注意力|epoch:50;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|62|
 |苏州服务器|label,unlabel,test:612,,1226(split:0.05,0.9,未加title_ids)|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45；batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|44|
+|苏州服务器|label,unlabel,test:2448,,1226(split:0.05,0.9,未加title_ids)|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45；batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|51.098|
 
-小节：
+小结：
 - 采用全部数据集（115个标签）时，提出的方法的效果只好大概百分之四，不是很明显；
 
-tag频率<100的数据集
+###tag频率<100的数据集
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|label,unlabel,test:72,0,146(split:0.05,0.9,未加title_ids)|Bert微调+多注意力|epoch:20;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|40.378|
+|label,unlabel,test:72,0,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力|epoch:20;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|46.170  45.024  |
