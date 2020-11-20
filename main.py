@@ -17,7 +17,7 @@ parser.add_argument('-j', '--workers', default=10, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--epochs', default=50, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('--epoch_step', default=[45], type=int, nargs='+',
+parser.add_argument('--epoch_step', default=[13], type=int, nargs='+',
                     help='number of epochs to change learning rate')
 parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
@@ -49,7 +49,7 @@ parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
                     help='utilize_unlabeled_data')
 
 #../datasets/ProgrammerWeb/programweb-data.csv
