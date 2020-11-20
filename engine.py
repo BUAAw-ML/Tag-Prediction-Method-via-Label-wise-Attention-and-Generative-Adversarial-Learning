@@ -185,8 +185,8 @@ class Engine(object):
 
         for epoch in range(self.state['start_epoch'], self.state['max_epochs']):
             self.state['epoch'] = epoch
-            # lr = self.adjust_learning_rate(optimizer)
-            # print('lr:', lr)
+            lr = self.adjust_learning_rate(optimizer)
+            print('lr:', lr)
 
             if utilize_unlabeled_data:
                 # train for one epoch
