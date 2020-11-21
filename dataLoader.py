@@ -98,7 +98,7 @@ class allData(Dataset):
                 tag = tag.strip()
                 tag = [t for t in tag if t != '']
 
-                if len(tag) < 100:
+                if len(tag) < 0:
                     continue
 
                 for t in tag:
@@ -152,7 +152,7 @@ class allData(Dataset):
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if tag_occurance[tag] > 100:
+            if tag_occurance[tag] > 200:
                 ignored_tags.add(tag)
 
         print(ignored_tags)
