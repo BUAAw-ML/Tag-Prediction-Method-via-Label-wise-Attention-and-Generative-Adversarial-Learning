@@ -518,7 +518,7 @@ def load_TrainTestData(data_path):
         torch.save(tag_mask, os.path.join('cache', cache_file_head + '.tag_mask'))
 
     print("train_data_size: {}".format(len(dataset.train_data)))
-    print("unlabeled_train_data_size: {}".format(len(dataset.unlabeled_train_data)))
+    #print("unlabeled_train_data_size: {}".format(len(dataset.unlabeled_train_data)))
     print("val_data_size: {}".format(len(dataset.test_data)))
 
     return dataset, encoded_tag, tag_mask
