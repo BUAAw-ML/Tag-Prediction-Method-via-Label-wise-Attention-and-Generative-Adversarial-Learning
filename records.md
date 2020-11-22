@@ -1,6 +1,8 @@
-# Experimental progress and records
 
-实验结果
+
+#实验结果 Experimental progress and records
+
+##programmerWeb数据集
 
 ###tag频率<200的数据集
 
@@ -47,3 +49,18 @@
 |---|---|---|---|
 |label,unlabel,test:72,0,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力|epoch:20;epoch_step:13;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|46.170  45.024  48.917  46.872  43.485  47.755|
 |label,unlabel,test:72,949,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|54.745  54.383  55.709  52.864|
+
+##gan-bert数据集
+
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|label,unlabel,test:109,0,500|Bert微调+多注意力|epoch:20;epoch_step:13;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|20  22  23|
+|label,unlabel,test:109,5343,500|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|28|
+
+
+##AAPD数据集
+
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|label,unlabel,test:2742,,16452|Bert微调+多注意力|epoch:15;epoch_step:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|44|
+|label,unlabel,test:2742,35646,164520|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|28|
