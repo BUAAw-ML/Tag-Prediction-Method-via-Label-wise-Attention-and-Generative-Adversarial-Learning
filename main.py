@@ -45,14 +45,19 @@ parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
 parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
-parser.add_argument('--data_type', default='TrainTestData', type=str,
+parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../datasets/ProgrammerWeb', type=str,
+parser.add_argument('--data_path', default='../datasets/AAPD/AAPD2.csv', type=str,
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
 
+#苏州服务器上数据：
 #../datasets/ProgrammerWeb/programweb-data.csv
+#../datasets/AAPD/AAPD2.csv
+#../datasets/gan_bert
+
+#614服务器上数据：
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
 #../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv
 #../../datasets/multiLabel_text_classification/EUR-Lex
