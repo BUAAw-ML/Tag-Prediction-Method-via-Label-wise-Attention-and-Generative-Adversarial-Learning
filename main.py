@@ -23,7 +23,7 @@ parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('-b', '--batch-size', default=4, type=int,
+parser.add_argument('-b', '--batch-size', default=10, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
@@ -49,7 +49,7 @@ parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
                     help='path of data')
-parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=False, type=bool,
                     help='utilize_unlabeled_data')
 
 #苏州服务器上数据：

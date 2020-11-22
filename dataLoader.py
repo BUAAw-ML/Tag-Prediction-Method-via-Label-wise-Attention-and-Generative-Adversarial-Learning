@@ -54,8 +54,7 @@ class allData(Dataset):
 
     @classmethod
     def from_csv(cls, data_path):
-        data, tag2id, id2tag, document = allData.load_programWeb(data_path)
-        # data, tag2id, id2tag, document = allData.load_news_group20(data_path)
+        data, tag2id, id2tag, document = allData.load_data(data_path)
 
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
@@ -71,66 +70,14 @@ class allData(Dataset):
         return allData(train_data, unlabeled_train_data, test_data, co_occur_mat, tag2id, id2tag, tfidf_dict)
 
     @classmethod
-    def load_news_group20(cls, f):
-        data = []
-        tag2id = {}
-        id2tag = {}
-
-        document = []
-
-        #csv.field_size_limit(500 * 1024 * 1024)
-        csv.field_size_limit(sys.maxsize)
-        with open(f, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)
-            for row in reader:
-                if len(row) != 4:
-                    continue
-                id, index, tag, dscp = row
-
-                dscp_tokens = tokenizer.tokenize(dscp.strip())
-                if len(dscp_tokens) > 510:
-                    continue
-
-                document.append(" ".join(dscp_tokens))
-                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-
-                tag = tag.strip()
-                tag = [t for t in tag if t != '']
-
-                if len(tag) < 0:
-                    continue
-
-                for t in tag:
-                    if t not in tag2id:
-                        tag_id = len(tag2id)
-                        tag2id[t] = tag_id
-                        id2tag[tag_id] = t
-
-                tag_ids = [tag2id[t] for t in tag]
-
-                data.append({
-                    'id': int(id),
-                    'dscp_ids': dscp_ids,
-                    'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
-                    'dscp': dscp
-                })
-
-        print("The number of tags for training: {}".format(len(tag2id)))
-        os.makedirs('cache', exist_ok=True)
-
-        return data, tag2id, id2tag, document
-
-    @classmethod
-    def load_programWeb(cls, f):
+    def load_data(cls, f):
         data = []
         tag2id = {}
         id2tag = {}
 
         document = []
         tag_occurance = {}
-
+        # csv.field_size_limit(sys.maxsize)
         with open(f, newline='') as csvfile:
             reader = csv.reader(csvfile)
             next(reader)
@@ -155,7 +102,7 @@ class allData(Dataset):
             if tag_occurance[tag] == 0:
                 ignored_tags.add(tag)
 
-        print(ignored_tags)
+        print(tag_occurance)
 
         with open(f, newline='') as csvfile:
             reader = csv.reader(csvfile)
@@ -335,7 +282,7 @@ def load_allData(data_path=None):
 
     if os.path.isfile(os.path.join('cache', cache_file_head + '.dataset')) \
             and os.path.isfile(os.path.join('cache', cache_file_head + '.encoded_tag')) \
-            and os.path.isfile(os.path.join('cache', cache_file_head + '.tag_mask')) and False:
+            and os.path.isfile(os.path.join('cache', cache_file_head + '.tag_mask')):
 
         print("load dataset from cache")
 
