@@ -29,7 +29,7 @@ parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=f
                     metavar='LR', help='initial learning rate')
 parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.1, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
-parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.01, type=float,
+parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.0001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
