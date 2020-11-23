@@ -68,8 +68,8 @@
 |label,unlabel,test:2742,,16452|Bert微调+多注意力|epoch:15;epoch_step:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|44|
 |label,unlabel,test:2742,35646,164520|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
-|label,unlabel,test:,,16452|Bert微调+多注意力|epoch:15;epoch_step:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|44|
-|label,unlabel,test:,,164520|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:40;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|label,unlabel,test:548,,16452|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:40;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
