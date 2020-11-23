@@ -47,7 +47,6 @@
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|label,unlabel,test:72,949,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力+自标注|epoch:20;epoch_step:13;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |label,unlabel,test:72,0,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力|epoch:20;epoch_step:13;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|46.170  45.024  48.917  46.872  43.485  47.755|
 |label,unlabel,test:72,949,438(split:0.05,0.7,未加title_ids)|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|54.745  54.383  55.709  52.864|
 
@@ -72,12 +71,14 @@
 |---|---|---|---|
 |label,unlabel,test:548,,16452|Bert微调+多注意力|epoch:21;epoch_step:15;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|28.793|
 |label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:10;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|34.139|
-|label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:10;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|31.651|
+|label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:15;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|31.651|
 |---|---|---|---|
+|label,unlabel,test:548,,3291|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|34.768|
+|label,unlabel,test:548,7129,3291|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:23;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|39.414|
 
 
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
 - batch-size使用30时，GAN初期提不起来（6轮都不咋提高），感觉之后效果应该不好。
-- 当模型达到最高性能后性能又会快速下降
+- 提出方法当模型达到最高性能后性能又会快速下降（好像是在d_loss变为0的时候）
 - 感觉batch-size对方法的效果有影响
