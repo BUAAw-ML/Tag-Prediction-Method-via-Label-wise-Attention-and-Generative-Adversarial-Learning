@@ -47,7 +47,7 @@ parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
 parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data', type=str,
+parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
