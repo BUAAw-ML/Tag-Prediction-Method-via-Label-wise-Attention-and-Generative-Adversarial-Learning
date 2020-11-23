@@ -17,13 +17,13 @@ parser.add_argument('-j', '--workers', default=10, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--epochs', default=50, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('--epoch_step', default=[15], type=int, nargs='+',
+parser.add_argument('--epoch_step', default=[40], type=int, nargs='+',
                     help='number of epochs to change learning rate')
 parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('-b', '--batch-size', default=10, type=int,
+parser.add_argument('-b', '--batch-size', default=30, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
