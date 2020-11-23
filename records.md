@@ -69,8 +69,9 @@
 |label,unlabel,test:2742,35646,164520|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
 |label,unlabel,test:548,,16452|Bert微调+多注意力|epoch:21;epoch_step:15;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|28.793|
-|label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:40;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|label,unlabel,test:548,37840,16452|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|34.139|
 
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
 - batch-size使用30时，GAN初期提不起来，感觉之后效果应该不好。
+- 当模型达到最高性能后性能又会快速下降
