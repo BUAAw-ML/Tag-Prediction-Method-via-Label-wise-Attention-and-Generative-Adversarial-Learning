@@ -58,11 +58,12 @@ class allData(Dataset):
 
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
-        split = int(len(data) * 0.01)
-        split2 = int(len(data) * 0.7)
+        split = int(len(data) * 0.05 * 0.2)
+        split2 = int(len(data) * 0.7 * 0.2)
+        split3 = int(len(data) * 1 * 0.2)
         train_data = data[ind[:split]].tolist()
         unlabeled_train_data = data[ind[split:split2]].tolist()
-        test_data = data[ind[split2:]].tolist()
+        test_data = data[ind[split2:split3]].tolist()
 
         co_occur_mat = allData.stat_cooccurence(data, len(tag2id))
         tfidf_dict = allData.get_tfidf_dict(document)
