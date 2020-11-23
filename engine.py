@@ -468,7 +468,9 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
             pseudo_label = self.state['output'] - pseudo_label
-            pseudo_label = pseudo_label >= 0
+
+            pseudo_label[pseudo_label >= 0] = 1.
+            pseudo_label[pseudo_label < 0] = 0.
 
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(pseudo_label * log_probs, dim=-1) / target_var.shape[-1]
