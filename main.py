@@ -15,9 +15,9 @@ parser.add_argument('-seed', default=0, type=int, metavar='N',
                     help='random seed')
 parser.add_argument('-j', '--workers', default=10, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
-parser.add_argument('--epochs', default=100, type=int, metavar='N',
+parser.add_argument('--epochs', default=50, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('--epoch_step', default=[13], type=int, nargs='+',
+parser.add_argument('--epoch_step', default=[45], type=int, nargs='+',
                     help='number of epochs to change learning rate')
 parser.add_argument('--device_ids', default=[0], type=int, nargs='+',
                     help='')
@@ -27,7 +27,7 @@ parser.add_argument('-b', '--batch-size', default=4, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--G-lr', '--Generator-learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial learning rate')
-parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.01, type=float,
+parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.1, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
@@ -47,7 +47,7 @@ parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
 parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
-parser.add_argument('--data_path', default='../datasets/ProgrammerWeb/programweb-data.csv', type=str,
+parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
                     help='path of data')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
