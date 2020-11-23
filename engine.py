@@ -472,9 +472,6 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
             pseudo_label[pseudo_label >= 0] = 1.
             pseudo_label[pseudo_label < 0] = 0.
 
-            print(pseudo_label)
-            exit()
-
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(pseudo_label * log_probs, dim=-1) / pseudo_label.shape[-1]
             D_L_Supervised = torch.mean(per_example_loss)
