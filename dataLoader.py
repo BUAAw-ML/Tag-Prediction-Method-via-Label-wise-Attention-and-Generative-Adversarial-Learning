@@ -58,9 +58,10 @@ class allData(Dataset):
 
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
-        split = int(len(data) * 0.05 * 0.2)
-        split2 = int(len(data) * 0.7 * 0.2)
-        split3 = int(len(data) * 1 * 0.2)
+        data_use = 1
+        split = int(len(data) * 0.05 * data_use)
+        split2 = int(len(data) * 0.7 * data_use)
+        split3 = int(len(data) * 1 * data_use)
         train_data = data[ind[:split]].tolist()
         unlabeled_train_data = data[ind[split:split2]].tolist()
         test_data = data[ind[split2:split3]].tolist()
@@ -100,7 +101,7 @@ class allData(Dataset):
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if tag_occurance[tag] == 0:
+            if tag_occurance[tag] > 100:
                 ignored_tags.add(tag)
 
         print(tag_occurance)
