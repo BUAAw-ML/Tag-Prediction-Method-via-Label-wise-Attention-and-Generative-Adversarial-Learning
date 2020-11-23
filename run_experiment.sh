@@ -1,28 +1,20 @@
 
 # Experiment runner script
 
-SEQ_LEN="64"
-BS="64"
-LR="2e-5"
-EPOCHS="3"
-cur_dir="data"
-LABEL_RATE="0.02"
+python main.py \
+        --epochs=50 \
+        --epoch_step=[45] \
+        --device_ids=[0] \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.001 \
+        --print-freq=200 \
+        --save_model_path='./checkpoint' \
+        --log_dir='./logs' \
+        --data_type='allData' \
+        --data_path='../datasets/AAPD/aapd2.csv' \
+        --utilize_unlabeled_data=True \
 
-python -u ganbert.py \
-        --task_name=QC-fine \
-        --label_rate=${LABEL_RATE} \
-        --do_train=true \
-        --do_eval=true \
-        --do_predict=false \
-        --data_dir=${cur_dir} \
-        --vocab_file=$BERT_BASE_DIR/vocab.txt \
-        --bert_config_file=$BERT_BASE_DIR/bert_config.json \
-        --init_checkpoint=$BERT_BASE_DIR/bert_model.ckpt \
-        --max_seq_length=${SEQ_LEN} \
-        --train_batch_size=${BS} \
-        --learning_rate=${LR} \
-        --num_train_epochs=${EPOCHS} \
-        --warmup_proportion=0.1 \
-        --do_lower_case=false \
-        --output_dir=ganbert_output_model
+
 
