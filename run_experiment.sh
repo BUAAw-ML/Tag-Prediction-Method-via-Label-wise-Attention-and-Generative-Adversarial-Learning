@@ -14,7 +14,7 @@ python main.py \
         --log_dir='./logs' \
         --data_type='allData' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
-        --utilize_unlabeled_data=0 \
+        --utilize_unlabeled_data=1 \
 
 
 #utilize_unlabeled_data、学习率、epoch_step、无监督损失，
