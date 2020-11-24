@@ -51,7 +51,7 @@ parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=st
                     help='path of data')
 parser.add_argument('--bert_trainable', default=True, type=bool,
                     help='bert_trainable')
-parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
+parser.add_argument('--utilize_unlabeled_data', default=1, type=int,
                     help='utilize_unlabeled_data')
 
 global args, use_gpu
