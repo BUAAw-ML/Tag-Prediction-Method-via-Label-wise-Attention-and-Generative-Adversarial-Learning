@@ -14,8 +14,9 @@ python main.py \
         --log_dir='./logs' \
         --data_type='allData' \
         --data_path='../datasets/AAPD/aapd2.csv' \
-        --bert_trainable=True \
         --utilize_unlabeled_data=False \
+        --bert_trainable=True \
+
 
 #utilize_unlabeled_data、学习率、epoch_step、无监督损失，
 

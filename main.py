@@ -61,8 +61,8 @@ use_gpu = torch.cuda.is_available()
 
 print("batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
     args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr))
-print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {}".format(
-    args.device_ids, args.utilize_unlabeled_data, args.data_path))
+print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {}".format(
+    args.device_ids, args.utilize_unlabeled_data, args.data_path, args.bert_trainable))
 
 if args.data_type == 'allData':
     dataset, encoded_tag, tag_mask = load_allData(args.data_path)
