@@ -1,10 +1,10 @@
 
 
-#实验结果 Experimental progress and records
+# 实验结果 Experimental progress and records
 
-##programmerWeb数据集
+## programmerWeb数据集
 
-###tag频率<200的数据集
+### tag频率<200的数据集
 
 |实验环境|数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|---|
@@ -30,7 +30,7 @@
 - Gnerator用了G_feat_match效果不好；
 - Gnerator设置3层不好，使用dropout不好；
 
-###全部数据集
+### 全部数据集
 
 |实验环境|数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|---|
@@ -43,7 +43,7 @@
 小结：
 - 采用全部数据集（115个标签）时，提出的方法的效果只好大概百分之四，不是很明显；
 
-###tag频率<100的数据集
+### tag频率<100的数据集
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
@@ -54,7 +54,7 @@
 - model里的判别特征如何改成和权重矩阵乘后求mean()效果是不好的。
 - 尝试了对所有未标注样本打伪标签（预测概率最大的类别tag设置为1），然后一起训练模型。但是基本训练不起来。
 
-##gan-bert数据集
+## gan-bert数据集
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
@@ -62,7 +62,7 @@
 |label,unlabel,test:109,5343,500|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|28|
 
 
-##AAPD数据集
+## AAPD数据集
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
@@ -83,6 +83,9 @@
 |---|---|---|---|
 |label,unlabel,test:4387,,2194|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|48.924  48.842|
 |label,unlabel,test:4387,4387,2194|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:20;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|50.165|
+|---|---|---|---|
+|label,unlabel,test:7677,,2194|Bert微调+多注意力|epoch:50;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|label,unlabel,test:7677,1097,2194|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
