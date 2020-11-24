@@ -3,8 +3,8 @@
 
 python main.py \
         --epochs=50 \
-        --epoch_step= 45 \
-        --device_ids= 0 \
+        --epoch_step=45 \
+        --device_ids=0 \
         --batch-size=22 \
         --G-lr=0.001 \
         --D-lr=0.1 \
