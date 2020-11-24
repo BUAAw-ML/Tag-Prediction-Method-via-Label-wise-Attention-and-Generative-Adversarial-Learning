@@ -69,17 +69,27 @@ class Generator(nn.Module):
         for i in range(num_hidden_generator):
             dim = input_dim if i == 0 else hidden_dim_generator
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
-        self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
-        self.m1 = nn.BatchNorm1d(1,2000)
+        self.Linear1 = nn.Linear(input_dim, 1500)
+        self.Linear2 = nn.Linear(1500, 3000)
+        self.Linear3 = nn.Linear(3000, 1500)
+        self.output = nn.Linear(1500, hidden_dim)
+
+        self.m1 = nn.BatchNorm1d(1, 2000)
 
     def forward(self, feat):
         x = feat
-        for i in range(self.num_hidden_generator):
-            x = self.hidden_list_generator[i](x)
-            # x = self.m1(x)
-            x = self.act(x)
-            # x = self.dropout(x)
+        # for i in range(self.num_hidden_generator):
+        #     x = self.hidden_list_generator[i](x)
+        #     # x = self.m1(x)
+        #     x = self.act(x)
+        #     # x = self.dropout(x)
+        x = self.Linear1(x)
+        x = self.act(x)
+        x = self.Linear2(x)
+        x = self.act(x)
+        x = self.Linear3(x)
+        x = self.act(x)
         y = self.output(x)
         return y
 
