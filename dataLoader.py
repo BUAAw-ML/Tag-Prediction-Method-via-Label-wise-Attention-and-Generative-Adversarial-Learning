@@ -59,7 +59,7 @@ class allData(Dataset):
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
         data_use = 0.2
-        split = int(len(data) * 0.05 * data_use)
+        split = int(len(data) * 0.01 * data_use)
         split2 = int(len(data) * 0.7 * data_use)
         split3 = int(len(data) * 1 * data_use)
         train_data = data[ind[:split]].tolist()

@@ -8,7 +8,7 @@ from transformers import BertModel
 import warnings
 warnings.filterwarnings('ignore')
 
-#utilize_unlabeled_data、学习率、epoch_step、无监督损失，
+
 parser = argparse.ArgumentParser(description='Training Super-parameters')
 
 parser.add_argument('-seed', default=0, type=int, metavar='N',
@@ -49,6 +49,8 @@ parser.add_argument('--data_type', default='allData', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
                     help='path of data')
+parser.add_argument('--bert_trainable', default=True, type=bool,
+                    help='bert_trainable')
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
 
@@ -57,7 +59,7 @@ args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
 
-print(" batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
+print("batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
     args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr))
 print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {}".format(
     args.device_ids, args.utilize_unlabeled_data, args.data_path))
@@ -72,9 +74,9 @@ bert = BertModel.from_pretrained('bert-base-uncased')
 
 model = {}
 model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
-model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
+model['Encoder'] = Bert_Encoder(bert, bert_trainable=args.bert_trainable)
 model['Generator'] = Generator()
-model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True, device=args.device_ids[0])
+model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
 # define loss function (criterion)
 criterion = nn.BCELoss()
