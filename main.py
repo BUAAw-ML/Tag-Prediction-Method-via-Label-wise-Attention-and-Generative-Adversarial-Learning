@@ -52,68 +52,54 @@ parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=st
 parser.add_argument('--utilize_unlabeled_data', default=True, type=bool,
                     help='utilize_unlabeled_data')
 
-#苏州服务器上数据：
-#../datasets/ProgrammerWeb/programweb-data.csv
-#../datasets/AAPD/aapd2.csv
-#../datasets/gan_bert
+global args, use_gpu
+args = parser.parse_args()
 
-#614服务器上数据：
-#../../datasets/multiClass_text_classification/news_group20/news_group20.csv
-#../../datasets/multiLabel_text_classification/ProgrammerWeb/programweb-data.csv
-#../../datasets/multiLabel_text_classification/EUR-Lex
+use_gpu = torch.cuda.is_available()
 
+print(" batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
+    args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr))
+print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {}".format(
+    args.device_ids, args.utilize_unlabeled_data, args.data_path))
 
-def multiLabel_text_classify():
+if args.data_type == 'allData':
+    dataset, encoded_tag, tag_mask = load_allData(args.data_path)
 
-    global args, use_gpu
-    args = parser.parse_args()
+elif args.data_type == 'TrainTestData':
+    dataset, encoded_tag, tag_mask = load_TrainTestData(args.data_path)
 
-    use_gpu = torch.cuda.is_available()
+bert = BertModel.from_pretrained('bert-base-uncased')
 
-    print("device_ids: {} \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
-        args.device_ids, args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr))
+model = {}
+model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
+model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
+model['Generator'] = Generator()
+model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True, device=args.device_ids[0])
 
-    if args.data_type == 'allData':
-        dataset, encoded_tag, tag_mask = load_allData(args.data_path)
+# define loss function (criterion)
+criterion = nn.BCELoss()
 
-    elif args.data_type == 'TrainTestData':
-        dataset, encoded_tag, tag_mask = load_TrainTestData(args.data_path)
+# define optimizer
+optimizer = {}
+optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
+                                         momentum=args.momentum, weight_decay=args.weight_decay)
+# optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
+#                                    momentum=args.momentum, weight_decay=args.weight_decay)
 
-    bert = BertModel.from_pretrained('bert-base-uncased')
+optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, args.B_lr),
+                            momentum=args.momentum, weight_decay=args.weight_decay)
 
-    model = {}
-    model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
-    model['Encoder'] = Bert_Encoder(bert, bert_trainable=True)
-    model['Generator'] = Generator()
-    model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=True, device=args.device_ids[0])
+# optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
 
-    # define loss function (criterion)
-    criterion = nn.BCELoss()
+state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
+         'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
+         'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
+         'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
+         'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag}
 
-    # define optimizer
-    optimizer = {}
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
-                                             momentum=args.momentum, weight_decay=args.weight_decay)
-    # optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
-    #                                    momentum=args.momentum, weight_decay=args.weight_decay)
+if args.evaluate:
+    state['evaluate'] = True
 
-    optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, args.B_lr),
-                                momentum=args.momentum, weight_decay=args.weight_decay)
+engine = GCNMultiLabelMAPEngine(state)
+engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
 
-    # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
-
-    state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
-             'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
-             'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
-             'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
-             'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag}
-
-    if args.evaluate:
-        state['evaluate'] = True
-
-    engine = GCNMultiLabelMAPEngine(state)
-    engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
-
-
-if __name__ == '__main__':
-    multiLabel_text_classify()
