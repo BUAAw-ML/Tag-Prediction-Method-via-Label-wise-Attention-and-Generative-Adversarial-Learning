@@ -81,11 +81,12 @@
 |---|---|---|---|
 |label,unlabel,test:548,,3291|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:30;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|28.599  28|
 |---|---|---|---|
-|label,unlabel,test:109,,3291|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
-|label,unlabel,test:109,7568,3291|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|label,unlabel,test:4387,,2194|Bert微调+多注意力|epoch:50;epoch_step:15;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|label,unlabel,test:4387,4387,2194|Bert微调+多注意力+GAN(对抗指标：噪音样本与标签w近似度的和)|epoch:;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
 - batch-size使用30时，GAN初期提不起来（6轮都不咋提高），感觉之后效果应该不好。
 - 提出方法当模型达到最高性能后性能又会快速下降（好像是在d_loss变为0的时候）
 - 感觉batch-size对方法的效果有影响
+- 给generator增加了一层也还是不能避免d_loss变为0后性能迅速下降
