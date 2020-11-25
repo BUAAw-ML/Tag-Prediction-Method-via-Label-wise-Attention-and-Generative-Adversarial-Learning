@@ -13,7 +13,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='allData' \
-        --data_path='../datasets/AAPD/aapd2.csv' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
         --utilize_unlabeled_data=1 \
 
 
