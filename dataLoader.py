@@ -385,6 +385,59 @@ class TrainTestData(Dataset):
 
         return data
 
+    # def load_EurLex(self, file1, ):
+    #     data = []
+    #
+    #     document = []
+    #     tag_occurance = {}
+    #
+    #     f_text = open(file, 'r')
+    #     f_labels = open(file, 'r')
+    #     contents = f.read()
+    #     file_as_list = contents.splitlines()
+    #
+    #     for line in file_as_list[1:]:
+    #         split = line.split(" ")
+    #         dscp = ' '.join(split[1:])
+    #
+    #         inn_split = split[0].split(":")
+    #         tag = inn_split[0] + "_" + inn_split[1]
+    #
+    #         dscp_tokens = tokenizer.tokenize(dscp.strip())
+    #         if len(dscp_tokens) > 510:
+    #             continue
+    #
+    #         document.append(" ".join(dscp_tokens))
+    #
+    #         dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
+    #
+    #         if tag in self.tag2id:
+    #             tag_id = self.tag2id[tag]
+    #         elif tag == 'UNK_UNK':
+    #             tag_id = 0
+    #         else:
+    #             tag_id = len(self.tag2id)
+    #             self.tag2id[tag] = tag_id
+    #             self.id2tag[tag_id] = tag
+    #
+    #         data.append({
+    #             'id': 0,
+    #             'dscp_ids': dscp_ids,
+    #             'dscp_tokens': dscp_tokens,
+    #             'tag_ids': tag_id,
+    #             'dscp': dscp
+    #         })
+    #
+    #     print("The number of tags for training: {}".format(len(self.tag2id)))
+    #     os.makedirs('cache', exist_ok=True)
+    #     print(self.tag2id.keys())
+    #
+    #
+    #     f_text.close()
+    #     f_labels.close()
+    #
+    #     return data
+
     def get_tags_num(self):
         return len(self.tag2id)
 
