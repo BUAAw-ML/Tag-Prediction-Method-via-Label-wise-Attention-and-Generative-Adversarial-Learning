@@ -532,7 +532,7 @@ def load_TrainTestData(data_path):
 
         file1 = os.path.join(data_path, 'train_texts.txt')
         file2 = os.path.join(data_path, 'train_labels.txt')
-        filter_tags(file2)
+        dataset.filter_tags(file2)
         dataset.train_data = dataset.load_EurLex(file1, file2)
 
         # data = np.array(data)
