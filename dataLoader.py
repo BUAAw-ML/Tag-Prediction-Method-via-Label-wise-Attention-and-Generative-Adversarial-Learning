@@ -314,8 +314,9 @@ def load_allData(data_path=None):
 
 #Training and test data are in different files
 class TrainTestData(Dataset):
-    def __init__(self, train_data=None, test_data=None, co_occur_mat=None, tag2id={}, id2tag={}):
+    def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None, co_occur_mat=None, tag2id={}, id2tag={}):
         self.train_data = train_data
+        self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
         self.tag2id = tag2id
         # if id2tag is None:
@@ -385,58 +386,48 @@ class TrainTestData(Dataset):
 
         return data
 
-    # def load_EurLex(self, file1, ):
-    #     data = []
-    #
-    #     document = []
-    #     tag_occurance = {}
-    #
-    #     f_text = open(file, 'r')
-    #     f_labels = open(file, 'r')
-    #     contents = f.read()
-    #     file_as_list = contents.splitlines()
-    #
-    #     for line in file_as_list[1:]:
-    #         split = line.split(" ")
-    #         dscp = ' '.join(split[1:])
-    #
-    #         inn_split = split[0].split(":")
-    #         tag = inn_split[0] + "_" + inn_split[1]
-    #
-    #         dscp_tokens = tokenizer.tokenize(dscp.strip())
-    #         if len(dscp_tokens) > 510:
-    #             continue
-    #
-    #         document.append(" ".join(dscp_tokens))
-    #
-    #         dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-    #
-    #         if tag in self.tag2id:
-    #             tag_id = self.tag2id[tag]
-    #         elif tag == 'UNK_UNK':
-    #             tag_id = 0
-    #         else:
-    #             tag_id = len(self.tag2id)
-    #             self.tag2id[tag] = tag_id
-    #             self.id2tag[tag_id] = tag
-    #
-    #         data.append({
-    #             'id': 0,
-    #             'dscp_ids': dscp_ids,
-    #             'dscp_tokens': dscp_tokens,
-    #             'tag_ids': tag_id,
-    #             'dscp': dscp
-    #         })
-    #
-    #     print("The number of tags for training: {}".format(len(self.tag2id)))
-    #     os.makedirs('cache', exist_ok=True)
-    #     print(self.tag2id.keys())
-    #
-    #
-    #     f_text.close()
-    #     f_labels.close()
-    #
-    #     return data
+    def load_EurLex(self, file1, file2):
+        data = []
+
+        f_text = open(file1, 'r').read()
+        f_tag = open(file2, 'r').read()
+
+        for text, tag in zip(f_text, f_tag):
+
+            dscp_tokens = tokenizer.tokenize(text.strip())
+            if len(dscp_tokens) > 510:
+                continue
+
+            dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
+
+            tag = tag.strip().split()
+            tag = [t for t in tag if t != '']
+
+            if len(tag) == 0:
+                continue
+
+            for t in tag:
+                if t not in self.tag2id:
+                    tag_id = len(self.tag2id)
+                    self.tag2id[t] = tag_id
+                    self.id2tag[tag_id] = t
+
+            tag_ids = [self.tag2id[t] for t in tag]
+
+            data.append({
+                'id': 0,
+                'dscp_ids': dscp_ids,
+                'dscp_tokens': dscp_tokens,
+                'tag_ids': tag_ids,
+                'dscp': text
+            })
+
+        print("The number of tags for training: {}".format(len(tag2id)))
+
+        f_text.close()
+        f_labels.close()
+
+        return data
 
     def get_tags_num(self):
         return len(self.tag2id)
@@ -504,14 +495,22 @@ def load_TrainTestData(data_path):
 
         dataset = TrainTestData()
 
-        file = os.path.join(data_path, 'labeled.tsv')
-        dataset.train_data = dataset.load(file)
+        # file = os.path.join(data_path, 'labeled.tsv')
+        # dataset.train_data = dataset.load(file)
+        # file = os.path.join(data_path, 'unlabeled.tsv')
+        # dataset.unlabeled_train_data = dataset.load(file)
+        # file = os.path.join(data_path, 'test.tsv')
+        # dataset.test_data = dataset.load(file)
 
-        file = os.path.join(data_path, 'unlabeled.tsv')
-        dataset.unlabeled_train_data = dataset.load(file)
+        file1 = os.path.join(data_path, 'train_texts.txt')
+        file2 = os.path.join(data_path, 'train_labels.txt')
+        dataset.train_data = dataset.load_EurLex(file1, file2)
 
-        file = os.path.join(data_path, 'test.tsv')
-        dataset.test_data = dataset.load(file)
+        file1 = os.path.join(data_path, 'test_texts.txt')
+        file2 = os.path.join(data_path, 'test_labels.txt')
+        dataset.test_data = dataset.load_EurLex(file1, file2)
+
+        dataset.unlabeled_train_data = []
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
 
