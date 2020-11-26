@@ -323,6 +323,8 @@ class TrainTestData(Dataset):
         #     id2tag = {v: k for k, v in tag2id.items()}
         self.id2tag = id2tag
 
+        self.ignored_tags = set()
+
     @classmethod
     def from_dict(cls, data_dict):
         return TrainTestData(data_dict.get('train_data'),
@@ -386,6 +388,27 @@ class TrainTestData(Dataset):
 
         return data
 
+    def filter_tags(self, file2):
+        tag_occurance = {}
+
+        with open(file2, 'r') as f_tag:
+            tags = f_tag.readlines()
+            for tag in tags:
+
+                tag = tag.strip().split()
+                tag = [t for t in tag if t != '']
+
+                for t in tag:
+                    if t not in tag_occurance:
+                        tag_occurance[t] = 1
+                    tag_occurance[t] += 1
+
+        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
+        # 'Data-as-a-Service'])  #
+        for tag in tag_occurance:
+            if tag_occurance[tag] < 100:
+                self.ignored_tags.add(tag)
+
     def load_EurLex(self, file1, file2):
         data = []
 
@@ -404,6 +427,9 @@ class TrainTestData(Dataset):
 
             tag = tag.strip().split()
             tag = [t for t in tag if t != '']
+
+            if ignored_tags is not None:
+                tag = [t for t in tag if t not in self.ignored_tags]
 
             if len(tag) == 0:
                 continue
@@ -506,13 +532,19 @@ def load_TrainTestData(data_path):
 
         file1 = os.path.join(data_path, 'train_texts.txt')
         file2 = os.path.join(data_path, 'train_labels.txt')
+        filter_tags(file2)
         dataset.train_data = dataset.load_EurLex(file1, file2)
+
+        # data = np.array(data)
+        # ind = np.random.RandomState(seed=10).permutation(len(data))
+        # split = int(len(data) * 0.2)
+        #
+        # dataset.train_data = data[ind[:split]].tolist()
+        dataset.unlabeled_train_data = []#data[ind[split:]].tolist()
 
         file1 = os.path.join(data_path, 'test_texts.txt')
         file2 = os.path.join(data_path, 'test_labels.txt')
         dataset.test_data = dataset.load_EurLex(file1, file2)
-
-        dataset.unlabeled_train_data = []
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
 
