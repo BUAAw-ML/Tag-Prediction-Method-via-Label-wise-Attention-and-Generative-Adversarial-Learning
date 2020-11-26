@@ -390,9 +390,9 @@ class TrainTestData(Dataset):
         data = []
 
         f_text = open(file1, 'r')
-        texts = f_text.read()
+        texts = f_text.readlines()
         f_tag = open(file2, 'r')
-        tags = f_tag.read()
+        tags = f_tag.readlines()
 
         for text, tag in zip(texts, tags):
 
