@@ -428,7 +428,7 @@ class TrainTestData(Dataset):
             tag = tag.strip().split()
             tag = [t for t in tag if t != '']
 
-            if ignored_tags is not None:
+            if self.ignored_tags is not None:
                 tag = [t for t in tag if t not in self.ignored_tags]
 
             if len(tag) == 0:
