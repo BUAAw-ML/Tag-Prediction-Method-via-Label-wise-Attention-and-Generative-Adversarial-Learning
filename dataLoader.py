@@ -389,10 +389,12 @@ class TrainTestData(Dataset):
     def load_EurLex(self, file1, file2):
         data = []
 
-        f_text = open(file1, 'r').read()
-        f_tag = open(file2, 'r').read()
+        f_text = open(file1, 'r')
+        texts = f_text.read()
+        f_tag = open(file2, 'r')
+        tags = f_tag.read()
 
-        for text, tag in zip(f_text, f_tag):
+        for text, tag in zip(texts, tags):
 
             dscp_tokens = tokenizer.tokenize(text.strip())
             if len(dscp_tokens) > 510:
@@ -422,10 +424,10 @@ class TrainTestData(Dataset):
                 'dscp': text
             })
 
-        print("The number of tags for training: {}".format(len(tag2id)))
+        print("The number of tags for training: {}".format(len(self.tag2id)))
 
         f_text.close()
-        f_labels.close()
+        f_tag.close()
 
         return data
 
