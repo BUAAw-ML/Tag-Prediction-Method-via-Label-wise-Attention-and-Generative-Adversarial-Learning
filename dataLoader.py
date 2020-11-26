@@ -396,8 +396,6 @@ class TrainTestData(Dataset):
 
         for text, tag in zip(texts, tags):
 
-            print(text)
-            print(tag)
             dscp_tokens = tokenizer.tokenize(text.strip())
             if len(dscp_tokens) > 510:
                 continue
@@ -406,10 +404,6 @@ class TrainTestData(Dataset):
 
             tag = tag.strip().split()
             tag = [t for t in tag if t != '']
-
-            print(tag)
-            exit()
-
 
             if len(tag) == 0:
                 continue
