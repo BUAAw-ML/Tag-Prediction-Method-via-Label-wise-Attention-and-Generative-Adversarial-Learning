@@ -406,7 +406,7 @@ class TrainTestData(Dataset):
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if tag_occurance[tag] < 200:
+            if tag_occurance[tag] > 100:
                 self.ignored_tags.add(tag)
 
     def load_EurLex(self, file1, file2):
@@ -430,7 +430,7 @@ class TrainTestData(Dataset):
             tag = [t for t in tag if t != '']
 
             if self.ignored_tags is not None:
-                tag = [t for t in tag if t not in self.ignored_tags]
+                tag = [t for t in tag if t in self.ignored_tags]
 
             if len(tag) == 0:
                 continue
