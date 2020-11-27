@@ -534,14 +534,14 @@ def load_TrainTestData(data_path):
         file1 = os.path.join(data_path, 'train_texts.txt')
         file2 = os.path.join(data_path, 'train_labels.txt')
         dataset.filter_tags(file2)
-        dataset.train_data = dataset.load_EurLex(file1, file2)
+        data = dataset.load_EurLex(file1, file2)
 
-        # data = np.array(data)
-        # ind = np.random.RandomState(seed=10).permutation(len(data))
-        # split = int(len(data) * 0.2)
-        #
-        # dataset.train_data = data[ind[:split]].tolist()
-        dataset.unlabeled_train_data = []#data[ind[split:]].tolist()
+        data = np.array(data)
+        ind = np.random.RandomState(seed=10).permutation(len(data))
+        split = int(len(data) * 0.5)
+
+        dataset.train_data = data[ind[:split]].tolist()
+        dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
         file1 = os.path.join(data_path, 'test_texts.txt')
         file2 = os.path.join(data_path, 'test_labels.txt')
