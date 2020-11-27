@@ -421,8 +421,8 @@ class TrainTestData(Dataset):
 
             dscp_tokens = tokenizer.tokenize(text.strip())
             if len(dscp_tokens) > 510:
-                dscp_tokens = dscp_tokens[:509]
-                # continue
+                # dscp_tokens = dscp_tokens[:509]
+                continue
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
