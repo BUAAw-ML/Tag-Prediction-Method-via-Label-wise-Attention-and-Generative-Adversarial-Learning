@@ -242,7 +242,7 @@ class dataEngine(Dataset):
 
         return tfidf_dict
 
-    def load_programWeb(cls, f):
+    def load_programWeb(self, f):
         data = []
 
         document = []
