@@ -45,7 +45,7 @@ parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
 parser.add_argument('--log_dir', default='./logs', type=str,
                     help='path to save log (default: none)')
-parser.add_argument('--data_type', default='allData', type=str,
+parser.add_argument('--data_type', default='All', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
                     help='path of data')
@@ -53,6 +53,8 @@ parser.add_argument('--bert_trainable', default=True, type=bool,
                     help='bert_trainable')
 parser.add_argument('--utilize_unlabeled_data', default=1, type=int,
                     help='utilize_unlabeled_data')
+parser.add_argument('--use_previousData', default=0, type=int,
+                    help='use_previousData')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -64,11 +66,7 @@ print("batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".for
 print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {}".format(
     args.device_ids, args.utilize_unlabeled_data, args.data_path, args.bert_trainable))
 
-if args.data_type == 'allData':
-    dataset, encoded_tag, tag_mask = load_allData(args.data_path)
-
-elif args.data_type == 'TrainTestData':
-    dataset, encoded_tag, tag_mask = load_TrainTestData(args.data_path)
+dataset, encoded_tag, tag_mask = load_data(args.data_path, args.data_type, args.use_previousData)
 
 bert = BertModel.from_pretrained('bert-base-uncased')
 

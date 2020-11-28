@@ -113,7 +113,10 @@
 |label,unlabel,test:10845,,2662（标签数：60）（tag频率>200,text按510截断）|Bert微调+多注意力|epoch:17;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|66.914|
 |label,unlabel,test:5422,5423,2662（标签数：60）（tag频率>200,text按510截断）|Bert微调+多注意力+GAN|epoch:35;epoch_step:40;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|63.904|
 
+
+
 另外进行的试验：
 - 过滤文本长于510，且使用标签频次大于100  能达到五十多的MAP
 - 使用标签频次大于100 能达到三十多的MAP
+- 使用标签频次大于10 有一千三百八十多个标签 用一半的训练数据 截断的能达到十七的MAP 过滤的（不截断）的七点多的MAP
 - 63.452 训练集和测试集都是相同的一百八十多个标签
