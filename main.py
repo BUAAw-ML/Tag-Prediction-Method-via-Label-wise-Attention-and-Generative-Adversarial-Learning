@@ -65,10 +65,18 @@ args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
 
-print("batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}".format(
-    args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr))
-print("device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {}".format(
-    args.device_ids, args.utilize_unlabeled_data, args.data_path, args.bert_trainable))
+result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
+if not os.path.exists(result_path):
+    os.makedirs(result_path)
+method_str = args.data_path.split("/")[-2] + args.method
+fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
+setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {} ' \
+              '\t device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {} \n'.format(
+                args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr,
+                args.device_ids, args.utilize_unlabeled_data, args.data_path, args.bert_trainable)
+
+print(setting_str)
+fo.write(setting_str)
 
 dataset, encoded_tag, tag_mask = load_data(args.data_path, args.data_type, args.use_previousData)
 
@@ -108,13 +116,6 @@ if args.method == 'MultiLabelMAP':
     engine = MultiLabelMAPEngine(state)
 elif args.method == 'semiGAN_MultiLabelMAP':
     engine = semiGAN_MultiLabelMAPEngine(state)
-
-result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
-if not os.path.exists(result_path):
-    os.makedirs(result_path)
-method_str = args.data_path.split("/")[-2] + args.method
-fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
-fo.write("www.runoob.com!\nVery good site!\n")
 
 # engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
 
