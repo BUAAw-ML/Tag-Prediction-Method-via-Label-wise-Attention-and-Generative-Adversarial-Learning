@@ -15,7 +15,7 @@ python main.py \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --utilize_unlabeled_data=0 \
-        --use_previousData=0 \
+        --use_previousData=1 \
         --method='MultiLabelMAP' \
 
 #All  TrainTest  TrainTestTextTag

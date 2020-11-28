@@ -101,6 +101,7 @@ state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': a
 
 if args.evaluate:
     state['evaluate'] = True
+
 if args.method == 'MultiLabelMAP':
     engine = MultiLabelMAPEngine(state)
 elif args.method == 'semiGAN_MultiLabelMAP':
