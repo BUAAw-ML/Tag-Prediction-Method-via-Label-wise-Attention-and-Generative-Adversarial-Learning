@@ -174,7 +174,10 @@ class Engine(object):
             is_best = prec1 > self.state['best_score']
             self.state['best_score'] = max(prec1, self.state['best_score'])
 
-            print(' *** best={best:.3f}'.format(best=self.state['best_score']))
+            best_str = ' *** best={best:.3f}'.format(best=self.state['best_score'])
+            print(best_str)
+            self.result_file.write(best_str + '\n')
+
         return self.state['best_score']
 
     def train(self, data_loader, model, criterion, optimizer, epoch, semi_supervised):
