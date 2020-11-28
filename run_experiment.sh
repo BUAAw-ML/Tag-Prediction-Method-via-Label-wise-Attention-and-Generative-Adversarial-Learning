@@ -12,7 +12,7 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='TrainTest' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --utilize_unlabeled_data=0 \
         --use_previousData=0 \
