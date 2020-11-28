@@ -109,7 +109,7 @@ if args.method == 'MultiLabelMAP':
 elif args.method == 'semiGAN_MultiLabelMAP':
     engine = semiGAN_MultiLabelMAPEngine(state)
 
-result_path = os.path.join('result', datetime.date.today())
+result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
 if not os.path.exists(result_path):
     os.makedirs(result_path)
 method_str = args.data_path.split("/")[-2] + method
