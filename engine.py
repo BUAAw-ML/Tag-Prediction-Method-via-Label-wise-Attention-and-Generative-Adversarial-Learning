@@ -22,6 +22,8 @@ class Engine(object):
     def __init__(self, state={}):
         self.writer = SummaryWriter(state['log_dir'])
         os.makedirs(state['log_dir'], exist_ok=True)
+        self.result_file = state['result_file']
+
         self.state = state
         if self._state('use_gpu') is None:
             self.state['use_gpu'] = torch.cuda.is_available()
@@ -356,29 +358,40 @@ class MultiLabelMAPEngine(Engine):
         OP_k, OR_k, OF1_k, CP_k, CR_k, CF1_k = self.state['ap_meter'].overall_topk(3)
         if display:
             if training:
-                print('Epoch: [{0}]\t'
-                      'Loss {loss:.4f}\t'
-                      'mAP {map:.3f}'.format(self.state['epoch'], loss=loss, map=map))
-                print('OP: {OP:.4f}\t'
-                      'OR: {OR:.4f}\t'
-                      'OF1: {OF1:.4f}\t'
-                      'CP: {CP:.4f}\t'
-                      'CR: {CR:.4f}\t'
-                      'CF1: {CF1:.4f}'.format(OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1))
+                reselt_str = 'Epoch: [{0}]\t Loss {loss:.4f}\t mAP {map:.3f} \n ' \
+                'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f}'.format(
+                self.state['epoch'], loss=loss, map=map, OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1)
+                # print('Epoch: [{0}]\t'
+                #       'Loss {loss:.4f}\t'
+                #       'mAP {map:.3f}'.format(self.state['epoch'], loss=loss, map=map))
+                # print('OP: {OP:.4f}\t'
+                #       'OR: {OR:.4f}\t'
+                #       'OF1: {OF1:.4f}\t'
+                #       'CP: {CP:.4f}\t'
+                #       'CR: {CR:.4f}\t'
+                #       'CF1: {CF1:.4f}'.format(OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1))
             else:
-                print('Test: \t Loss {loss:.4f}\t mAP {map:.3f}'.format(loss=loss, map=map))
-                print('OP: {OP:.4f}\t'
-                      'OR: {OR:.4f}\t'
-                      'OF1: {OF1:.4f}\t'
-                      'CP: {CP:.4f}\t'
-                      'CR: {CR:.4f}\t'
-                      'CF1: {CF1:.4f}'.format(OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1))
-                print('OP_3: {OP:.4f}\t'
-                      'OR_3: {OR:.4f}\t'
-                      'OF1_3: {OF1:.4f}\t'
-                      'CP_3: {CP:.4f}\t'
-                      'CR_3: {CR:.4f}\t'
-                      'CF1_3: {CF1:.4f}'.format(OP=OP_k, OR=OR_k, OF1=OF1_k, CP=CP_k, CR=CR_k, CF1=CF1_k))
+                reselt_str = 'Test: \t Loss {loss:.4f}\t mAP {map:.3f} \n' \
+                'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f} \n' \
+                'OP_3: {OP_3:.4f}\t OR_3: {OR_3:.4f}\t OF1_3: {OF1_3:.4f}\t CP_3: {CP_3:.4f}\t CR_3: {CR_3:.4f}\t CF1_3: {CF1_3:.4f}'.format(
+                    loss=loss, map=map, OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1,
+                    OP_3=OP_k, OR_3=OR_k, OF1_3=OF1_k, CP_3=CP_k, CR_3=CR_k, CF1_3=CF1_k)
+                # print('Test: \t Loss {loss:.4f}\t mAP {map:.3f}'.format(loss=loss, map=map))
+                # print('OP: {OP:.4f}\t'
+                #       'OR: {OR:.4f}\t'
+                #       'OF1: {OF1:.4f}\t'
+                #       'CP: {CP:.4f}\t'
+                #       'CR: {CR:.4f}\t'
+                #       'CF1: {CF1:.4f}'.format(OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1))
+                # print('OP_3: {OP:.4f}\t'
+                #       'OR_3: {OR:.4f}\t'
+                #       'OF1_3: {OF1:.4f}\t'
+                #       'CP_3: {CP:.4f}\t'
+                #       'CR_3: {CR:.4f}\t'
+                #       'CF1_3: {CF1:.4f}'.format(OP=OP_k, OR=OR_k, OF1=OF1_k, CP=CP_k, CR=CR_k, CF1=CF1_k))
+            print(reselt_str)
+            self.result_file.write(reselt_str + '\n')
+
         if training:
             self.writer.add_scalar('loss/train_epoch_loss', loss, self.state['epoch'])
             self.writer.add_scalar('mAP/train_mAP', map, self.state['epoch'])
