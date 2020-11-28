@@ -5,6 +5,8 @@ from util import *
 from dataLoader import *
 from transformers import BertModel
 
+import datetime
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -107,5 +109,13 @@ if args.method == 'MultiLabelMAP':
 elif args.method == 'semiGAN_MultiLabelMAP':
     engine = semiGAN_MultiLabelMAPEngine(state)
 
-engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
+result_path = os.path.join('result', datetime.date.today())
+if not os.path.exists(result_path):
+    os.makedirs(result_path)
+method_str = args.data_path.split("/")[-2] + method
+fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
+fo.write("www.runoob.com!\nVery good site!\n")
 
+# engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
+
+fo.close()
