@@ -112,7 +112,7 @@ elif args.method == 'semiGAN_MultiLabelMAP':
 result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
 if not os.path.exists(result_path):
     os.makedirs(result_path)
-method_str = args.data_path.split("/")[-2] + method
+method_str = args.data_path.split("/")[-2] + args.method
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 fo.write("www.runoob.com!\nVery good site!\n")
 
