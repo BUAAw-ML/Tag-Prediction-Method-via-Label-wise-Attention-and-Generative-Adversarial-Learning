@@ -68,7 +68,7 @@ use_gpu = torch.cuda.is_available()
 result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
 if not os.path.exists(result_path):
     os.makedirs(result_path)
-method_str = args.data_path.split("/")[-2] + args.method
+method_str = args.data_path.split("/")[-1] + args.method
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {} ' \
               '\t device_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {} \n'.format(
