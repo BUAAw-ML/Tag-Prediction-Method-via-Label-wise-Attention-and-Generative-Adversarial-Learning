@@ -16,8 +16,10 @@ python main.py \
         --data_path='../datasets/EUR-Lex' \
         --utilize_unlabeled_data=0 \
         --use_previousData=0 \
+        --method='MultiLabelMAP' \
 
 #All  TrainTest  TrainTestTextTag
+#MultiLabelMAP semiGAN_MultiLabelMAP
 
 #utilize_unlabeled_data、学习率、epoch_step、无监督损失，
 

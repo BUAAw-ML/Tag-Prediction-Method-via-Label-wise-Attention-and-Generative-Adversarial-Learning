@@ -55,6 +55,8 @@ parser.add_argument('--utilize_unlabeled_data', default=1, type=int,
                     help='utilize_unlabeled_data')
 parser.add_argument('--use_previousData', default=0, type=int,
                     help='use_previousData')
+parser.add_argument('--method', default='MultiLabelMAP', type=str,
+                    help='Method')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -99,7 +101,10 @@ state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': a
 
 if args.evaluate:
     state['evaluate'] = True
+if args.method == 'MultiLabelMAP':
+    engine = MultiLabelMAPEngine(state)
+elif args.method == 'semiGAN_MultiLabelMAP':
+    engine = semiGAN_MultiLabelMAPEngine(state)
 
-engine = GCNMultiLabelMAPEngine(state)
 engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
 

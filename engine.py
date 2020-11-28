@@ -86,40 +86,7 @@ class Engine(object):
         pass
 
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
-
-        # record loss
-        self.state['loss_batch'] = self.state['loss'][0].item() + self.state['loss'][1].item()
-        self.state['meter_loss'].add(self.state['loss_batch'])
-        if training:
-            self.writer.add_scalar('loss/train_batch_loss', self.state['loss_batch'], self.state['train_iters'] - 1)
-        else:
-            self.writer.add_scalar('loss/eval_batch_loss', self.state['loss_batch'], self.state['eval_iters'] - 1)
-
-        if display and self.state['print_freq'] != 0 and self.state['iteration'] % self.state['print_freq'] == 0:
-            loss = self.state['meter_loss'].value()[0]
-            batch_time = self.state['batch_time'].value()[0]
-            data_time = self.state['data_time'].value()[0]
-            if training:
-                print('Epoch: [{0}][{1}/{2}]\t'
-                      'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f}\t'
-                      'g_Loss {g_loss_current:.4f}'.format(
-                    self.state['epoch'], self.state['iteration'], len(data_loader),
-                    batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time,
-                    d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item()
-                    ))
-            else:
-                print('Test: [{0}/{1}]\t'
-                      'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f}\t'
-                      'g_Loss {g_loss_current:.4f}'.format(
-                    self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time,
-                    d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item()
-                    ))
+        pass
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True):
         input_var = self.state['input']
@@ -344,6 +311,40 @@ class MultiLabelMAPEngine(Engine):
             self.state['difficult_examples'] = False
         self.state['ap_meter'] = AveragePrecisionMeter(self.state['difficult_examples'])
 
+    def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
+        target_var = self.state['target']
+        ids, token_type_ids, attention_mask = self.state['input']
+        ids = ids.cuda(self.state['device_ids'][0])
+        token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
+        attention_mask = attention_mask.cuda(self.state['device_ids'][0])
+
+        if training:
+            self.state['train_iters'] += 1
+        else:
+            self.state['eval_iters'] += 1
+
+        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        x_g = model['Generator'](z)
+
+        _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
+                                                                      self.state['encoded_tag'],
+                                                                      self.state['tag_mask'], x_g.detach())#
+        logits = logits[:, 1:]
+        self.state['output'] = F.softmax(logits, dim=-1)
+
+        log_probs = F.log_softmax(logits, dim=-1)
+        per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
+        D_L_Supervised = torch.mean(per_example_loss)
+        self.state['loss'] = D_L_Supervised
+
+        if training:
+            optimizer['enc'].zero_grad()
+            self.state['loss'].backward()
+            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+            optimizer['enc'].step()
+        else:
+            return self.state['output']
+
     def on_start_epoch(self, training, model, criterion, data_loader, optimizer=None, display=True):
         Engine.on_start_epoch(self, training, model, criterion, data_loader, optimizer)
         self.state['ap_meter'].reset()
@@ -393,16 +394,22 @@ class MultiLabelMAPEngine(Engine):
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
         self.state['target_gt'] = self.state['target'].clone()
-        self.state['target'][self.state['target'] == 0] = 1
-        self.state['target'][self.state['target'] == -1] = 0
-
-        input = self.state['input']
-        self.state['input'] = input[0]
-        self.state['name'] = input[1]
+        # self.state['target'][self.state['target'] == 0] = 1
+        # self.state['target'][self.state['target'] == -1] = 0
+        #
+        # input = self.state['input']
+        # self.state['input'] = input[0]
+        # self.state['name'] = input[1]
 
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
-        Engine.on_end_batch(self, training, model, criterion, data_loader, optimizer, display=False)
+        # record loss
+        self.state['loss_batch'] = self.state['loss'].item()
+        self.state['meter_loss'].add(self.state['loss_batch'])
+        if training:
+            self.writer.add_scalar('loss/train_batch_loss', self.state['loss_batch'], self.state['train_iters'] - 1)
+        else:
+            self.writer.add_scalar('loss/eval_batch_loss', self.state['loss_batch'], self.state['eval_iters'] - 1)
 
         # measure mAP
         self.state['ap_meter'].add(self.state['output'].data.cpu(), self.state['target_gt'].cpu())
@@ -414,27 +421,23 @@ class MultiLabelMAPEngine(Engine):
             if training:
                 print('Epoch: [{0}][{1}/{2}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f}\t'
-                      'g_Loss {g_loss_current:.4f}'.format(
+                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
+                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['epoch'], self.state['iteration'], len(data_loader),
                     batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time,
-                    d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item()
-                ))
+                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
+                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
             else:
                 print('Test: [{0}/{1}]\t'
                       'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
-                      'd_Loss {d_loss_current:.4f}\t'
-                      'g_Loss {g_loss_current:.4f}'.format(
+                      'Data {data_time_current:.3f} ({data_time:.3f})\t'
+                      'Loss {loss_current:.4f} ({loss:.4f})'.format(
                     self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
-                    batch_time=batch_time,
-                    d_loss_current=self.state['loss'][0].item(),
-                    g_loss_current=self.state['loss'][1].item()
-                ))
+                    batch_time=batch_time, data_time_current=self.state['data_time_batch'],
+                    data_time=data_time, loss_current=self.state['loss_batch'], loss=loss))
 
 
-class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
+class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']
@@ -506,9 +509,44 @@ class GCNMultiLabelMAPEngine(MultiLabelMAPEngine):
         if not training:
             return self.state['output']
 
-    def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
+    def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
-        self.state['target_gt'] = self.state['target'].clone()
+        # record loss
+        self.state['loss_batch'] = self.state['loss'][0].item() + self.state['loss'][1].item()
+        self.state['meter_loss'].add(self.state['loss_batch'])
+        if training:
+            self.writer.add_scalar('loss/train_batch_loss', self.state['loss_batch'], self.state['train_iters'] - 1)
+        else:
+            self.writer.add_scalar('loss/eval_batch_loss', self.state['loss_batch'], self.state['eval_iters'] - 1)
+
+        # measure mAP
+        self.state['ap_meter'].add(self.state['output'].data.cpu(), self.state['target_gt'].cpu())
+
+        if display and self.state['print_freq'] != 0 and self.state['iteration'] % self.state['print_freq'] == 0:
+            loss = self.state['meter_loss'].value()[0]
+            batch_time = self.state['batch_time'].value()[0]
+            data_time = self.state['data_time'].value()[0]
+            if training:
+                print('Epoch: [{0}][{1}/{2}]\t'
+                      'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
+                    self.state['epoch'], self.state['iteration'], len(data_loader),
+                    batch_time_current=self.state['batch_time_current'],
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item()
+                ))
+            else:
+                print('Test: [{0}/{1}]\t'
+                      'Time {batch_time_current:.3f} ({batch_time:.3f})\t'
+                      'd_Loss {d_loss_current:.4f}\t'
+                      'g_Loss {g_loss_current:.4f}'.format(
+                    self.state['iteration'], len(data_loader), batch_time_current=self.state['batch_time_current'],
+                    batch_time=batch_time,
+                    d_loss_current=self.state['loss'][0].item(),
+                    g_loss_current=self.state['loss'][1].item()
+                ))
 
 
 
