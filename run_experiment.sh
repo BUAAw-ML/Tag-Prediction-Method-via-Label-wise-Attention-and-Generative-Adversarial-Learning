@@ -12,7 +12,7 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='All' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
@@ -29,7 +29,7 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='All' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
@@ -46,7 +46,7 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='All' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
@@ -63,7 +63,7 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='All' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
