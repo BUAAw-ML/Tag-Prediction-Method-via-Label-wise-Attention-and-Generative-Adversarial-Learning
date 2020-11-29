@@ -66,7 +66,7 @@ python main.py \
         --log_dir='./logs' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
+        --use_previousData=1 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
 

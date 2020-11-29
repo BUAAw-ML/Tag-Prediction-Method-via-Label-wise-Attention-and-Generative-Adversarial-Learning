@@ -394,7 +394,7 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if tag_occurance[tag] > 100:
+            if tag_occurance[tag] < 10000:
                 self.use_tags.add(tag)
 
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
