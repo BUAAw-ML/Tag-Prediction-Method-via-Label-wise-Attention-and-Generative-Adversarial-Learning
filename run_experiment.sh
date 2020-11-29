@@ -13,7 +13,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='TrainTest' \
-        --data_path='../datasets/gan_bert/' \
+        --data_path='../datasets/gan-bert/' \
         --utilize_unlabeled_data=1 \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
@@ -29,7 +29,7 @@ python main.py \
 #苏州服务器上数据：
 #../datasets/ProgrammerWeb/programweb-data.csv
 #../datasets/AAPD/aapd2.csv
-#../datasets/gan_bert
+#../datasets/gan-bert
 #../datasets/EUR-Lex
 
 #614服务器上数据：
