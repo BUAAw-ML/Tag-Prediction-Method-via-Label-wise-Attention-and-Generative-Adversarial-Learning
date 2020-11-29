@@ -108,7 +108,7 @@ class Engine(object):
             self.state['loss'].backward()
             optimizer.step()
 
-    def learning(self, model, criterion, dataset, optimizer=None, utilize_unlabeled_data=False):
+    def learning(self, model, criterion, dataset, optimizer=None):
         # data loading code
 
         # train_sampler = MultilabelBalancedRandomSampler(dataset.train_data)
@@ -158,7 +158,7 @@ class Engine(object):
             lr = self.adjust_learning_rate(optimizer)
             print('lr:', lr)
 
-            if utilize_unlabeled_data:
+            if self.state['method'] == 'semiGAN_MultiLabelMAP':
                 # train for one epoch
                 print("Train with unlabeled data:")
                 self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)

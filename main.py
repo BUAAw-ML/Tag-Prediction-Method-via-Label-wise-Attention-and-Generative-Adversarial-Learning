@@ -53,8 +53,8 @@ parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=st
                     help='path of data')
 parser.add_argument('--bert_trainable', default=True, type=bool,
                     help='bert_trainable')
-parser.add_argument('--utilize_unlabeled_data', default=1, type=int,
-                    help='utilize_unlabeled_data')
+# parser.add_argument('--utilize_unlabeled_data', default=1, type=int,
+#                     help='utilize_unlabeled_data')
 parser.add_argument('--use_previousData', default=0, type=int,
                     help='use_previousData')
 parser.add_argument('--method', default='MultiLabelMAP', type=str,
@@ -111,7 +111,7 @@ state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': a
          'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
          'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
-         'result_file': fo}
+         'result_file': fo, 'method': args.method}
 
 if args.evaluate:
     state['evaluate'] = True
@@ -121,6 +121,6 @@ if args.method == 'MultiLabelMAP':
 elif args.method == 'semiGAN_MultiLabelMAP':
     engine = semiGAN_MultiLabelMAPEngine(state)
 
-engine.learning(model, criterion, dataset, optimizer, args.utilize_unlabeled_data)
+engine.learning(model, criterion, dataset, optimizer)
 
 fo.close()

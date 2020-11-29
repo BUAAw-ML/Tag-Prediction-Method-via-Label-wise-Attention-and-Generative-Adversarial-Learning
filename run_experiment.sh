@@ -14,7 +14,6 @@ python main.py \
         --log_dir='./logs' \
         --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
-        --utilize_unlabeled_data=1 \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
 
