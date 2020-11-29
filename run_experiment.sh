@@ -3,26 +3,26 @@
 
 python main.py \
         --epochs=50 \
-        --epoch_step=13 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=10 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
-        --utilize_unlabeled_data=0 \
-        --use_previousData=1 \
+        --data_type='TrainTest' \
+        --data_path='./datasets/AAPD/aapd2.csv' \
+        --utilize_unlabeled_data=1 \
+        --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
 
 
 #All  TrainTest  TrainTestTextTag
 #MultiLabelMAP semiGAN_MultiLabelMAP
 
-#utilize_unlabeled_data、学习率、epoch_step、无监督损失，
+#utilize_unlabeled_data、学习率、epoch_step
 
 #batch-size：1，4，8，16
 
