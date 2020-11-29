@@ -35,7 +35,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False):
 
         if data_type == 'All':
 
-            data = dataset.load_programWeb(data_path)
+            data = dataset.load_programWeb_AAPD(data_path)
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
@@ -242,7 +242,7 @@ class dataEngine(Dataset):
 
         return tfidf_dict
 
-    def load_programWeb(self, f):
+    def load_programWeb_AAPD(self, f):
         data = []
 
         document = []
