@@ -1,39 +1,39 @@
 
 # Experiment runner script
 
-python main.py \
-        --epochs=40 \
-        --epoch_step=15 \
-        --device_ids=0 \
-        --batch-size=8 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --print-freq=200 \
-        --save_model_path='./checkpoint' \
-        --log_dir='./logs' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-
-python main.py \
-        --epochs=40 \
-        --epoch_step=30 \
-        --device_ids=0 \
-        --batch-size=8 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --print-freq=200 \
-        --save_model_path='./checkpoint' \
-        --log_dir='./logs' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
+#python main.py \
+#        --epochs=40 \
+#        --epoch_step=15 \
+#        --device_ids=0 \
+#        --batch-size=8 \
+#        --G-lr=0.001 \
+#        --D-lr=0.1 \
+#        --B-lr=0.01 \
+#        --print-freq=200 \
+#        --save_model_path='./checkpoint' \
+#        --log_dir='./logs' \
+#        --data_type='TrainTestTextTag' \
+#        --data_path='../datasets/RCV2' \
+#        --use_previousData=0 \
+#        --method='MultiLabelMAP' \
+#        --overlength_handle='truncation' \
+#
+#python main.py \
+#        --epochs=40 \
+#        --epoch_step=30 \
+#        --device_ids=0 \
+#        --batch-size=8 \
+#        --G-lr=0.001 \
+#        --D-lr=0.1 \
+#        --B-lr=0.001 \
+#        --print-freq=200 \
+#        --save_model_path='./checkpoint' \
+#        --log_dir='./logs' \
+#        --data_type='TrainTestTextTag' \
+#        --data_path='../datasets/RCV2' \
+#        --use_previousData=0 \
+#        --method='semiGAN_MultiLabelMAP' \
+#        --overlength_handle='truncation' \
 
 
 python main.py \
