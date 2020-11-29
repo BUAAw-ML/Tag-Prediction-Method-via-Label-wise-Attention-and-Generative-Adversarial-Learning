@@ -3,9 +3,9 @@
 
 python main.py \
         --epochs=40 \
-        --epoch_step=30 \
+        --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=16 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -13,7 +13,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -22,7 +22,7 @@ python main.py \
         --epochs=40 \
         --epoch_step=30 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=16 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
@@ -30,16 +30,17 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
 
+
 python main.py \
         --epochs=40 \
-        --epoch_step=30 \
+        --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=16 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -47,7 +48,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
@@ -56,7 +57,7 @@ python main.py \
         --epochs=40 \
         --epoch_step=30 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=16 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
@@ -64,10 +65,12 @@ python main.py \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
+
+
 
 #truncation  skip
 #All  TrainTest  TrainTestTextTag
@@ -82,6 +85,7 @@ python main.py \
 #../datasets/AAPD/aapd2.csv
 #../datasets/gan-bert
 #../datasets/EUR-Lex
+#../datasets/RCV2
 
 #614服务器上数据：
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
