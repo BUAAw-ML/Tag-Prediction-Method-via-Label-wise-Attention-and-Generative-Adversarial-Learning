@@ -72,7 +72,7 @@ if not os.path.exists(result_path):
     os.makedirs(result_path)
 method_str = args.data_path.split("/")[-1] + '_' + args.method
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
-fo.write('#' * 50)
+fo.write('#' * 100 + '\n')
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}'\
               '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {}' \
               '\nuse_previousData: {} \t method: {} \t overlength_handle: {}'.format(
