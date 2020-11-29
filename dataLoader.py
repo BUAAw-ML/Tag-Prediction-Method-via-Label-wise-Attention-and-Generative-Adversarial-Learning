@@ -394,7 +394,7 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if tag_occurance[tag] > 10:
+            if tag_occurance[tag] > 50:
                 self.use_tags.add(tag)
 
     def load_EurLex(self, file1, file2):
