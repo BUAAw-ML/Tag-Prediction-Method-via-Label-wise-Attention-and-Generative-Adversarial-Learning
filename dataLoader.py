@@ -62,7 +62,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
             file1 = os.path.join(data_path, 'train_texts.txt')
             file2 = os.path.join(data_path, 'train_labels.txt')
             dataset.filter_tags(file2)
-            data = dataset.load_EurLex(file1, file2)
+            data = dataset.load_EurLex_RCV2(file1, file2)
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
@@ -73,7 +73,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
 
             file1 = os.path.join(data_path, 'test_texts.txt')
             file2 = os.path.join(data_path, 'test_labels.txt')
-            dataset.test_data = dataset.load_EurLex(file1, file2)
+            dataset.test_data = dataset.load_EurLex_RCV2(file1, file2)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
@@ -397,7 +397,7 @@ class dataEngine(Dataset):
             if tag_occurance[tag] > 50:
                 self.use_tags.add(tag)
 
-    def load_EurLex(self, file1, file2):
+    def load_EurLex_RCV2(self, file1, file2):
         data = []
 
         f_text = open(file1, 'r')
