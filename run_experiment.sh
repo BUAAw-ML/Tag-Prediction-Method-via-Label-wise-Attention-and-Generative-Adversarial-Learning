@@ -70,15 +70,12 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
 
-
-
-#truncation  skip
-#All  TrainTest  TrainTestTextTag
-#MultiLabelMAP semiGAN_MultiLabelMAP
-
 #utilize_unlabeled_data、学习率、epoch_step
 
 #batch-size：1，4，8，16
+#data_type: All  TrainTest  TrainTestTextTag
+#method: MultiLabelMAP semiGAN_MultiLabelMAP
+#overlength_handle: truncation  skip
 
 #苏州服务器上数据：
 #../datasets/ProgrammerWeb/programweb-data.csv

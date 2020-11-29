@@ -394,7 +394,7 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if tag_occurance[tag] > 50:
+            if tag_occurance[tag] > 100 and tag_occurance[tag] < 500:
                 self.use_tags.add(tag)
 
     def load_EurLex_RCV2(self, file1, file2):
