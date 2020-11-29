@@ -16,7 +16,7 @@ tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 token_table = {'ecommerce': 'electronic commerce'}
 
 
-def load_data(data_path=None, data_type='allData', use_previousData=False):
+def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation'):
     cache_file_head = data_path.split("/")[-1]
 
     if use_previousData:
@@ -31,7 +31,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False):
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset = dataEngine()
+        dataset = dataEngine(overlength_handle)
 
         if data_type == 'All':
 
@@ -89,7 +89,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False):
 
 class dataEngine(Dataset):
     def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None,
-                 tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None):
+                 tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation'):
         self.train_data = train_data
         self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
@@ -101,6 +101,8 @@ class dataEngine(Dataset):
 
         self.co_occur_mat = co_occur_mat
         self.tfidf_dict = tfidf_dict
+
+        self.overlength_handle = overlength_handle
 
 
     @classmethod
@@ -284,11 +286,14 @@ class dataEngine(Dataset):
                 id, title, dscp, tag = row
 
                 title_tokens = tokenizer.tokenize(title.strip())
-                dscp_tokens = tokenizer.tokenize(dscp.strip())
-                if len(title_tokens) + len(dscp_tokens) > 510:
-                    continue
+                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
-                title_ids = tokenizer.convert_tokens_to_ids(title_tokens)
+                if len(dscp_tokens) > 510:
+                    if self.overlength_handle == 'truncation':
+                        dscp_tokens = dscp_tokens[:510]
+                    else:
+                        continue
+
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
                 tag = tag.strip().split('###')
@@ -313,8 +318,8 @@ class dataEngine(Dataset):
 
                 data.append({
                     'id': int(id),
-                    'dscp_ids': title_ids + dscp_ids,
-                    'dscp_tokens': title_tokens + dscp_tokens,
+                    'dscp_ids': dscp_ids,
+                    'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
                     'dscp': dscp
                 })
@@ -342,9 +347,12 @@ class dataEngine(Dataset):
 
                 dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
-                    continue
+                    if self.overlength_handle == 'truncation':
+                        dscp_tokens = dscp_tokens[:510]
+                    else:
+                        continue
 
-                document.append(" ".join(dscp_tokens) )
+                document.append(" ".join(dscp_tokens))
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
@@ -401,8 +409,10 @@ class dataEngine(Dataset):
 
             dscp_tokens = tokenizer.tokenize(text.strip())
             if len(dscp_tokens) > 510:
-                # dscp_tokens = dscp_tokens[:509]
-                continue
+                if self.overlength_handle == 'truncation':
+                    dscp_tokens = dscp_tokens[:510]
+                else:
+                    continue
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 

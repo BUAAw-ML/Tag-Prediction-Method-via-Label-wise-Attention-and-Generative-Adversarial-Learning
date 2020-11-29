@@ -16,8 +16,9 @@ python main.py \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
+        --overlength_handle='truncation' \
 
-
+#truncation  skip
 #All  TrainTest  TrainTestTextTag
 #MultiLabelMAP semiGAN_MultiLabelMAP
 
