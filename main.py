@@ -72,11 +72,9 @@ method_str = args.data_path.split("/")[-1] + '_' + args.method
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 fo.write('#' * 50)
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}'\
-              '\ndevice_ids: {} \t utilize_unlabeled_data: {} \t data_path: {} \t bert_trainable: {} ' \
-              '\n use_previousData: {}'.format(
+              '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {} \t use_previousData: {}'.format(
                 args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr,
-                args.device_ids, args.utilize_unlabeled_data, args.data_path, args.bert_trainable,
-                args.use_previousData)
+                args.device_ids, args.data_path, args.bert_trainable, args.use_previousData)
 
 print(setting_str)
 fo.write(setting_str)
