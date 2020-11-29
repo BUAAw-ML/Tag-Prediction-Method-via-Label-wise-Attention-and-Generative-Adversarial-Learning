@@ -12,8 +12,8 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --log_dir='./logs' \
-        --data_type='All' \
-        --data_path='../datasets/AAPD/aapd2.csv' \
+        --data_type='TrainTest' \
+        --data_path='../datasets/gan_bert/' \
         --utilize_unlabeled_data=1 \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
