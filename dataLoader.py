@@ -19,7 +19,8 @@ token_table = {'ecommerce': 'electronic commerce'}
 def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation',
               min_tagFrequence=0, max_tagFrequence=100000):
     cache_file_head = data_path.split("/")[-1]
-
+    print(min_tagFrequence)
+    print(max_tagFrequence)
     if use_previousData:
 
         print("load dataset from cache")
