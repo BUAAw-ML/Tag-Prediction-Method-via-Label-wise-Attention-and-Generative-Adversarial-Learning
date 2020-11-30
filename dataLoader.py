@@ -397,6 +397,11 @@ class dataEngine(Dataset):
         print('Total number of tags: {}'.format(len(tag_occurance)))
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
 
+        print(self.max_tagFrequence)
+        print(len(self.use_tags))
+        exit()
+
+
     def load_EurLex_RCV2(self, file1, file2):
         data = []
 
