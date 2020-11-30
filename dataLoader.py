@@ -84,10 +84,11 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
 
 class dataEngine(Dataset):
-    def __init__(self, data_config, tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None):
-        self.train_data = None
-        self.unlabeled_train_data = None
-        self.test_data = None
+    def __init__(self, data_config, train_data=None, unlabeled_train_data=None, test_data=None,
+                    tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None):
+        self.train_data = train_data
+        self.unlabeled_train_data = unlabeled_train_data
+        self.test_data = test_data
 
         self.tag2id = tag2id
         self.id2tag = id2tag
