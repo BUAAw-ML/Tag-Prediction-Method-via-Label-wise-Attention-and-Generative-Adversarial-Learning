@@ -17,8 +17,8 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=10000  \
-        --intanceNum_limit=4000 \
+        --max_tagFrequence=20000  \
+        --intanceNum_limit=10000 \
 
 python main.py \
         --epochs=40 \
@@ -36,8 +36,8 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=10000  \
-        --intanceNum_limit=4000 \
+        --max_tagFrequence=20000  \
+        --intanceNum_limit=10000 \
 
 #utilize_unlabeled_data、学习率、epoch_step
 

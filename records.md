@@ -115,3 +115,9 @@
 - 使用标签频次大于100 能达到三十多的MAP
 - 使用标签频次大于10 有一千三百八十多个标签 用一半的训练数据 截断的能达到十七的MAP 过滤的（不截断）的七点多的MAP
 - 63.452 训练集和测试集都是相同的一百八十多个标签
+
+## RCV2数据集
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|label,unlabel,test:800,,132（标签数：41）（tag频率<5000,intanceNum_limit<5000）|Bert微调+多注意力|epoch:20;epoch_step:15;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|55.890|
+|label,unlabel,test:800,3201,132（标签数：41）（tag频率<5000,intanceNum_limit<5000）|Bert微调+多注意力+GAN|epoch:40;epoch_step:30;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|58.535|
