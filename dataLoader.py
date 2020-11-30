@@ -423,6 +423,7 @@ class dataEngine(Dataset):
 
             if instanceCount > self.data_config['intanceNum_limit']:
                 break
+            instanceCount += 1
 
             for t in tag:
                 if t not in self.tag2id:

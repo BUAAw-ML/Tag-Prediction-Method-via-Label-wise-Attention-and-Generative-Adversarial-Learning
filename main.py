@@ -98,7 +98,7 @@ dataset, encoded_tag, tag_mask = load_data(data_config=data_config,
                                            data_type=args.data_type,
                                            use_previousData=args.use_previousData)
 
-data_size = "train_data_size: {} \n unlabeled_train_data: {} \n val_data_size: {} \n".format(
+data_size = "train_data_size: {} \nunlabeled_train_data: {} \nval_data_size: {} \n".format(
     len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data))
 print(data_size)
 fo.write(data_size)
