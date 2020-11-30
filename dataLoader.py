@@ -19,8 +19,7 @@ token_table = {'ecommerce': 'electronic commerce'}
 def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation',
               min_tagFrequence=0, max_tagFrequence=100000):
     cache_file_head = data_path.split("/")[-1]
-    print(min_tagFrequence)
-    print(max_tagFrequence)
+
     if use_previousData:
 
         print("load dataset from cache")
@@ -33,7 +32,9 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset = dataEngine(overlength_handle, min_tagFrequence, max_tagFrequence)
+        dataset = dataEngine(overlength_handle=overlength_handle,
+                             min_tagFrequence=min_tagFrequence,
+                             max_tagFrequence=max_tagFrequence)
 
         if data_type == 'All':
 
@@ -86,12 +87,11 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
 
 
 class dataEngine(Dataset):
-    def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None,
-                 tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation',
+    def __init__(self, tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation',
                  min_tagFrequence=0, max_tagFrequence=100000):
-        self.train_data = train_data
-        self.unlabeled_train_data = unlabeled_train_data
-        self.test_data = test_data
+        self.train_data = None
+        self.unlabeled_train_data = None
+        self.test_data = None
 
         self.tag2id = tag2id
         self.id2tag = id2tag
