@@ -16,7 +16,8 @@ tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 token_table = {'ecommerce': 'electronic commerce'}
 
 
-def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation'):
+def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation',
+              min_tagFrequence=0, max_tagFrequence=100000):
     cache_file_head = data_path.split("/")[-1]
 
     if use_previousData:
@@ -31,7 +32,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset = dataEngine(overlength_handle)
+        dataset = dataEngine(overlength_handle, min_tagFrequence, max_tagFrequence)
 
         if data_type == 'All':
 
@@ -85,7 +86,8 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
 
 class dataEngine(Dataset):
     def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None,
-                 tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation'):
+                 tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation',
+                 min_tagFrequence=0, max_tagFrequence=100000):
         self.train_data = train_data
         self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
@@ -99,6 +101,8 @@ class dataEngine(Dataset):
         self.tfidf_dict = tfidf_dict
 
         self.overlength_handle = overlength_handle
+        self.min_tagFrequence = min_tagFrequence
+        self.max_tagFrequence = max_tagFrequence
 
 
     @classmethod
@@ -263,14 +267,14 @@ class dataEngine(Dataset):
                         tag_occurance[t] = 1
                     tag_occurance[t] += 1
 
-        ignored_tags = set()
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if tag_occurance[tag] == 0:
-                ignored_tags.add(tag)
+            if self.min_tagFrequence <= tag_occurance[tag] <= self.max_tagFrequence:
+                self.use_tags.add(tag)
 
-        print(tag_occurance)
+        print('Total number of tags: {}'.format(len(tag_occurance)))
+        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
 
         with open(f, newline='') as csvfile:
             reader = csv.reader(csvfile)
@@ -295,8 +299,8 @@ class dataEngine(Dataset):
                 tag = tag.strip().split('###')
                 tag = [t for t in tag if t != '']
 
-                if ignored_tags is not None:
-                    tag = [t for t in tag if t not in ignored_tags]
+                if self.use_tags is not None:
+                    tag = [t for t in tag if t in self.use_tags]
 
                 # if len(set(tag)) < 2:
                 #     continue
@@ -327,9 +331,7 @@ class dataEngine(Dataset):
 
     def load_ganBert(self, file):
         data = []
-
         document = []
-        tag_occurance = {}
 
         with open(file, 'r') as f:
             contents = f.read()
@@ -390,9 +392,9 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if tag_occurance[tag] > 50:
+            if self.min_tagFrequence <= tag_occurance[tag] <= self.max_tagFrequence:
                 self.use_tags.add(tag)
-
+        print('Total number of tags: {}'.format(len(tag_occurance)))
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
 
     def load_EurLex_RCV2(self, file1, file2):

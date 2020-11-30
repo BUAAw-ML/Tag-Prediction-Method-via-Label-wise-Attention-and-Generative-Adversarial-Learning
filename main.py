@@ -45,8 +45,8 @@ parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
-parser.add_argument('--log_dir', default='./logs', type=str,
-                    help='path to save log (default: none)')
+# parser.add_argument('--log_dir', default='./logs', type=str,
+#                     help='path to save log (default: none)')
 parser.add_argument('--data_type', default='All', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
@@ -61,6 +61,10 @@ parser.add_argument('--method', default='MultiLabelMAP', type=str,
                     help='Method')
 parser.add_argument('--overlength_handle', default='truncation', type=str,
                     help='overlength_handle')
+parser.add_argument('--min_tagFrequence', default=0, type=int,
+                    help='min_tagFrequence')
+parser.add_argument('--max_tagFrequence', default=100000, type=int,
+                    help='max_tagFrequence')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -68,6 +72,7 @@ args = parser.parse_args()
 use_gpu = torch.cuda.is_available()
 
 result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
+log_dir = os.path.join(result_path, 'logs')
 if not os.path.exists(result_path):
     os.makedirs(result_path)
 method_str = args.data_path.split("/")[-1] + '_' + args.method
@@ -83,7 +88,8 @@ setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR:
 print(setting_str)
 fo.write(setting_str)
 
-dataset, encoded_tag, tag_mask = load_data(args.data_path, args.data_type, args.use_previousData, args.overlength_handle)
+dataset, encoded_tag, tag_mask = load_data(args.data_path, args.data_type, args.use_previousData,
+                                           args.overlength_handle, args.min_tagFrequence, args.max_tagFrequence)
 
 data_size = "train_data_size: {} \n unlabeled_train_data: {} \n val_data_size: {} \n".format(
     len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data))
@@ -115,7 +121,7 @@ optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, a
 
 state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
          'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
-         'save_model_path': args.save_model_path, 'log_dir': args.log_dir, 'workers': args.workers,
+         'save_model_path': args.save_model_path, 'log_dir': log_dir, 'workers': args.workers,
          'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
          'result_file': fo, 'method': args.method}
