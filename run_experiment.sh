@@ -2,7 +2,7 @@
 # Experiment runner script
 
 python main.py \
-        --epochs=40 \
+        --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
         --batch-size=8 \
@@ -16,9 +16,26 @@ python main.py \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=100  \
-        --max_tagFrequence=1000  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=5000  \
 
+python main.py \
+        --epochs=40 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=8 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --print-freq=200 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/RCV2' \
+        --use_previousData=0 \
+        --method='semiGAN_MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=5000  \
 
 #utilize_unlabeled_data、学习率、epoch_step
 
