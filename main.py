@@ -65,6 +65,8 @@ parser.add_argument('--min_tagFrequence', default=0, type=int,
                     help='min_tagFrequence')
 parser.add_argument('--max_tagFrequence', default=100000, type=int,
                     help='max_tagFrequence')
+parser.add_argument('--intanceNum_limit', default=2000, type=int,
+                    help='max_tagFrequence')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -88,12 +90,13 @@ setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR:
 print(setting_str)
 fo.write(setting_str)
 
-dataset, encoded_tag, tag_mask = load_data(data_path=args.data_path,
+data_config = {'overlength_handle': args.overlength_handle, 'intanceNum_limit': args.intanceNum_limit,
+               'min_tagFrequence': args.min_tagFrequence, 'max_tagFrequence': args.max_tagFrequence}
+
+dataset, encoded_tag, tag_mask = load_data(data_config=data_config,
+                                           data_path=args.data_path,
                                            data_type=args.data_type,
-                                           use_previousData=args.use_previousData,
-                                           overlength_handle=args.overlength_handle,
-                                           min_tagFrequence=args.min_tagFrequence,
-                                           max_tagFrequence=args.max_tagFrequence)
+                                           use_previousData=args.use_previousData)
 
 data_size = "train_data_size: {} \n unlabeled_train_data: {} \n val_data_size: {} \n".format(
     len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data))

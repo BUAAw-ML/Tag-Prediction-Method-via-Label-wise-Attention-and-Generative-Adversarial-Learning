@@ -18,6 +18,7 @@ python main.py \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=5000  \
+        --intanceNum_limit = 4000 \
 
 python main.py \
         --epochs=40 \
@@ -36,6 +37,7 @@ python main.py \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=5000  \
+        --intanceNum_limit = 4000 \
 
 #utilize_unlabeled_data、学习率、epoch_step
 

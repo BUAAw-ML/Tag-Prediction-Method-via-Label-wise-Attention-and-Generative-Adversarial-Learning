@@ -16,8 +16,7 @@ tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 token_table = {'ecommerce': 'electronic commerce'}
 
 
-def load_data(data_path=None, data_type='allData', use_previousData=False, overlength_handle='truncation',
-              min_tagFrequence=0, max_tagFrequence=100000):
+def load_data(data_config, data_path=None, data_type='allData', use_previousData=False):
     cache_file_head = data_path.split("/")[-1]
 
     if use_previousData:
@@ -32,9 +31,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset = dataEngine(overlength_handle=overlength_handle,
-                             min_tagFrequence=min_tagFrequence,
-                             max_tagFrequence=max_tagFrequence)
+        dataset = dataEngine(data_config)
 
         if data_type == 'All':
 
@@ -69,7 +66,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * 0.5)
+            split = int(len(data) * 0.2)
 
             dataset.train_data = data[ind[:split]].tolist()
             dataset.unlabeled_train_data = data[ind[split:]].tolist()
@@ -87,8 +84,7 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
 
 
 class dataEngine(Dataset):
-    def __init__(self, tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, overlength_handle='truncation',
-                 min_tagFrequence=0, max_tagFrequence=100000):
+    def __init__(self, data_config, tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None):
         self.train_data = None
         self.unlabeled_train_data = None
         self.test_data = None
@@ -101,9 +97,7 @@ class dataEngine(Dataset):
         self.co_occur_mat = co_occur_mat
         self.tfidf_dict = tfidf_dict
 
-        self.overlength_handle = overlength_handle
-        self.min_tagFrequence = min_tagFrequence
-        self.max_tagFrequence = max_tagFrequence
+        self.data_config = data_config
 
 
     @classmethod
@@ -271,7 +265,7 @@ class dataEngine(Dataset):
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
         for tag in tag_occurance:
-            if self.min_tagFrequence <= tag_occurance[tag] <= self.max_tagFrequence:
+            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
                 self.use_tags.add(tag)
 
         print('Total number of tags: {}'.format(len(tag_occurance)))
@@ -290,7 +284,7 @@ class dataEngine(Dataset):
                 dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
                 if len(dscp_tokens) > 510:
-                    if self.overlength_handle == 'truncation':
+                    if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
                     else:
                         continue
@@ -346,7 +340,7 @@ class dataEngine(Dataset):
 
                 dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
-                    if self.overlength_handle == 'truncation':
+                    if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
                     else:
                         continue
@@ -393,7 +387,7 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if self.min_tagFrequence <= tag_occurance[tag] <= self.max_tagFrequence:
+            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
                 self.use_tags.add(tag)
         print('Total number of tags: {}'.format(len(tag_occurance)))
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
@@ -406,11 +400,12 @@ class dataEngine(Dataset):
         f_tag = open(file2, 'r')
         tags = f_tag.readlines()
 
+        instanceCount = 0
         for text, tag in zip(texts, tags):
 
             dscp_tokens = tokenizer.tokenize(text.strip())
             if len(dscp_tokens) > 510:
-                if self.overlength_handle == 'truncation':
+                if self.data_config['overlength_handle'] == 'truncation':
                     dscp_tokens = dscp_tokens[:510]
                 else:
                     continue
@@ -425,6 +420,9 @@ class dataEngine(Dataset):
 
             if len(tag) == 0:
                 continue
+
+            if instanceCount > self.data_config['intanceNum_limit']:
+                break
 
             for t in tag:
                 if t not in self.tag2id:
