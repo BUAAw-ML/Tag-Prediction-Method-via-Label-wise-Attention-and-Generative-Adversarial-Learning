@@ -66,7 +66,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * 0.2)
+            split = int(len(data) * 0.1)
 
             dataset.train_data = data[ind[:split]].tolist()
             dataset.unlabeled_train_data = data[ind[split:]].tolist()
