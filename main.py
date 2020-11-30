@@ -75,7 +75,7 @@ fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 fo.write('#' * 100 + '\n')
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}'\
               '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {}' \
-              '\nuse_previousData: {} \t method: {} \t overlength_handle: {}'.format(
+              '\nuse_previousData: {} \t method: {} \t overlength_handle: {} \n'.format(
                 args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr,
                 args.device_ids, args.data_path, args.bert_trainable,
                 args.use_previousData, args.method, args.overlength_handle)
@@ -84,6 +84,11 @@ print(setting_str)
 fo.write(setting_str)
 
 dataset, encoded_tag, tag_mask = load_data(args.data_path, args.data_type, args.use_previousData, args.overlength_handle)
+
+data_size = "train_data_size: {} \n unlabeled_train_data: {} \n val_data_size: {} \n".format(
+    len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data))
+print(data_size)
+fo.write(data_size)
 
 bert = BertModel.from_pretrained('bert-base-uncased')
 

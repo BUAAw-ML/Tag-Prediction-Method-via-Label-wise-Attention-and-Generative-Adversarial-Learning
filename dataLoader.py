@@ -80,10 +80,6 @@ def load_data(data_path=None, data_type='allData', use_previousData=False, overl
         torch.save(encoded_tag, os.path.join('cache', cache_file_head + '.encoded_tag'))
         torch.save(tag_mask, os.path.join('cache', cache_file_head + '.tag_mask'))
 
-    print("train_data_size: {}".format(len(dataset.train_data)))
-    print("unlabeled_train_data: {}".format(len(dataset.unlabeled_train_data)))
-    print("val_data_size: {}".format(len(dataset.test_data)))
-
     return dataset, encoded_tag, tag_mask
 
 
@@ -394,7 +390,7 @@ class dataEngine(Dataset):
                     tag_occurance[t] += 1
 
         for tag in tag_occurance:
-            if tag_occurance[tag] < 10000:
+            if tag_occurance[tag] > 50:
                 self.use_tags.add(tag)
 
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
