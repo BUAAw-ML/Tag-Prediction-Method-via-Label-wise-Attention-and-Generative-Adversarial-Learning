@@ -1,12 +1,32 @@
 
 # Experiment runner script
 
-EN='02'  #experiment_no
+#EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no=${EN}  \
-        --epochs=60 \
-        --epoch_step=50 \
+        --experiment_no='tagFrequence>100_dataSplit=0.1'  \
+        --epochs=30 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=8 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/EUR-Lex' \
+        --use_previousData=0 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=100  \
+        --max_tagFrequence=20000  \
+        --intanceNum_limit=10000 \
+        --data_split=0.1  \
+
+python main.py \
+        --experiment_no='tagFrequence>100_dataSplit=0.1'  \
+        --epochs=55 \
+        --epoch_step=45 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
@@ -18,10 +38,10 @@ python main.py \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=200  \
+        --min_tagFrequence=100  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        --data_split=0.2  \
+        --data_split=0.1  \
 
 
 

@@ -92,7 +92,7 @@
 另外，进行了其它试验，包括：
 - 0.69的label，0.01的。
 - batch-size使用30时，GAN初期提不起来（6轮都不咋提高），感觉之后效果应该不好。
-- 提出方法当模型达到最高性能后性能又会快速下降（好像是在d_loss变为0的时候）
+- 提出方法当模型达到最高性能后性能又会快速下降（掉到底）（好像是在d_loss变为0的时候）
 - 感觉batch-size对方法的效果有影响
 - 给generator增加了一层也还是不能避免d_loss变为0后性能迅速下降
 
@@ -108,6 +108,12 @@
 |label,unlabel,test:5422,5423,2662（标签数：60）（tag频率>200,text按510截断）|Bert微调+多注意力+GAN|epoch:35;epoch_step:40;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|63.904|
 |label,unlabel,test:10845,,2662（标签数：60）（tag频率>200,text按510截断）|Bert微调+多注意力|epoch:17;epoch_step:13;batch-size:10;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|66.914|
 |---|---|---|---|
+|label,unlabel,test:870,,1084（标签数：60）（tag频率>200,skip）|Bert微调+多注意力+GAN|epoch:30;epoch_step:15;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|45.705|
+|label,unlabel,test:870,3483,1084（标签数：60）（tag频率>200,skip）|Bert微调+多注意力+GAN|epoch:60;epoch_step:50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|47.850|
+|---|---|---|---|
+|label,unlabel,test:435，，1084（标签数：60）（tag频率>200,skip）|Bert微调+多注意力+GAN|epoch:30;epoch_step:15;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|37.547|
+|label,unlabel,test:435，3918，1084（标签数：60）（tag频率>200,skip）|Bert微调+多注意力+GAN|epoch:60;epoch_step:50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|37.876|
+|---|---|---|---|
 
 
 另外进行的试验：
@@ -115,6 +121,7 @@
 - 使用标签频次大于100 能达到三十多的MAP
 - 使用标签频次大于10 有一千三百八十多个标签 用一半的训练数据 截断的能达到十七的MAP 过滤的（不截断）的七点多的MAP
 - 63.452 训练集和测试集都是相同的一百八十多个标签
+
 
 ## RCV2数据集
 |数据配置|模型方法|训练参数|实验结果|
@@ -125,4 +132,6 @@
 |label,unlabel,test:1000,,410（标签数：41）（tag频率<20000,intanceNum_limit<10000）|Bert微调+多注意力|epoch:25;epoch_step:15;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|44.963|
 |label,unlabel,test:1000,9001,410（标签数：41）（tag频率<20000,intanceNum_limit<10000）|Bert微调+多注意力+GAN|epoch:40;epoch_step:30;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|47.398|
 
+另外进行的试验：
 - 提出方法当模型达到最高性能后性能又会快速下降（好像是在d_loss变为0的时候）
+- 使用该数据1500，13501，668 提出的方法没有训练成果，具体因为训练中性能掉到底两次
