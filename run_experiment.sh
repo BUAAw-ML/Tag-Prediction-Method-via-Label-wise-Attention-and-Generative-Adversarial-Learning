@@ -1,7 +1,7 @@
 
 # Experiment runner script
 
-EN='01'  #experiment_no
+EN='02'  #experiment_no
 
 python main.py \
         --epochs=30 \
@@ -21,7 +21,7 @@ python main.py \
         --min_tagFrequence=200  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        --data_split=0.1
+        --data_split=0.2
         --experiment_no=${EN}  \
 
 python main.py \
@@ -42,7 +42,7 @@ python main.py \
         --min_tagFrequence=200  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        --data_split=0.1
+        --data_split=0.2
         --experiment_no=${EN}  \
 
 
