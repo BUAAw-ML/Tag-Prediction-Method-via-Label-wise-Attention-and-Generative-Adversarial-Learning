@@ -67,7 +67,7 @@ parser.add_argument('--max_tagFrequence', default=100000, type=int,
                     help='max_tagFrequence')
 parser.add_argument('--intanceNum_limit', default=2000, type=int,
                     help='max_tagFrequence')
-parser.add_argument('-ds', '--data_split', default=[], type=int, nargs='+', action='append',
+parser.add_argument('--data_split', default=0.5, type=float,
                     help='data_split')
 parser.add_argument('--experiment_no', default='01', type=str,
                     help='experiment_no')

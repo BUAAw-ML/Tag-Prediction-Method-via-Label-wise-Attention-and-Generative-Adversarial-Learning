@@ -22,7 +22,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        -ds=${myarray[*]} \
+        --data_split=0.1
         --experiment_no=${EN}  \
 
 #python main.py \

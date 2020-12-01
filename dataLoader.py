@@ -40,9 +40,9 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
 
-            split = int(len(data) * data_config['data_split'][0])
-            split2 = int(len(data) * data_config['data_split'][1])
-            split3 = int(len(data) * data_config['data_split'][2])
+            split = int(len(data) * data_config['data_split'] * 0.7)
+            split2 = int(len(data) * 0.7)
+            split3 = int(len(data) * 1)
 
             dataset.train_data = data[ind[:split]].tolist()
             dataset.unlabeled_train_data = data[ind[split:split2]].tolist()
@@ -66,7 +66,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * data_config['data_split'][0])
+            split = int(len(data) * data_config['data_split'])
 
             dataset.train_data = data[ind[:split]].tolist()
             dataset.unlabeled_train_data = data[ind[split:]].tolist()
