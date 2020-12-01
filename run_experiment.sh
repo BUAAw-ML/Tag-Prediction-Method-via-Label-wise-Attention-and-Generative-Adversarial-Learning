@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='tagFrequence>100_dataSplit=0.1'  \
+        --experiment_no='tagFrequence>100_dataSplit=0.2'  \
         --epochs=30 \
         --epoch_step=15 \
         --device_ids=0 \
@@ -21,10 +21,10 @@ python main.py \
         --min_tagFrequence=100  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        --data_split=0.1  \
+        --data_split=0.2  \
 
 python main.py \
-        --experiment_no='tagFrequence>100_dataSplit=0.1'  \
+        --experiment_no='tagFrequence>100_dataSplit=0.2'  \
         --epochs=55 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -41,7 +41,7 @@ python main.py \
         --min_tagFrequence=100  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        --data_split=0.1  \
+        --data_split=0.2  \
 
 
 
