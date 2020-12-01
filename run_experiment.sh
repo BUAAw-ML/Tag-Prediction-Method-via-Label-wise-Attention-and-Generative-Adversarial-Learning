@@ -2,10 +2,9 @@
 # Experiment runner script
 
 EN='01'  #experiment_no
-myarray=(1 2 3 4 5)
 
 python main.py \
-        --epochs=25 \
+        --epochs=30 \
         --epoch_step=15 \
         --device_ids=0 \
         --batch-size=8 \
@@ -15,35 +14,37 @@ python main.py \
         --print-freq=200 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=0  \
+        --min_tagFrequence=200  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
         --data_split=0.1
         --experiment_no=${EN}  \
 
-#python main.py \
-#        --epochs=40 \
-#        --epoch_step=30 \
-#        --device_ids=0 \
-#        --batch-size=8 \
-#        --G-lr=0.001 \
-#        --D-lr=0.1 \
-#        --B-lr=0.001 \
-#        --print-freq=200 \
-#        --save_model_path='./checkpoint' \
-#        --data_type='TrainTestTextTag' \
-#        --data_path='../datasets/RCV2' \
-#        --use_previousData=0 \
-#        --method='semiGAN_MultiLabelMAP' \
-#        --overlength_handle='skip' \
-#        --min_tagFrequence=0  \
-#        --max_tagFrequence=20000  \
-#        --intanceNum_limit=10000 \
-#        --experiment_no=${EN}  \
+python main.py \
+        --epochs=40 \
+        --epoch_step=30 \
+        --device_ids=0 \
+        --batch-size=8 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.001 \
+        --print-freq=200 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/EUR-Lex' \
+        --use_previousData=0 \
+        --method='semiGAN_MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=200  \
+        --max_tagFrequence=20000  \
+        --intanceNum_limit=10000 \
+        --data_split=0.1
+        --experiment_no=${EN}  \
+
 
 #utilize_unlabeled_data、学习率、epoch_step
 
