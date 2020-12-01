@@ -2,6 +2,7 @@
 # Experiment runner script
 
 EN='01'  #experiment_no
+myarray=(1 2 3 4 5)
 
 python main.py \
         --epochs=25 \
@@ -21,7 +22,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        -ds=(0 1 1) \
+        -ds=${myarray} \
         --experiment_no=${EN}  \
 
 #python main.py \
