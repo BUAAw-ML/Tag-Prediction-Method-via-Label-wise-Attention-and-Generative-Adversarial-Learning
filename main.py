@@ -67,6 +67,10 @@ parser.add_argument('--max_tagFrequence', default=100000, type=int,
                     help='max_tagFrequence')
 parser.add_argument('--intanceNum_limit', default=2000, type=int,
                     help='max_tagFrequence')
+parser.add_argument('--data_split', default=[0.1, 0.7, 1], type=int, nargs='+',
+                    help='data_split')
+parser.add_argument('--experiment_no', default='01', type=str,
+                    help='experiment_no')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -77,22 +81,24 @@ result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
 log_dir = os.path.join(result_path, 'logs')
 if not os.path.exists(result_path):
     os.makedirs(result_path)
-method_str = args.data_path.split("/")[-1] + '_' + args.method
+method_str = args.experiment_no + '_' + args.data_path.split("/")[-1]
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 print('#' * 100 + '\n')
 fo.write('#' * 100 + '\n')
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}'\
               '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {}' \
-              '\nuse_previousData: {} \t method: {} \t overlength_handle: {} \n'.format(
+              '\nuse_previousData: {} \t method: {} \t overlength_handle: {} \n' \
+              'data_split: {} \n'.format(
                 args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr,
                 args.device_ids, args.data_path, args.bert_trainable,
-                args.use_previousData, args.method, args.overlength_handle)
+                args.use_previousData, args.method, args.overlength_handle, args.data_split)
 
 print(setting_str)
 fo.write(setting_str)
 
 data_config = {'overlength_handle': args.overlength_handle, 'intanceNum_limit': args.intanceNum_limit,
-               'min_tagFrequence': args.min_tagFrequence, 'max_tagFrequence': args.max_tagFrequence}
+               'min_tagFrequence': args.min_tagFrequence, 'max_tagFrequence': args.max_tagFrequence,
+               'data_split': args.data_split}
 
 dataset, encoded_tag, tag_mask = load_data(data_config=data_config,
                                            data_path=args.data_path,
