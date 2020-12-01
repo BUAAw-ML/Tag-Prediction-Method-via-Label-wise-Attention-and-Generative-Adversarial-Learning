@@ -1,9 +1,10 @@
 
 # Experiment runner script
 
-EN='01'  #experiment_no
+EN='03'  #experiment_no
 
 python main.py \
+        --experiment_no=${EN}  \
         --epochs=30 \
         --epoch_step=15 \
         --device_ids=0 \
@@ -11,42 +12,41 @@ python main.py \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
-        --print-freq=200 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=200  \
-        --max_tagFrequence=20000  \
-        --intanceNum_limit=10000 \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=30000  \
+        --intanceNum_limit=15000 \
         --data_split=0.1  \
-        --experiment_no=${EN}  \
 
 python main.py \
-        --epochs=40 \
-        --epoch_step=30 \
+        --experiment_no=${EN}  \
+        --epochs=45 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
-        --print-freq=200 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=200  \
-        --max_tagFrequence=20000  \
-        --intanceNum_limit=10000 \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=30000  \
+        --intanceNum_limit=15000 \
         --data_split=0.1  \
-        --experiment_no=${EN}  \
 
 
-#utilize_unlabeled_data、学习率、epoch_step
+
+
+#方法、学习率、epoch_step
 
 #batch-size：1，4，8，16
 #data_type: All  TrainTest  TrainTestTextTag

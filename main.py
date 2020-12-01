@@ -37,7 +37,7 @@ parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
 parser.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
                     metavar='W', help='weight decay (default: 1e-4)')
-parser.add_argument('--print-freq', '-p', default=200, type=int,
+parser.add_argument('--print-freq', '-p', default=400, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
@@ -104,8 +104,8 @@ dataset, encoded_tag, tag_mask = load_data(data_config=data_config,
                                            data_type=args.data_type,
                                            use_previousData=args.use_previousData)
 
-data_size = "train_data_size: {} \nunlabeled_train_data: {} \nval_data_size: {} \n".format(
-    len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data))
+data_size = "train_data_size: {} \nunlabeled_train_data: {} \nval_data_size: {} \ntag_num: {} \n".format(
+    len(dataset.train_data), len(dataset.unlabeled_train_data), len(dataset.test_data), len(dataset.tag2id))
 print(data_size)
 fo.write(data_size)
 
