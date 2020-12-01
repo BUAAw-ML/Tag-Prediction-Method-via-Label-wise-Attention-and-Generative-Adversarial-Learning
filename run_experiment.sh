@@ -21,7 +21,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=20000  \
         --intanceNum_limit=10000 \
-        -ds=[1 1 1]  \
+        -ds=[1,1,1]  \
         --experiment_no=${EN}  \
 
 #python main.py \
