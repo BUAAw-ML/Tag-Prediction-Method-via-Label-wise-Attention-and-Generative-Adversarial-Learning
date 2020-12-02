@@ -452,7 +452,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         D_L_unsupervised = -1 * torch.mean(torch.log(prob[:, 0] + 1e-8))
 
-        print(prob[:, 0])
+        # print(prob[:, 0])
 
         if semi_supervised == False: #train with labeled data
             log_probs = F.log_softmax(logits, dim=-1)
