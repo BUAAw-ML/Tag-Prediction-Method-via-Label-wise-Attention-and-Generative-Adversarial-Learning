@@ -3,28 +3,10 @@
 
 #EN='02'  #experiment_no
 
-python main.py \
-        --experiment_no='datasplit=0.05_tagFrequence<500'  \
-        --epochs=30 \
-        --epoch_step=20 \
-        --device_ids=0 \
-        --batch-size=8 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='skip' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=500  \
-        --intanceNum_limit=100000 \
-        --data_split=0.05  \
+
 
 python main.py \
-        --experiment_no='datasplit=0.05_tagFrequence<500'  \
+        --experiment_no='test'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
