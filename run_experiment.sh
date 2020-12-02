@@ -31,7 +31,7 @@ python main.py \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow' \
