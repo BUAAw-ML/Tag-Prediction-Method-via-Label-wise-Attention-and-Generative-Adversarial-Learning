@@ -4,9 +4,9 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='tagFrequence>100_datasplit=0.1'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --experiment_no='datasplit=0.1'  \
+        --epochs=30 \
+        --epoch_step=20 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
@@ -14,19 +14,19 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=100  \
+        --min_tagFrequence=0  \
         --max_tagFrequence=20000  \
-        --intanceNum_limit=10000 \
+        --intanceNum_limit=20000 \
         --data_split=0.1  \
 
 python main.py \
-        --experiment_no='tagFrequence>100_datasplit=0.1'  \
-        --epochs=80 \
-        --epoch_step=70 \
+        --experiment_no='datasplit=0.1'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
@@ -34,15 +34,14 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=100  \
+        --min_tagFrequence=0  \
         --max_tagFrequence=20000  \
-        --intanceNum_limit=10000 \
+        --intanceNum_limit=20000 \
         --data_split=0.1  \
-
 
 
 
@@ -59,6 +58,7 @@ python main.py \
 #../datasets/gan-bert
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
+#../datasets/stack-overflow  (TrainTestTextTag)
 
 #614服务器上数据：
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
