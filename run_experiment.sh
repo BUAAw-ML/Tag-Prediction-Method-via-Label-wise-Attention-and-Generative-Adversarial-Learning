@@ -4,9 +4,9 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='Test'  \
-        --epochs=60 \
-        --epoch_step=50 \
+        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200_data_split=0.1'  \
+        --epochs=75 \
+        --epoch_step=65 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
