@@ -44,14 +44,18 @@ class MABert(nn.Module):
         attention_out = attention_out * self.class_weight
         #################fake sample process#######
         feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
-        attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-            (1 - masks.byte()), torch.tensor(-np.inf))
-        attention_fake = F.softmax(attention_fake, -1)
-        attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
-        attention_out_fake = attention_out_fake * self.class_weight
-        discrimate = torch.sum(attention_out_fake, -1)
-        discrimate = torch.sum(discrimate, -1, keepdim=True)
+        feat = torch.sum(feat, 1)
+        # attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+        #     (1 - masks.byte()), torch.tensor(-np.inf))
+        # attention_fake = F.softmax(attention_fake, -1)
+        # attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
+        # attention_out_fake = attention_out_fake * self.class_weight
+        # discrimate = torch.sum(attention_out_fake, -1)
+        # discrimate = torch.sum(discrimate, -1, keepdim=True)
         #################
+
+        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+        attention_out = attention_out * self.class_weight
 
         pred = torch.sum(attention_out, -1)
         pred = torch.cat((discrimate, pred), -1)
