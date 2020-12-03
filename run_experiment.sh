@@ -2,7 +2,7 @@
 # Experiment runner script
 
 #EN='02'  #experiment_no
-
+ss=(0,1,2)
 
 python main.py \
         --experiment_no='Test'  \
@@ -23,7 +23,7 @@ python main.py \
         --max_tagFrequence=200  \
         --intanceNum_limit=5000 \
         --data_split=0.1  \
-        --split=(0,1,2)  \
+        --split=${ss} \
 
 #python main.py \
 #        --experiment_no='test_tagFrequence<100_data_split=0.05'  \
