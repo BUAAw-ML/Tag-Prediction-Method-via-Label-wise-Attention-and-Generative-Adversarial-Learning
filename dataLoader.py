@@ -70,7 +70,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             split2 = int(len(data) * 0.5)
 
             dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[split:split2]].tolist()
+            dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
             file1 = os.path.join(data_path, 'valid+test_texts.txt')
             file2 = os.path.join(data_path, 'valid+test_labels.txt')
