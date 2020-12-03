@@ -3,9 +3,29 @@
 
 #EN='02'  #experiment_no
 
+python main.py \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=20000'  \
+        --epochs=30 \
+        --epoch_step=20
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/stack-overflow' \
+        --use_previousData=0 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=20000 \
+        --data_split=0.1  \
+
 
 python main.py \
-        --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_Test'  \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=20000'  \
         --epochs=70 \
         --epoch_step=60 \
         --device_ids=0 \
@@ -21,7 +41,7 @@ python main.py \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
-        --intanceNum_limit=10000 \
+        --intanceNum_limit=20000 \
         --data_split=0.1  \
 
 
