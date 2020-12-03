@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='Test'  \
+        --experiment_no='Fine-grained'  \
         --epochs=75 \
         --epoch_step=65 \
         --device_ids=0 \
