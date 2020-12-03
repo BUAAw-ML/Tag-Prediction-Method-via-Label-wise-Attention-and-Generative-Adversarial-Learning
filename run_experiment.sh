@@ -5,7 +5,7 @@
 
 
 python main.py \
-        --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_batchsize4'  \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_Test'  \
         --epochs=30 \
         --epoch_step=20 \
         --device_ids=0 \

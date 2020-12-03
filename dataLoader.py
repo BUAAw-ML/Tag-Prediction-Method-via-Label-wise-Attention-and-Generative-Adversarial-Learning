@@ -67,9 +67,10 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
             split = int(len(data) * data_config['data_split'])
+            split2 = int(len(data) * 0.6)
 
             dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[split:]].tolist()
+            dataset.unlabeled_train_data = data[ind[split:split2]].tolist()
 
             file1 = os.path.join(data_path, 'valid+test_texts.txt')
             file2 = os.path.join(data_path, 'valid+test_labels.txt')
