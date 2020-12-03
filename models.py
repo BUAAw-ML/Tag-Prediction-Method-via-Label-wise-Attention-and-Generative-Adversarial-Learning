@@ -101,7 +101,7 @@ class MABert(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=3, hidden_dim_generator=2000):
+    def __init__(self, hidden_dim=768, input_dim=768, num_hidden_generator=2, hidden_dim_generator=2000):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -113,26 +113,26 @@ class Generator(nn.Module):
             dim = input_dim if i == 0 else hidden_dim_generator
             self.hidden_list_generator.append(nn.Linear(dim, hidden_dim_generator))
 
-        self.Linear1 = nn.Linear(input_dim, 1500)
-        self.Linear2 = nn.Linear(1500, 3000)
-        self.Linear3 = nn.Linear(3000, 2000)
+        # self.Linear1 = nn.Linear(input_dim, 1500)
+        # self.Linear2 = nn.Linear(1500, 3000)
+        # self.Linear3 = nn.Linear(3000, 2000)
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
         self.m1 = nn.BatchNorm1d(1, 2000)
 
     def forward(self, feat):
         x = feat
-        # for i in range(self.num_hidden_generator):
-        #     x = self.hidden_list_generator[i](x)
-        #     # x = self.m1(x)
-        #     x = self.act(x)
-        #     # x = self.dropout(x)
-        x = self.Linear1(x)
-        x = self.act(x)
-        x = self.Linear2(x)
-        x = self.act(x)
-        x = self.Linear3(x)
-        x = self.act(x)
+        for i in range(self.num_hidden_generator):
+            x = self.hidden_list_generator[i](x)
+            # x = self.m1(x)
+            x = self.act(x)
+            # x = self.dropout(x)
+        # x = self.Linear1(x)
+        # x = self.act(x)
+        # x = self.Linear2(x)
+        # x = self.act(x)
+        # x = self.Linear3(x)
+        # x = self.act(x)
         y = self.output(x)
         return y
 
