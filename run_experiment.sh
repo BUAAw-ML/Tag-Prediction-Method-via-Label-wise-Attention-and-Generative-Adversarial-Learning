@@ -2,7 +2,7 @@
 # Experiment runner script
 
 #EN='02'  #experiment_no
-ss=(0,1,2)
+ss=(0 1 2)
 
 python main.py \
         --experiment_no='Test'  \
