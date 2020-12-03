@@ -124,13 +124,15 @@ criterion = nn.BCELoss()
 
 # define optimizer
 optimizer = {}
-optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
-                                         momentum=args.momentum, weight_decay=args.weight_decay)
-# optimizer['enc'] = torch.optim.SGD([{'params': model['MABert'].parameters(), 'lr': 0.01}], lr=0.1,
-#                                    momentum=args.momentum, weight_decay=args.weight_decay)
+# optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
+#                                          momentum=args.momentum, weight_decay=args.weight_decay)
 
-optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, args.B_lr),
-                            momentum=args.momentum, weight_decay=args.weight_decay)
+optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': args.G_lr}])
+
+# optimizer['enc'] = torch.optim.SGD(model['MABert'].get_config_optim(args.D_lr, args.B_lr),
+#                             momentum=args.momentum, weight_decay=args.weight_decay)
+
+optimizer['enc'] = torch.optim.Adam(model['MABert'].get_config_optim(args.D_lr, args.B_lr))
 
 # optimizer['Generator'] = torch.optim.Adam([{'params': model['Generator'].parameters(), 'lr': 5e-3}], lr=5e-3)
 
