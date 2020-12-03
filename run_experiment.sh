@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200_data_split=0.1'  \
+        --experiment_no='Test'  \
         --epochs=75 \
         --epoch_step=65 \
         --device_ids=0 \
