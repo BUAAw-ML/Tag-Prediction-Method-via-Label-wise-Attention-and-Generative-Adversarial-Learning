@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200'  \
+        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200_matchloss'  \
         --epochs=30 \
         --epoch_step=20 \
         --device_ids=0 \
@@ -24,7 +24,7 @@ python main.py \
         --data_split=0.1  \
 
 python main.py \
-        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200'  \
+        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200_matchloss'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
