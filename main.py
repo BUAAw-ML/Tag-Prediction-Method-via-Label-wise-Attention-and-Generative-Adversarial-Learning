@@ -75,6 +75,9 @@ parser.add_argument('--experiment_no', default='01', type=str,
 parser.add_argument('--split', default=[], nargs='+',
                     help='split')
 
+print(args.split)
+exit()
+
 global args, use_gpu
 args = parser.parse_args()
 
