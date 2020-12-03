@@ -71,8 +71,7 @@ parser.add_argument('--data_split', default=0.5, type=float,
                     help='data_split')
 parser.add_argument('--experiment_no', default='01', type=str,
                     help='experiment_no')
-
-parser.add_argument('--split', default=[], nargs='+',
+parser.add_argument('--split', default=[],  type=float, nargs='+',
                     help='split')
 
 
