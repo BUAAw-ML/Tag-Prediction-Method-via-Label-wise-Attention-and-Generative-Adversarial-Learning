@@ -27,7 +27,7 @@ class MABert(nn.Module):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0] #N, L, hidden_size
-        print(token_feat.shape)
+        # print(token_feat.shape)
 
         sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
@@ -43,7 +43,7 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         attention_out = attention_out * self.class_weight
         #################fake sample process#######
-        # feat  # N, L, hidden_size
+        feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
         attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
             (1 - masks.byte()), torch.tensor(-np.inf))
         attention_fake = F.softmax(attention_fake, -1)
