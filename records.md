@@ -135,3 +135,14 @@
 另外进行的试验：
 - 提出方法当模型达到最高性能后性能又会快速下降（好像是在d_loss变为0的时候）
 - 使用该数据1500，13501，668 提出的方法没有训练成果，具体因为训练中性能掉到底两次
+
+## Stack Overflow数据集
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|label,unlabel,test:500,,262（标签数：205）（tag频率<200,intanceNum_limit<5000）|Bert微调+多注意力|epoch:30;epoch_step:20;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|34.023|
+|label,unlabel,test:500,4501,262（标签数：205）（tag频率<200,intanceNum_limit<5000）|Bert微调+多注意力+GAN|epoch:75;epoch_step:65;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|40.081|
+
+
+另外进行的试验：
+- 采用大规模数据集时，例如tag频率<500，提出方法性能提升到一半就提不动了。
+- 在上面第二个实验中，即使当D_loss变为0，模型性能依然能提升。

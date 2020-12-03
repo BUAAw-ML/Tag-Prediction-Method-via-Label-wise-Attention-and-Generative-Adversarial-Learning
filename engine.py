@@ -440,7 +440,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
-        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape[0], 512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
         #-----------train enc-----------512,
@@ -485,10 +485,10 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                                                                       self.state['tag_mask'], x_g)
 
         g_loss = -1 * torch.mean(torch.log(1 - prob[:, 0] + 1e-8))
-        # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
-        feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
+        feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
+        # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
         G_feat_match = torch.mean(feature_error * feature_error)
-        g_loss = G_feat_match #g_loss #+
+        g_loss = g_loss + G_feat_match#
 
         if training:
             optimizer['Generator'].zero_grad()
