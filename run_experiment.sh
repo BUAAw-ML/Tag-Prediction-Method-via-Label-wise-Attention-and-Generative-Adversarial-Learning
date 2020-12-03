@@ -34,7 +34,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
+        --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
