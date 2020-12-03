@@ -5,7 +5,7 @@
 
 
 python main.py \
-        --experiment_no='intanceNum_limit=5000_max_tagFrequence<200_matchloss'  \
+        --experiment_no='test'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
