@@ -27,7 +27,8 @@ class MABert(nn.Module):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0] #N, L, hidden_size
-        sentence_feat = torch.mean(token_feat, dim=1)#N, hidden_size
+        sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
+                        / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
 
         embed = self.bert.get_input_embeddings()
         tag_embedding = embed(encoded_tag)
