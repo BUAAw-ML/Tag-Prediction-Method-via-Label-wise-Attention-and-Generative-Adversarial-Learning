@@ -77,7 +77,7 @@ args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
 
-result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
+result_path = os.path.join('result_test', datetime.date.today().strftime('%Y%m%d'))
 log_dir = os.path.join(result_path, 'logs')
 if not os.path.exists(result_path):
     os.makedirs(result_path)
