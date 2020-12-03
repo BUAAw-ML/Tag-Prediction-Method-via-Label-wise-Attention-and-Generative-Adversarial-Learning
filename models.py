@@ -50,7 +50,7 @@ class MABert(nn.Module):
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
         attention_out_fake = attention_out_fake * self.class_weight
         discrimate = torch.sum(attention_out_fake, -1)
-        discrimate = torch.sum(discrimate, -1, keepdim=True)
+        discrimate = torch.mean(discrimate, -1, keepdim=True)
         #################
 
         pred = torch.sum(attention_out, -1)
