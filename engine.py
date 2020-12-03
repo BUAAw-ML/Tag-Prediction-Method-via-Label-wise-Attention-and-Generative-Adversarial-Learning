@@ -440,7 +440,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         else:
             self.state['eval_iters'] += 1
 
-        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape[0],512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
         #-----------train enc-----------512,
