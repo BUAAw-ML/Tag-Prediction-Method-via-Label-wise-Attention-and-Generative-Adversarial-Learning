@@ -6,8 +6,8 @@
 
 python main.py \
         --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_Test'  \
-        --epochs=30 \
-        --epoch_step=20 \
+        --epochs=70 \
+        --epoch_step=60 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
