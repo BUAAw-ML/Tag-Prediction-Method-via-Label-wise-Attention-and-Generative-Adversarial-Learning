@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='max_tagFrequence<500_intanceNum_limit=20000'  \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=20000'  \
         --epochs=30 \
         --epoch_step=20 \
         --device_ids=0 \
@@ -19,12 +19,12 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=500  \
+        --max_tagFrequence=200  \
         --intanceNum_limit=20000 \
         --data_split=0.1  \
 
 python main.py \
-        --experiment_no='max_tagFrequence<500_intanceNum_limit=20000'  \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=20000'  \
         --epochs=70 \
         --epoch_step=60 \
         --device_ids=0 \
@@ -39,7 +39,7 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=500  \
+        --max_tagFrequence=200  \
         --intanceNum_limit=20000 \
         --data_split=0.1  \
 
