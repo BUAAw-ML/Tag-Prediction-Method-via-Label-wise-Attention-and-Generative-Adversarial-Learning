@@ -3,6 +3,8 @@
 
 #EN='02'  #experiment_no
 ss=(0 1 2)
+echo ${ss}
+echo ${ss[*]}
 
 python main.py \
         --experiment_no='Test'  \
