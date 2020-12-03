@@ -72,6 +72,9 @@ parser.add_argument('--data_split', default=0.5, type=float,
 parser.add_argument('--experiment_no', default='01', type=str,
                     help='experiment_no')
 
+parser.add_argument('--split', default=[], nargs='+',
+                    help='split')
+
 global args, use_gpu
 args = parser.parse_args()
 
