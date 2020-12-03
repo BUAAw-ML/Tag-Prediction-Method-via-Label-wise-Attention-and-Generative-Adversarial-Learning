@@ -5,7 +5,7 @@
 
 
 python main.py \
-        --experiment_no='test'  \
+        --experiment_no='Test'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
