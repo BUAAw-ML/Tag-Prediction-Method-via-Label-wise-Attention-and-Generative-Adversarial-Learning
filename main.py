@@ -75,13 +75,15 @@ parser.add_argument('--experiment_no', default='01', type=str,
 parser.add_argument('--split', default=[], nargs='+',
                     help='split')
 
-print(args.split)
-exit()
+
 
 global args, use_gpu
 args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
+
+print(args.split)
+exit()
 
 result_path = os.path.join('result', datetime.date.today().strftime('%Y%m%d'))
 log_dir = os.path.join(result_path, 'logs')
