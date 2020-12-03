@@ -6,7 +6,7 @@
 python main.py \
         --experiment_no='max_tagFrequence<500_intanceNum_limit=20000'  \
         --epochs=30 \
-        --epoch_step=20
+        --epoch_step=20 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
@@ -22,7 +22,6 @@ python main.py \
         --max_tagFrequence=500  \
         --intanceNum_limit=20000 \
         --data_split=0.1  \
-
 
 python main.py \
         --experiment_no='max_tagFrequence<500_intanceNum_limit=20000'  \
