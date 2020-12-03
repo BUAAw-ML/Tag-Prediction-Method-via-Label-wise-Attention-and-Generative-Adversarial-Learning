@@ -25,7 +25,7 @@ python main.py \
         --max_tagFrequence=200  \
         --intanceNum_limit=5000 \
         --data_split=0.1  \
-        --split=${ss[*]} \
+        --split=1 2 3 \
 
 #python main.py \
 #        --experiment_no='test_tagFrequence<100_data_split=0.05'  \
