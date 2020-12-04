@@ -146,7 +146,7 @@ class Generator(nn.Module):
         # self.Linear3 = nn.Linear(3000, 2000)
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
-        self.m1 = nn.BatchNorm1d(1, 2000)
+        self.m1 = nn.BatchNorm1d(2000)
 
     def forward(self, feat):
         x = feat
