@@ -115,12 +115,12 @@ class MABert(nn.Module):
 
         discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
 
-        pred = self.Linear1(attention_out)
-        pred = self.Linear2(pred).squeeze(-1)
+        # pred = self.Linear1(attention_out)
+        # pred = self.Linear2(pred).squeeze(-1)
 
-        # attention_out = attention_out * self.class_weight
-        #
-        # pred = torch.sum(attention_out, -1)
+        attention_out = attention_out * self.class_weight
+        pred = torch.sum(attention_out, -1)
+
         pred = torch.cat((discrimate, pred), -1)
 
         flatten = sentence_feat
