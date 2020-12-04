@@ -484,9 +484,9 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         #-----------train Generator-----------
 
-        # features, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
-        #                                                               self.state['encoded_tag'],
-        #                                                               self.state['tag_mask'], x_g)
+        features, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
+                                                                      self.state['encoded_tag'],
+                                                                      self.state['tag_mask'], x_g)
         # prob = prob[:, 0]
         # epsion = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion[prob == 0] = 1e-8
