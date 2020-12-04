@@ -114,10 +114,8 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
 
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
-        print(feat.unsqueeze(0).shape)
-        print(feat.unsqueeze(1).shape)
-        exit()
-        attention_out = torch.cat((feat.unsqueeze(1), attention_out), -2)
+
+        attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         pred = self.Linear1(attention_out)
         pred = self.Linear2(pred).squeeze(-1)
 

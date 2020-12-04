@@ -6,20 +6,20 @@
 
 python main.py \
         --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_Test'  \
-        --epochs=20 \
-        --epoch_step=15 \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=0  \
+        --min_tagFrequence=1  \
         --max_tagFrequence=200  \
         --intanceNum_limit=10000 \
         --data_split=0.1  \
