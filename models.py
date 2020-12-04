@@ -21,6 +21,9 @@ class MABert(nn.Module):
         self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
+        self.Linear1 = nn.Linear(768, 1)
+        self.Linear2 = nn.Linear(500, 1)
+
         self.output = nn.Softmax(dim=-1)
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
@@ -111,9 +114,12 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
 
         discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
-        attention_out = attention_out * self.class_weight
 
-        pred = torch.sum(attention_out, -1)
+        pred = self.Linear1(attention_out).squeeze(-1)
+
+        # attention_out = attention_out * self.class_weight
+        #
+        # pred = torch.sum(attention_out, -1)
         pred = torch.cat((discrimate, pred), -1)
 
         flatten = sentence_feat
@@ -125,6 +131,8 @@ class MABert(nn.Module):
         return [
             {'params': self.class_weight, 'lr': lr},
             {'params': self.bert.parameters(), 'lr': lrp},
+            {'params': self.Linear1, 'lr': lr},
+            {'params': self.Linear2, 'lr': lr},
         ]
 
 
