@@ -3,34 +3,15 @@
 
 #EN='02'  #experiment_no
 
-python main.py \
-        --experiment_no='1000>max_tagFrequence>200'  \
-        --epochs=30 \
-        --epoch_step=20 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='skip' \
-        --min_tagFrequence=200  \
-        --max_tagFrequence=1000  \
-        --intanceNum_limit=2000000 \
-        --data_split=0.1  \
 
 python main.py \
-        --experiment_no='1000>max_tagFrequence>200'  \
+        --experiment_no='max_tagFrequence<200_intanceNum_limit=10000_Test'  \
         --epochs=70 \
         --epoch_step=60 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
-        --D-lr=0.1 \
+        --D-lr=0.05 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
@@ -38,9 +19,9 @@ python main.py \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=200  \
-        --max_tagFrequence=1000  \
-        --intanceNum_limit=2000000 \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=10000 \
         --data_split=0.1  \
 
 
