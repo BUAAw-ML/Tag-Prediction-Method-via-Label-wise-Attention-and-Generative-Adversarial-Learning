@@ -90,7 +90,7 @@ class MABert(nn.Module):
         concate_logit = torch.cat((discrimate, logit), -1)
         prob = self.output(concate_logit)
         print(concate_logit.shape)
-        print(prob[:self.num_classes].shape)
+        print(prob[:,:self.num_classes].shape)
         prob = torch.sum(prob[:self.num_classes])
 
         return flatten, logit, prob
