@@ -453,10 +453,10 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = F.softmax(logits, dim=-1)
 
         prob = prob[:, 0]
-        epsion2 = torch.zeros((4, 1))
+        epsion2 = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         epsion2[prob == 1] = 1e-8
 
-        epsion = torch.zeros((4, 1))
+        epsion = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         epsion[prob == 0] = 1e-8
         print(epsion)
         print(epsion2)
