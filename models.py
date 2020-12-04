@@ -91,7 +91,8 @@ class MABert(nn.Module):
         prob = self.output(concate_logit)
         print(concate_logit.shape)
         print(prob[:,:self.num_classes].shape)
-        prob = torch.sum(prob[:self.num_classes])
+        prob = torch.sum(prob[:,:self.num_classes],dim=-1)
+        print(prob.shape)
 
         return flatten, logit, prob
 
