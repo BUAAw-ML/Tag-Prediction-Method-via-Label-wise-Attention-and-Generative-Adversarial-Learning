@@ -131,8 +131,8 @@ class MABert(nn.Module):
         return [
             {'params': self.class_weight, 'lr': lr},
             {'params': self.bert.parameters(), 'lr': lrp},
-            {'params': self.Linear1, 'lr': lr},
-            {'params': self.Linear2, 'lr': lr},
+            {'params': self.Linear1.parameters(), 'lr': lr},
+            {'params': self.Linear2.parameters(), 'lr': lr},
         ]
 
 
