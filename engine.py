@@ -454,7 +454,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         prob = prob[:, 0]
         epsion2 = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
-        epsion2[prob == 1] = 1e-8
+        epsion2[prob == 0] = 1e-8
 
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob[:, 0] + 1e-4))
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsion2))
@@ -490,7 +490,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                                                                       self.state['tag_mask'], x_g)
         prob = prob[:, 0]
         epsion = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
-        epsion[prob == 0] = 1e-8
+        epsion[prob == 1] = 1e-8
         g_loss = -1 * torch.mean(torch.log(prob + epsion))
         # g_loss = -1 * torch.mean(torch.log(prob[:, 0] + 1e-4))
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
