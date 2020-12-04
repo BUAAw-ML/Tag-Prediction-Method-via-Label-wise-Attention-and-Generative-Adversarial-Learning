@@ -87,10 +87,9 @@ class MABert(nn.Module):
 
         discrimate = torch.matmul(feat, self.class_weight.transpose(0, 1))
 
-        logit = torch.cat((discrimate, logit), -1)
-        prob = self.output(logit)
-        print(logit.shape)
-        print(prob[:self.num_classes].shape)
+        concate_logit = torch.cat((discrimate, logit), -1)
+        prob = self.output(concate_logit)
+
         prob = torch.sum(prob[:self.num_classes])
 
         return flatten, logit, prob
