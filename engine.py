@@ -451,7 +451,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = F.softmax(logits, dim=-1)
 
         # D_L_unsupervised = -1 * torch.mean(torch.log(prob[:, 0] + 1e-8))
-        D_L_unsupervised = -1 * torch.mean(torch.log(prob + 1e-8))
+        D_L_unsupervised = -1 * torch.mean(torch.log(1- prob + 1e-8))
 
         # print(prob[:, 0])
 
@@ -484,7 +484,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         features, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g)
-        g_loss = -1 * torch.mean(torch.log(1 - prob + 1e-8))
+        g_loss = -1 * torch.mean(torch.log(prob + 1e-8))
         # g_loss = -1 * torch.mean(torch.log(1 - prob[:, 0] + 1e-8))
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
         feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
