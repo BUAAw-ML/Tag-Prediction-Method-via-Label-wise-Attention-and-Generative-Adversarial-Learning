@@ -456,7 +456,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # epsion2 = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion2[prob == 1] = 1e-8
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsion2))
-        D_L_unsupervised = -1 * torch.mean(1 - torch.log(prob[:, 0] + 1e-8))
+        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob[:, 0] + 1e-8))
 
         if semi_supervised == False: #train with labeled data
             log_probs = F.log_softmax(logits, dim=-1)
