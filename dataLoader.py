@@ -31,7 +31,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
         if not os.path.exists('cache'):
             os.makedirs('cache')
 
-        dataset = dataEngine(data_config)
+        dataset = dataEngine(data_config=data_config)
 
         if data_type == 'All':
 
@@ -85,8 +85,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
 
 class dataEngine(Dataset):
-    def __init__(self, data_config, train_data=None, unlabeled_train_data=None, test_data=None,
-                    tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None):
+    def __init__(self, train_data=None, unlabeled_train_data=None, test_data=None,
+                    tag2id={}, id2tag={}, co_occur_mat=None, tfidf_dict=None, data_config={}):
         self.train_data = train_data
         self.unlabeled_train_data = unlabeled_train_data
         self.test_data = test_data
