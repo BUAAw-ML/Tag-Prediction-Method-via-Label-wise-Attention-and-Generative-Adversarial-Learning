@@ -25,6 +25,45 @@ python main.py \
         --intanceNum_limit=200000 \
         --data_split=0.05  \
 
+python main.py \
+        --experiment_no='tagFrequence<200_Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='All' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --use_previousData=1 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=200000 \
+        --data_split=0.05  \
+
+python main.py \
+        --experiment_no='tagFrequence<200_Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='All' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --use_previousData=1 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=200000 \
+        --data_split=0.05  \
 
 #方法、学习率、epoch_step
 
