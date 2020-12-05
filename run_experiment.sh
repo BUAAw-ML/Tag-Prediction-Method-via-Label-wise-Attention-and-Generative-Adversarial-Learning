@@ -6,7 +6,7 @@
 
 
 python main.py \
-        --experiment_no='Test'  \
+        --experiment_no='tagFrequence<200_Test'  \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
@@ -26,7 +26,7 @@ python main.py \
         --data_split=0.05  \
 
 python main.py \
-        --experiment_no='Test'  \
+        --experiment_no='tagFrequence<200_Test'  \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
@@ -46,7 +46,7 @@ python main.py \
         --data_split=0.05  \
 
 python main.py \
-        --experiment_no='Test'  \
+        --experiment_no='tagFrequence<200_Test'  \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
