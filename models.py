@@ -121,7 +121,7 @@ class MABert(nn.Module):
         # pred = torch.cat((discrimate, pred), -1)
 
         attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
-        pred = self.Linear1(attention_out)
+        pred = self.Linear1(attention_out).squeeze(-1)
         # pred = self.act(pred)
         # pred = self.Linear2(pred).squeeze(-1)
 
