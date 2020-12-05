@@ -444,10 +444,10 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         epsilon = 1e-8
 
-        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape[0], 71, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
-        #-----------train enc-----------512,
+        #-----------train enc-----------
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g.detach())#
