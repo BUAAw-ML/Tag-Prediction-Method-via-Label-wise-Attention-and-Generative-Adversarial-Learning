@@ -3,47 +3,67 @@
 
 #EN='02'  #experiment_no
 
+
+
 python main.py \
-        --experiment_no='max_tagFrequence<200_intanceNum_limit=10000'  \
-        --epochs=60 \
-        --epoch_step=50 \
+        --experiment_no='Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=10 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_type='All' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
-        --intanceNum_limit=10000 \
-        --data_split=0.1  \
+        --intanceNum_limit=200000 \
+        --data_split=0.05  \
 
+python main.py \
+        --experiment_no='Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=10 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='All' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --use_previousData=1 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=200000 \
+        --data_split=0.05  \
 
-#python main.py \
-#        --experiment_no='Test'  \
-#        --epochs=50 \
-#        --epoch_step=45 \
-#        --device_ids=0 \
-#        --batch-size=10 \
-#        --G-lr=0.001 \
-#        --D-lr=0.1 \
-#        --B-lr=0.001 \
-#        --save_model_path='./checkpoint' \
-#        --data_type='All' \
-#        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
-#        --use_previousData=0 \
-#        --method='semiGAN_MultiLabelMAP' \
-#        --overlength_handle='skip' \
-#        --min_tagFrequence=0  \
-#        --max_tagFrequence=200000  \
-#        --intanceNum_limit=200000 \
-#        --data_split=0.05  \
-
+python main.py \
+        --experiment_no='Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
+        --device_ids=0 \
+        --batch-size=10 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='All' \
+        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --use_previousData=1 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=200  \
+        --intanceNum_limit=200000 \
+        --data_split=0.05  \
 
 #方法、学习率、epoch_step
 
