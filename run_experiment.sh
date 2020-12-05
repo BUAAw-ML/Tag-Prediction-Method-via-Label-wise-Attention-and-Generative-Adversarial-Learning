@@ -10,7 +10,7 @@ python main.py \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -30,7 +30,7 @@ python main.py \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -50,7 +50,7 @@ python main.py \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=10 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
