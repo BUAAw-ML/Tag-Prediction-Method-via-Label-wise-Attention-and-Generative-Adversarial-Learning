@@ -22,7 +22,7 @@ class MABert(nn.Module):
         self.class_weight.requires_grad = True
 
         self.Linear1 = nn.Linear(768, 500)
-        self.Linear2 = nn.Linear(500, 71)
+        self.Linear2 = nn.Linear(500, 1)
         self.act = nn.LeakyReLU(0.2)
 
         self.output = nn.Softmax(dim=-1)
@@ -97,11 +97,12 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
+        attention_out = attention_out * self.class_weight
 
-        # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
-        # attention_out = attention_out * self.class_weight
-        # pred = torch.sum(attention_out, -1)
-        # pred = torch.cat((discrimate, pred), -1)
+        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+
+        pred = torch.sum(attention_out, -1)
+        pred = torch.cat((discrimate, pred), -1)
 
         # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         # pred = self.Linear1(attention_out)#.squeeze(-1)
@@ -109,14 +110,8 @@ class MABert(nn.Module):
         # pred = self.Linear2(pred).squeeze(-1)
         #
         flatten = torch.mean(attention_out,-2)
-        # logit = pred[:,1:]
-        # prob = self.output(pred)[:,0]
-
-        # pred = torch.sum(sentence_feat, -2)
-        pred = self.Linear1(sentence_feat)#.squeeze(-1)
-        pred = self.act(pred)
-        logit = self.Linear2(pred)
-        prob = logit
+        logit = pred[:,1:]
+        prob = self.output(pred)[:,0]
 
         return flatten, logit, prob
 
