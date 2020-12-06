@@ -6,9 +6,9 @@
 
 
 python main.py \
-        --experiment_no='tagFrequence<200_Test'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --experiment_no='data_split=0.7_Test'  \
+        --epochs=20 \
+        --epoch_step=15 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
@@ -17,13 +17,13 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
-        --use_previousData=1 \
-        --method='semiGAN_MultiLabelMAP' \
+        --use_previousData=0 \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=200  \
+        --max_tagFrequence=200000  \
         --intanceNum_limit=200000 \
-        --data_split=0.05  \
+        --data_split=0.7  \
 
 
 
