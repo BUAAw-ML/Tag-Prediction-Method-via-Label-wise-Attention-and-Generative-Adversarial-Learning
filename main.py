@@ -71,6 +71,8 @@ parser.add_argument('--data_split', default=0.5, type=float,
                     help='data_split')
 parser.add_argument('--experiment_no', default='01', type=str,
                     help='experiment_no')
+parser.add_argument('--test_description', default='01', type=str,
+                    help='test_description')
 
 global args, use_gpu
 args = parser.parse_args()
@@ -88,11 +90,11 @@ fo.write('#' * 100 + '\n')
 setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t G_LR: {} \t D_LR: {} \t B_LR: {}'\
               '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {}' \
               '\nuse_previousData: {} \t method: {} \t overlength_handle: {} \t data_split: {} \n' \
-              'experiment_no: {} \n'.format(
+              'experiment_no: {} \t test_description: {} \n'.format(
                 args.batch_size, args.epoch_step, args.G_lr, args.D_lr, args.B_lr,
                 args.device_ids, args.data_path, args.bert_trainable,
                 args.use_previousData, args.method, args.overlength_handle, args.data_split,
-                args.experiment_no)
+                args.experiment_no, args.test_description)
 
 print(setting_str)
 fo.write(setting_str)

@@ -498,7 +498,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
         feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
         G_feat_match = torch.mean(feature_error * feature_error)
-        g_loss = g_loss #+G_feat_match#
+        g_loss = g_loss +G_feat_match#
 
         if training:
             optimizer['Generator'].zero_grad()
