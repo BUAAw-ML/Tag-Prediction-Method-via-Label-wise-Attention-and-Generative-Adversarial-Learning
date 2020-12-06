@@ -76,8 +76,8 @@ class MABert(nn.Module):
         prob = torch.cat((torch.sum(discrimate,-1, keepdim=True), torch.sum(pred,-1, keepdim=True)), -1)
 
         prob = self.output(prob)
-        print("------")
-        print(prob)
+        # print("------")
+        # print(prob)
         # prob = torch.sum(prob[:,:self.num_classes],-1)
         return flatten, logit, prob[:,0]
 
