@@ -7,8 +7,8 @@
 
 python main.py \
         --experiment_no='tagFrequence<200_Test'  \
-        --epochs=20 \
-        --epoch_step=15 \
+        --epochs=30 \
+        --epoch_step=25 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.1 \
