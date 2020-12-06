@@ -46,7 +46,7 @@ class MABert(nn.Module):
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # attention_out = attention_out * self.class_weight
-        pred = torch.sum(attention_out, -1)
+        # pred = torch.sum(attention_out, -1)
         #################fake sample process#######
         feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
         # feat = torch.mean(feat, 1)
@@ -54,7 +54,7 @@ class MABert(nn.Module):
             (1 - masks.byte()), torch.tensor(-np.inf))
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
-        discrimate = torch.sum(attention_out_fake, -1)
+        # discrimate = torch.sum(attention_out_fake, -1)
         # attention_out_fake = attention_out_fake * self.class_weight
         # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
         # discrimate = torch.sum(discrimate, -1, keepdim=True)
@@ -63,16 +63,16 @@ class MABert(nn.Module):
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # attention_out = attention_out * self.class_weight
 
-        # pred = torch.cat((attention_out_fake, attention_out), -2)
-        # pred = self.Linear1(pred)
-        # pred = self.act(pred)
-        # pred = self.Linear2(pred).squeeze(-1)
+        pred = torch.cat((attention_out_fake, attention_out), -2)
+        pred = self.Linear1(pred)
+        pred = self.act(pred)
+        pred = self.Linear2(pred).squeeze(-1)
 
         flatten = token_feat
-        logit = pred
-        # logit = pred[:, self.num_classes:]
+        # logit = pred
+        logit = pred[:, self.num_classes:]
 
-        prob = torch.cat((torch.sum(discrimate,-1, keepdim=True), torch.sum(pred,-1, keepdim=True)), -1)
+        prob = torch.cat((torch.sum(pred[:, :self.num_classes],-1, keepdim=True), torch.sum(pred[:, self.num_classes:],-1, keepdim=True)), -1)
         prob = self.output(prob)
         # prob = torch.sum(prob[:,:self.num_classes],-1)
         return flatten, logit, prob[:,0]
