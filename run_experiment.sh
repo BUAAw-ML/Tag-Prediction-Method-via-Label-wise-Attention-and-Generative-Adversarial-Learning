@@ -10,10 +10,10 @@ python main.py \
         --epochs=20 \
         --epoch_step=15 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=10 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
