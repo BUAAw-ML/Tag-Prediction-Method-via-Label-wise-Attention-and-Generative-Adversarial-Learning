@@ -344,7 +344,7 @@ class MultiLabelMAPEngine(Engine):
         if training:
             optimizer['enc'].zero_grad()
             self.state['loss'].backward()
-            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+            # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
         else:
             return self.state['output']
