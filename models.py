@@ -39,7 +39,7 @@ class MABert(nn.Module):
         embed = self.bert.get_input_embeddings()
         tag_embedding = embed(encoded_tag)
         tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-                        / torch.sum(tag_mask, dim=1, keepdim=True)
+                        / torch.sum(tag_mask, dim=1, keepdim=True)  #labels_num, hidden_size
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
@@ -48,13 +48,14 @@ class MABert(nn.Module):
         # attention_out = attention_out * self.class_weight
         pred = torch.sum(attention_out, -1)
         #################fake sample process#######
-        feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
-        # feat = torch.mean(feat, 1)
-        attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-            (1 - masks.byte()), torch.tensor(-np.inf))
-        attention_fake = F.softmax(attention_fake, -1)
-        attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
-        discrimate = torch.sum(attention_out_fake, -1)
+        # feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
+        # # feat = torch.mean(feat, 1)
+        # attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+        #     (1 - masks.byte()), torch.tensor(-np.inf))
+        # attention_fake = F.softmax(attention_fake, -1)
+        # attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
+        discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
+        # discrimate = torch.sum(attention_out_fake, -1)
         # attention_out_fake = attention_out_fake * self.class_weight
         # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
         # discrimate = torch.sum(discrimate, -1, keepdim=True)

@@ -442,7 +442,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         epsilon = 1e-8
 
-        z = torch.rand(ids.shape[0],512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
         #-----------train enc-----------
@@ -451,7 +451,6 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                                                                       self.state['tag_mask'], z)#
 
         # print(prob[:, 0])
-
 
         self.state['output'] = F.softmax(logits, dim=-1)
 
