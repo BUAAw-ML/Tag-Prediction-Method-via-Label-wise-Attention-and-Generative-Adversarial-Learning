@@ -27,53 +27,12 @@ class MABert(nn.Module):
 
         self.output = nn.Softmax(dim=-1)
 
-    # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
-    #     token_feat = self.bert(ids,
-    #                            token_type_ids=token_type_ids,
-    #                            attention_mask=attention_mask)[0] #N, L, hidden_size
-    #     # print(token_feat.shape)
-    #
-    #     sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
-    #                     / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
-    #
-    #     embed = self.bert.get_input_embeddings()
-    #     tag_embedding = embed(encoded_tag)
-    #     tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-    #                     / torch.sum(tag_mask, dim=1, keepdim=True)
-    #
-    #     masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
-    #     attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
-    #     attention = F.softmax(attention, -1)
-    #     attention_out = attention @ token_feat   # N, labels_num, hidden_size
-    #     # attention_out = attention_out * self.class_weight
-    #     # pred = torch.sum(attention_out, -1)
-    #     #################fake sample process#######
-    #     feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
-    #     # feat = torch.mean(feat, 1)
-    #     attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-    #         (1 - masks.byte()), torch.tensor(-np.inf))
-    #     attention_fake = F.softmax(attention_fake, -1)
-    #     attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
-    #     # attention_out_fake = attention_out_fake * self.class_weight
-    #     discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
-    #     # discrimate = torch.sum(discrimate, -1, keepdim=True)
-    #     #################
-    #
-    #     # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
-    #     # attention_out = attention_out * self.class_weight
-    #
-    #     pred = torch.cat((discrimate, attention_out), -2)
-    #     pred = self.Linear1(pred).squeeze(-1)
-    #
-    #     flatten = token_feat
-    #     logit = pred
-    #     prob = self.output(logit)
-    #     return flatten, logit, prob
-
     def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0] #N, L, hidden_size
+        # print(token_feat.shape)
+
         sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
 
@@ -86,21 +45,64 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
+        # attention_out = attention_out * self.class_weight
+        # pred = torch.sum(attention_out, -1)
+        #################fake sample process#######
+        feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
+        # feat = torch.mean(feat, 1)
+        attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(-np.inf))
+        attention_fake = F.softmax(attention_fake, -1)
+        attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
+        # attention_out_fake = attention_out_fake * self.class_weight
+        discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
+        # discrimate = torch.sum(discrimate, -1, keepdim=True)
+        #################
 
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # attention_out = attention_out * self.class_weight
-        # pred = torch.sum(attention_out, -1)
-        # pred = torch.cat((discrimate, pred), -1)
 
-        attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
-        pred = self.Linear1(attention_out)#.squeeze(-1)
+        pred = torch.cat((discrimate, attention_out), -2)
+        pred = self.Linear1(pred)
         pred = self.act(pred)
         pred = self.Linear2(pred).squeeze(-1)
 
-        flatten = torch.mean(attention_out,-2)
+        flatten = token_feat
         logit = pred
         prob = self.output(logit)
         return flatten, logit, prob
+
+    # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
+    #     token_feat = self.bert(ids,
+    #                            token_type_ids=token_type_ids,
+    #                            attention_mask=attention_mask)[0] #N, L, hidden_size
+    #     sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
+    #                     / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
+    #
+    #     embed = self.bert.get_input_embeddings()
+    #     tag_embedding = embed(encoded_tag)
+    #     tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
+    #                     / torch.sum(tag_mask, dim=1, keepdim=True)
+    #
+    #     masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
+    #     attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
+    #     attention = F.softmax(attention, -1)
+    #     attention_out = attention @ token_feat   # N, labels_num, hidden_size
+    #
+    #     # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+    #     # attention_out = attention_out * self.class_weight
+    #     # pred = torch.sum(attention_out, -1)
+    #     # pred = torch.cat((discrimate, pred), -1)
+    #
+    #     attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
+    #     pred = self.Linear1(attention_out)#.squeeze(-1)
+    #     pred = self.act(pred)
+    #     pred = self.Linear2(pred).squeeze(-1)
+    #
+    #     flatten = torch.mean(attention_out,-2)
+    #     logit = pred
+    #     prob = self.output(logit)
+    #     return flatten, logit, prob
 
     def get_config_optim(self, lr, lrp):
         return [
