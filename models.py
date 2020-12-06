@@ -18,7 +18,7 @@ class MABert(nn.Module):
 
         self.num_classes = num_classes
 
-        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
+        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(-1, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
         self.Linear1 = nn.Linear(768, 500)
