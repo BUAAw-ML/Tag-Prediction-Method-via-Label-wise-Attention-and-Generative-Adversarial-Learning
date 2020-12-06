@@ -333,7 +333,7 @@ class MultiLabelMAPEngine(Engine):
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g.detach())#
-        logits = logits[:, 1:]
+
         self.state['output'] = F.softmax(logits, dim=-1)
 
         log_probs = F.log_softmax(logits, dim=-1)
@@ -452,14 +452,14 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         # print(prob[:, 0])
 
-        logits = logits[:, 1:]
+
         self.state['output'] = F.softmax(logits, dim=-1)
 
         # prob = prob[:, 0]
         # epsion2 = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion2[prob == 1] = 1e-8
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsion2))
-        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob[:, 0] + epsilon))
+        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
 
         if semi_supervised == False: #train with labeled data
             log_probs = F.log_softmax(logits, dim=-1)
@@ -494,7 +494,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # epsion = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion[prob == 0] = 1e-8
         # g_loss = -1 * torch.mean(torch.log(prob + epsion))
-        g_loss = -1 * torch.mean(torch.log(prob[:, 0] + epsilon))
+        g_loss = -1 * torch.mean(torch.log(prob + epsilon))
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
         # G_feat_match = torch.mean(feature_error * feature_error)
