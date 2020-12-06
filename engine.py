@@ -156,14 +156,14 @@ class Engine(object):
             lr = self.adjust_learning_rate(optimizer)
             print('lr:', lr)
 
+            # train for one epoch
+            print("Train with labeled data:")
+            self.train(train_loader, model, criterion, optimizer, epoch, False)
+
             if self.state['method'] == 'semiGAN_MultiLabelMAP':
                 # train for one epoch
                 print("Train with unlabeled data:")
                 self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
-
-            # train for one epoch
-            print("Train with labeled data:")
-            self.train(train_loader, model, criterion, optimizer, epoch, False)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -459,7 +459,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # epsion2 = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion2[prob == 1] = 1e-8
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsion2))
-        D_L_unsupervised = -1 * torch.mean(torch.log(prob + epsilon))
+        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
 
         if semi_supervised == False: #train with labeled data
             log_probs = F.log_softmax(logits, dim=-1)
@@ -494,7 +494,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # epsion = torch.zeros((4, 1)).cuda(self.state['device_ids'][0])
         # epsion[prob == 0] = 1e-8
         # g_loss = -1 * torch.mean(torch.log(prob + epsion))
-        g_loss = -1 * torch.mean(torch.log(1 - prob + epsilon))
+        g_loss = -1 * torch.mean(torch.log(prob + epsilon))
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
         # G_feat_match = torch.mean(feature_error * feature_error)
