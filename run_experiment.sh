@@ -24,7 +24,7 @@ python main.py \
         --max_tagFrequence=200  \
         --intanceNum_limit=200000 \
         --data_split=0.05  \
-        --test_description='label_pre'  \
+        --test_description='d_loss - unsurperise'  \
 
 
 
