@@ -54,6 +54,7 @@ class MABert(nn.Module):
             (1 - masks.byte()), torch.tensor(-np.inf))
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
+        discrimate = torch.sum(attention_out_fake, -1)
         # attention_out_fake = attention_out_fake * self.class_weight
         # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
         # discrimate = torch.sum(discrimate, -1, keepdim=True)
@@ -70,8 +71,10 @@ class MABert(nn.Module):
         flatten = token_feat
         logit = pred
         # logit = pred[:, self.num_classes:]
-        prob = self.output(pred)
-        # prob = torch.sum(prob[:,:self.num_classes],-1)
+
+        prob = torch.cat((discrimate, pred), -1)
+        prob = self.output(prob)
+        prob = torch.sum(prob[:,:self.num_classes],-1)
         return flatten, logit, prob
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
