@@ -22,7 +22,7 @@ class MABert(nn.Module):
         self.class_weight.requires_grad = True
 
         self.Linear1 = nn.Linear(768, 500)
-        self.Linear2 = nn.Linear(500, 1)
+        self.Linear2 = nn.Linear(500, 71)
         self.act = nn.LeakyReLU(0.2)
 
         self.output = nn.Softmax(dim=-1)
@@ -103,14 +103,21 @@ class MABert(nn.Module):
         # pred = torch.sum(attention_out, -1)
         # pred = torch.cat((discrimate, pred), -1)
 
-        attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
-        pred = self.Linear1(attention_out)#.squeeze(-1)
-        pred = self.act(pred)
-        pred = self.Linear2(pred).squeeze(-1)
-
+        # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
+        # pred = self.Linear1(attention_out)#.squeeze(-1)
+        # pred = self.act(pred)
+        # pred = self.Linear2(pred).squeeze(-1)
+        #
         flatten = torch.mean(attention_out,-2)
-        logit = pred[:,1:]
-        prob = self.output(pred)[:,0]
+        # logit = pred[:,1:]
+        # prob = self.output(pred)[:,0]
+
+        pred = torch.sum(attention_out, -2)
+        pred = self.Linear1(pred)#.squeeze(-1)
+        pred = self.act(pred)
+        logit = self.Linear2(pred)
+        prob = logit
+
         return flatten, logit, prob
 
     def get_config_optim(self, lr, lrp):
