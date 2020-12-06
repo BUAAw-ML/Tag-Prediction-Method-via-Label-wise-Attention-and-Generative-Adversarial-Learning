@@ -21,7 +21,7 @@ class MABert(nn.Module):
         self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
-        self.Linear1 = nn.Linear(768, 500)
+        self.Linear1 = nn.Linear(768, 1)
         self.Linear2 = nn.Linear(500, 1)
         self.act = nn.LeakyReLU(0.2)
 
@@ -93,9 +93,9 @@ class MABert(nn.Module):
         # pred = torch.cat((discrimate, pred), -1)
 
         attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
-        pred = self.Linear1(attention_out)#.squeeze(-1)
-        pred = self.act(pred)
-        pred = self.Linear2(pred).squeeze(-1)
+        pred = self.Linear1(attention_out).squeeze(-1)
+        # pred = self.act(pred)
+        # pred = self.Linear2(pred).squeeze(-1)
 
         flatten = torch.mean(attention_out,-2)
         logit = pred
