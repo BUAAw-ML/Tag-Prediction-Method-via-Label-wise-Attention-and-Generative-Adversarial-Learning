@@ -442,7 +442,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         epsilon = 1e-8
 
-        z = torch.rand(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+        z = torch.rand(ids.shape[0],512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z)
 
         #-----------train enc-----------
@@ -496,8 +496,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # g_loss = -1 * torch.mean(torch.log(prob + epsion))
         g_loss = -1 * torch.mean(torch.log(prob[:, 0] + epsilon))
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
-        feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
-        G_feat_match = torch.mean(feature_error * feature_error)
+        # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
+        # G_feat_match = torch.mean(feature_error * feature_error)
         # print(G_feat_match)
         g_loss = g_loss #+G_feat_match#
 
