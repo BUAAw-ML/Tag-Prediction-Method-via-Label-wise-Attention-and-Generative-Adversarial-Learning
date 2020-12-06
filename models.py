@@ -68,9 +68,9 @@ class MABert(nn.Module):
         pred = self.Linear2(pred).squeeze(-1)
 
         flatten = token_feat
-        logit = pred[self.num_classes:]
+        logit = pred[:, self.num_classes:]
         prob = self.output(pred)
-        prob = torch.sum(prob[:self.num_classes],-1)
+        prob = torch.sum(prob[:,self.num_classes],-1)
         return flatten, logit, prob
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
