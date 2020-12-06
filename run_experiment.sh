@@ -11,7 +11,7 @@ python main.py \
         --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
-        --G-lr=0.01 \
+        --G-lr=0.1 \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
@@ -24,7 +24,7 @@ python main.py \
         --max_tagFrequence=200  \
         --intanceNum_limit=200000 \
         --data_split=0.05  \
-        --test_description='gan_tag'  \
+        --test_description='label_pre'  \
 
 
 
