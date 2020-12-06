@@ -112,7 +112,7 @@ class MABert(nn.Module):
         # logit = pred[:,1:]
         # prob = self.output(pred)[:,0]
 
-        pred = torch.sum(attention_out, -2)
+        pred = torch.sum(sentence_feat, -2)
         pred = self.Linear1(pred)#.squeeze(-1)
         pred = self.act(pred)
         logit = self.Linear2(pred)
