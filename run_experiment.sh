@@ -23,7 +23,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=200000  \
         --intanceNum_limit=200000 \
-        --data_split=0.7  \
+        --data_split=0.9  \
 
 
 
