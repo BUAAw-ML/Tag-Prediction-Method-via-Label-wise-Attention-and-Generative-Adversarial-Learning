@@ -445,7 +445,6 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         epsilon = 1e-8
 
         z = torch.rand(ids.shape[0],512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
-        print(z)
 
         x_g = model['Generator'](z)
 
