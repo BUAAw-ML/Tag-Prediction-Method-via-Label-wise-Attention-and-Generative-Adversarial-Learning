@@ -96,11 +96,11 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        attention_out = attention_out * tag_embedding#self.class_weight
+        attention_out = attention_out * self.class_weight
         logit = torch.sum(attention_out, -1)
 
-        # discrimate = torch.sum(torch.matmul(feat, tag_embedding.transpose(0, 1)), -1, keepdim=True)
-        discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
+        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+        # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
         # pred = torch.sum(logit, -1, keepdim=True)
 
         pred = torch.cat((discrimate, logit), -1)
@@ -112,10 +112,10 @@ class MABert(nn.Module):
         #
         flatten = torch.mean(attention_out,-2)
 
-        prob = self.output(pred)
-        prob = torch.sum(prob[:,:self.num_classes], -1, keepdim=True)
+        prob = self.output(pred)[:,0]
 
-        return flatten, logit, prob[:,0]
+
+        return flatten, logit, prob
 
     def get_config_optim(self, lr, lrp):
         return [
