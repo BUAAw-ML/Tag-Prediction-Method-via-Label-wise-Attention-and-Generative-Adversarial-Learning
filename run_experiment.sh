@@ -15,9 +15,9 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='All' \
-        --data_path='../datasets/AAPD/aapd2.csv' \
-        --use_previousData=1 \
+        --data_type='TrainTest_agNews' \
+        --data_path='../datasets/ag-news' \
+        --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
@@ -41,6 +41,8 @@ python main.py \
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
 #../datasets/stack-overflow  (TrainTestTextTag)
+
+#../datasets/ag-news
 
 #614服务器上数据：
 #../../datasets/multiClass_text_classification/news_group20/news_group20.csv
