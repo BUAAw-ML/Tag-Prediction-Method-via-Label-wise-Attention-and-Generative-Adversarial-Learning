@@ -60,7 +60,15 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
         elif data_type == 'TrainTest_agNews':
 
             file = os.path.join(data_path, 'train.csv')
-            dataset.train_data = dataset.load_agNews(file)
+            data = dataset.load_agNews(file)
+
+            data = np.array(data)
+            ind = np.random.RandomState(seed=10).permutation(len(data))
+            split = int(len(data) * data_config['data_split'])
+            split2 = int(len(data) * 0.5)
+
+            dataset.train_data = data[ind[:split]].tolist()
+            dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
             file = os.path.join(data_path, 'test.csv')
             dataset.test_data = dataset.load_agNews(file)
