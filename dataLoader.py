@@ -346,9 +346,7 @@ class dataEngine(Dataset):
                 if len(row) != 3:
                     continue
                 tag, title, dscp = row
-                print(dscp.strip())
 
-                exit()
                 title_tokens = tokenizer.tokenize(title.strip())
                 dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
@@ -360,7 +358,7 @@ class dataEngine(Dataset):
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-                tag = tag.strip().split('###')
+                tag = tag.strip()
                 tag = [t for t in tag if t != '']
 
                 for t in tag:
