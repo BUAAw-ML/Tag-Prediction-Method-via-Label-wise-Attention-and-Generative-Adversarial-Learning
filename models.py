@@ -104,8 +104,6 @@ class MABert(nn.Module):
         # pred = torch.sum(logit, -1, keepdim=True)
 
         pred = torch.cat((discrimate, logit), -1)
-        print(pred.shape)
-        exit()
 
         # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         # pred = self.Linear1(attention_out)#.squeeze(-1)
@@ -115,7 +113,6 @@ class MABert(nn.Module):
         flatten = torch.mean(attention_out,-2)
 
         prob = self.output(pred)[:,0]
-
 
         return flatten, logit, prob
 
