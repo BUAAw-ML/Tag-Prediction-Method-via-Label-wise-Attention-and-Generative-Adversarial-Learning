@@ -447,15 +447,13 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # z = torch.randn(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
 
         z = torch.Tensor(ids.shape[0], 768).uniform_(-1, 1).cuda(self.state['device_ids'][0])
-        print(z)
-        exit()
 
         x_g = model['Generator'](z)
 
         #-----------train enc-----------
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())#x_g.detach()
+                                                                      self.state['tag_mask'], z)#x_g.detach()
 
         # print(prob[:, 0])
 
