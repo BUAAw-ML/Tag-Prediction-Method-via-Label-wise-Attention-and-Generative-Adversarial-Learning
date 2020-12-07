@@ -11,8 +11,8 @@ python main.py \
         --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
+        --G-lr=0.1 \
+        --D-lr=0.01 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='All' \
