@@ -370,7 +370,7 @@ class dataEngine(Dataset):
                 tag_ids = [self.tag2id[t] for t in tag]
 
                 data.append({
-                    'id': int(id),
+                    'id': int(0),
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
