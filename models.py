@@ -101,9 +101,9 @@ class MABert(nn.Module):
 
         discrimate = torch.sum(torch.matmul(feat, tag_embedding.transpose(0, 1)), -1, keepdim=True)
 
-        pred = torch.sum(logit, -1, keepdim=True)
+        # pred = torch.sum(logit, -1, keepdim=True)
 
-        pred = torch.cat((100 * discrimate, pred), -1)
+        pred = torch.cat(( discrimate, logit), -1)
 
         # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         # pred = self.Linear1(attention_out)#.squeeze(-1)
