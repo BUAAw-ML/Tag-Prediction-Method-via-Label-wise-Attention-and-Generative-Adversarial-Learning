@@ -17,7 +17,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='All' \
         --data_path='../datasets/AAPD/aapd2.csv' \
-        --use_previousData=0 \
+        --use_previousData=1 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
