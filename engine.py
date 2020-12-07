@@ -163,9 +163,9 @@ class Engine(object):
                 print("Train with unlabeled data:")
                 self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
-            # train for one epoch
-            print("Train with labeled data:")
-            self.train(train_loader, model, criterion, optimizer, epoch, False)
+            # # train for one epoch
+            # print("Train with labeled data:")
+            # self.train(train_loader, model, criterion, optimizer, epoch, False)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
