@@ -37,13 +37,13 @@ class MABert(nn.Module):
         sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
 
-        embed = self.bert.get_input_embeddings()
-        tag_embedding = embed(encoded_tag)
-        tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-                        / torch.sum(tag_mask, dim=1, keepdim=True)  #labels_num, hidden_size
+        # embed = self.bert.get_input_embeddings()
+        # tag_embedding = embed(encoded_tag)
+        # tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
+        #                 / torch.sum(tag_mask, dim=1, keepdim=True)  #labels_num, hidden_size
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
-        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
+        attention = (torch.matmul(token_feat, self.class_weight.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # attention_out = attention_out * self.class_weight
