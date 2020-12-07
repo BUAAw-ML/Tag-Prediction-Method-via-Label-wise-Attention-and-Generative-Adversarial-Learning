@@ -163,9 +163,9 @@ class Engine(object):
                 print("Train with unlabeled data:")
                 self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
-            # # train for one epoch
-            # print("Train with labeled data:")
-            # self.train(train_loader, model, criterion, optimizer, epoch, False)
+            # train for one epoch
+            print("Train with labeled data:")
+            self.train(train_loader, model, criterion, optimizer, epoch, False)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -453,7 +453,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         #-----------train enc-----------
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())#x_g.detach()
+                                                                      self.state['tag_mask'],z)#x_g.detach()
 
         # print(prob[:, 0])
 
