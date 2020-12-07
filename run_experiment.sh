@@ -17,12 +17,12 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='All' \
         --data_path='../datasets/AAPD/aapd2.csv' \
-        --use_previousData=1 \
+        --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=200  \
-        --intanceNum_limit=20000 \
+        --max_tagFrequence=20000  \
+        --intanceNum_limit=10000 \
         --data_split=0.01  \
         --test_description=''  \
 
