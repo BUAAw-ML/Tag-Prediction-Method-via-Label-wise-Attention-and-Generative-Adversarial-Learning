@@ -16,13 +16,13 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='All' \
-        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --data_path='../datasets/AAPD/aapd2.csv' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
-        --intanceNum_limit=200000 \
+        --intanceNum_limit=20000 \
         --data_split=0.01  \
         --test_description=''  \
 
