@@ -73,7 +73,6 @@ class MABert(nn.Module):
         logit = pred[:,self.num_classes:]
         flatten = token_feat
 
-
         # prob = torch.cat((torch.sum(discrimate,-1, keepdim=True), torch.sum(logit,-1, keepdim=True)), -1)
 
         prob = self.output(pred)
