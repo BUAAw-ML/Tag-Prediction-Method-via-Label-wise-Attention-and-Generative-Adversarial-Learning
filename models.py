@@ -103,7 +103,7 @@ class MABert(nn.Module):
 
         pred = torch.sum(logit, -1, keepdim=True)
 
-        pred = torch.cat((discrimate, pred), -1)
+        pred = torch.cat((10 * discrimate, pred), -1)
 
         # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         # pred = self.Linear1(attention_out)#.squeeze(-1)
