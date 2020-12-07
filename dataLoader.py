@@ -59,10 +59,10 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
         elif data_type == 'TrainTest_agNews':
 
-            file = os.path.join(data_path, 'train.txt')
+            file = os.path.join(data_path, 'train.csv')
             dataset.train_data = dataset.load_agNews(file)
 
-            file = os.path.join(data_path, 'test.txt')
+            file = os.path.join(data_path, 'test.csv')
             dataset.test_data = dataset.load_agNews(file)
 
         elif data_type == 'TrainTestTextTag':
