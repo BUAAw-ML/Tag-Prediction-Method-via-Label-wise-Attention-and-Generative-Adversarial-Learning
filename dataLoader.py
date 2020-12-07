@@ -338,49 +338,47 @@ class dataEngine(Dataset):
         data = []
         document = []
 
-        with open(file, 'r') as f:
-            contents = f.readlines()
-            for line in contents:
-                print(line)
-                split = line.split(" ")
-                print(split)
+        with open(file, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            # next(reader)
+            for row in reader:
+
+                if len(row) != 3:
+                    continue
+                tag, title, dscp = row
+                print(row)
                 exit()
-                dscp = ' '.join(split[1:])
+                title_tokens = tokenizer.tokenize(title.strip())
+                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
-                inn_split = split[0].split(":")
-                tag = inn_split[0] + "_" + inn_split[1]
-
-                dscp_tokens = tokenizer.tokenize(dscp.strip())
                 if len(dscp_tokens) > 510:
                     if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
                     else:
                         continue
 
-                document.append(" ".join(dscp_tokens))
-
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-                if tag in self.tag2id:
-                    tag_id = self.tag2id[tag]
-                elif tag == 'UNK_UNK':
-                    tag_id = 0
-                else:
-                    tag_id = len(self.tag2id)
-                    self.tag2id[tag] = tag_id
-                    self.id2tag[tag_id] = tag
+                tag = tag.strip().split('###')
+                tag = [t for t in tag if t != '']
+
+                for t in tag:
+                    if t not in self.tag2id:
+                        tag_id = len(self.tag2id)
+                        self.tag2id[t] = tag_id
+                        self.id2tag[tag_id] = t
+
+                tag_ids = [self.tag2id[t] for t in tag]
 
                 data.append({
-                    'id': 0,
+                    'id': int(id),
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_id,
+                    'tag_ids': tag_ids,
                     'dscp': dscp
                 })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
-        os.makedirs('cache', exist_ok=True)
-        print(self.tag2id.keys())
 
         return data
 
