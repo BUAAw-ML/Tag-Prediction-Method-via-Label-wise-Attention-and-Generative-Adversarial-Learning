@@ -346,8 +346,8 @@ class dataEngine(Dataset):
                 if len(row) != 3:
                     continue
                 tag, title, dscp = row
-                print(tag.strip())
-                print(tag.strip('\''))
+                print(dscp.strip())
+
                 exit()
                 title_tokens = tokenizer.tokenize(title.strip())
                 dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
