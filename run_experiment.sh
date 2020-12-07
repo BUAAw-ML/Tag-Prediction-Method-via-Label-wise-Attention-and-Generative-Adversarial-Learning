@@ -5,8 +5,8 @@
 
 python main.py \
         --experiment_no='tagFrequence<200_Test'  \
-        --epochs=20 \
-        --epoch_step=15 \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.1 \
@@ -16,7 +16,7 @@ python main.py \
         --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
         --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
