@@ -65,10 +65,10 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
             split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.5)
+            split2 = int(len(data) * 0.3)
 
             dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[split:]].tolist()
+            dataset.unlabeled_train_data = data[ind[split:split2]].tolist()
 
             file = os.path.join(data_path, 'test.csv')
             dataset.test_data = dataset.load_agNews(file)
