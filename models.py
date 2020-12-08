@@ -81,11 +81,9 @@ class MABert(nn.Module):
 
         flatten = token_feat
 
-        print(similarity_fake.shape)
-        print(similarity.shape)
-
 
         prob = self.output(torch.cat((similarity_fake, similarity), -1))
+        print(torch.cat((similarity_fake, similarity), -1))
         print(prob)
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
