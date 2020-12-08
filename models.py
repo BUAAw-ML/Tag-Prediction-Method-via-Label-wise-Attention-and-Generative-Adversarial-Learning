@@ -24,7 +24,7 @@ class MABert(nn.Module):
         self.Linear1 = nn.Linear(768, 500)
         self.Linear2 = nn.Linear(500, 1)
         self.act = nn.LeakyReLU(0.2)
-
+        self.relu = nn.ReLU()
         self.output = nn.Softmax(dim=-1)
 
     def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
@@ -77,6 +77,8 @@ class MABert(nn.Module):
         flatten = token_feat
 
         prob = pred[:,:self.num_classes]
+
+        prob = self.relu(torch.mean(prob, -1) - torch.mean(logit, -1))
 
         # prob = torch.sum(prob[:,:self.num_classes],-1)
         return flatten, logit, prob
