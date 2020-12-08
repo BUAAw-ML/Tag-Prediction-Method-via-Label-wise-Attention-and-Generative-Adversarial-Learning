@@ -342,7 +342,7 @@ class MultiLabelMAPEngine(Engine):
         # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
         # D_L_Supervised = torch.mean(per_example_loss)
 
-        self.state['output'] = torch.sigmoid(logits, dim=-1)
+        self.state['output'] = torch.sigmoid(logits)
 
         # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
         # D_L_Supervised = torch.mean(per_example_loss)
