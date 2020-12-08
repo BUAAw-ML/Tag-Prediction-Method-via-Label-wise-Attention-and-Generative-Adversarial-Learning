@@ -87,7 +87,7 @@ class MABert(nn.Module):
         prob = pred[:, :self.num_classes]
 
         flatten = token_feat
-
+        print(prob)
         # prob = torch.cat((similarity_fake, similarity), 1)
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
