@@ -84,8 +84,8 @@ class MABert(nn.Module):
 
 
         prob = self.output(torch.cat((similarity_fake, similarity), -1))
-        print(torch.cat((similarity_fake, similarity), -1))
-        print(prob)
+        # print(torch.cat((similarity_fake, similarity), -1))
+        # print(prob)
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
