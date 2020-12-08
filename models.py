@@ -88,7 +88,7 @@ class MABert(nn.Module):
 
         prob = torch.cat((similarity_fake, similarity), 1)
         # print(prob.shape)
-        # print(prob)
+        print(prob)
         prob = self.output(prob)
         # print(prob)
 
