@@ -44,7 +44,8 @@ class MABert(nn.Module):
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.detach().transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
-        similarity = torch.mean(torch.mean(attention, -1), -1, keepdim=True)
+
+        similarity = torch.mean(torch.mean(torch.matmul(token_feat, tag_embedding.detach().transpose(0, 1)), -1), -1, keepdim=True)
 
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
@@ -57,7 +58,7 @@ class MABert(nn.Module):
         attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
             (1 - masks.byte()), torch.tensor(-np.inf))
 
-        similarity_fake = torch.mean(torch.mean(attention_fake, -1), -1, keepdim=True)
+        similarity_fake = torch.mean(torch.mean(torch.matmul(feat, tag_embedding.transpose(0, 1)), -1), -1, keepdim=True)
 
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
