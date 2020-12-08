@@ -44,6 +44,7 @@ class MABert(nn.Module):
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.detach().transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
+        similarity = torch.sum(torch.mean(attention, -1), -1, keepdim=True)
 
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
@@ -56,7 +57,7 @@ class MABert(nn.Module):
         attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
             (1 - masks.byte()), torch.tensor(-np.inf))
 
-        similarity_fake = torch.sigmoid(torch.mean(attention_fake, -1))
+        similarity_fake = torch.sum(torch.mean(attention_fake, -1), -1, keepdim=True)
 
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
@@ -80,12 +81,12 @@ class MABert(nn.Module):
 
         flatten = token_feat
 
-        prob = pred[:,:self.num_classes]
+        prob = self.output(torch.cat((similarity, similarity_fake), -1))
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
         # prob = torch.sum(prob[:,:self.num_classes],-1)
-        return flatten, logit, similarity_fake
+        return flatten, logit, prob
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,
