@@ -448,7 +448,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # z = torch.randn(ids.shape[0], 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
 
         z = torch.Tensor(ids.shape[0],512, 768).uniform_(-1, 1).cuda(self.state['device_ids'][0])
-        target_zeros = torch.zeros(ids.shape[0], 71).cuda(self.state['device_ids'][0])
+        target_zeros = torch.zeros(ids.shape[0], 1).cuda(self.state['device_ids'][0])
 
         x_g = model['Generator'](z)
 
@@ -462,7 +462,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = logits
 
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
-        D_L_unsupervised = prob#criterion(prob, target_zeros)
+        D_L_unsupervised = criterion(prob, target_zeros)
 
         if semi_supervised == False: #train with labeled data
             # log_probs = F.log_softmax(logits, dim=-1)

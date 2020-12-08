@@ -78,7 +78,7 @@ class MABert(nn.Module):
 
         prob = pred[:,:self.num_classes]
 
-        prob = self.relu(torch.mean(prob, -1) - torch.mean(logit, -1))
+        prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
         # prob = torch.sum(prob[:,:self.num_classes],-1)
         return flatten, logit, prob
