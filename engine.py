@@ -156,16 +156,15 @@ class Engine(object):
             lr = self.adjust_learning_rate(optimizer)
             print('lr:', lr)
 
+
+            if self.state['method'] == 'semiGAN_MultiLabelMAP':
+                # train for one epoch
+                print("Train with unlabeled data:")
+                self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+
             # train for one epoch
             print("Train with labeled data:")
             self.train(train_loader, model, criterion, optimizer, epoch, False)
-
-            # if self.state['method'] == 'semiGAN_MultiLabelMAP':
-            #     # train for one epoch
-            #     print("Train with unlabeled data:")
-            #     self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
-
-
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -464,13 +463,13 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = logits
 
         # D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
-        D_L_unsupervised = criterion(prob, target_zeros) / 71.0
+        D_L_unsupervised = criterion(prob, target_var) / 71.0
 
         if semi_supervised == False: #train with labeled data
             # log_probs = F.log_softmax(logits, dim=-1)
             # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             # D_L_Supervised = torch.mean(per_example_loss)
-            d_loss = criterion(self.state['output'], target_var) + D_L_unsupervised
+            d_loss = criterion(self.state['output'], target_var)
         else:
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
             # pseudo_label = self.state['output'] - pseudo_label
