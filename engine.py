@@ -458,6 +458,12 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g.detach())#x_g.detach()
+        print(logits)
+        print(prob)
+        print('--------------------')
+        print(target_var)
+        print(target_zeros)
+        exit()
 
         # self.state['output'] = F.softmax(logits, dim=-1)
 
