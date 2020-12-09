@@ -96,7 +96,7 @@ class MABert(nn.Module):
 
         # prob = torch.sum(prob[:,:self.num_classes],-1)
 
-        return flatten, logit, prob[:,:,1]
+        return pred[:,:self.num_classes], logit, prob[:,:,1]
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,

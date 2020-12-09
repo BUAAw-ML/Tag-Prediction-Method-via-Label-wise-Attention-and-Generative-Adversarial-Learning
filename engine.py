@@ -452,9 +452,9 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         x_g = model['Generator'](z)
 
         #-----------train enc-----------
-        _, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
+        features, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())#x_g.detach()
+                                                                      self.state['tag_mask'], z)#x_g.detach()
 
         # self.state['output'] = F.softmax(logits, dim=-1)
 
@@ -478,7 +478,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # log_probs = F.log_softmax(logits, dim=-1)
             # per_example_loss = -1 * torch.sum(pseudo_label * log_probs, dim=-1) / pseudo_label.shape[-1]
             # D_L_Supervised = torch.mean(per_example_loss)
-
+            print(logits)
+            print(features)
             d_loss = D_L_unsupervised
 
         if training:
