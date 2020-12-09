@@ -96,10 +96,10 @@ class MABert(nn.Module):
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
         prob2 = 0.5 - torch.max(logit, -1)[0]
-        prob2 = self.relu(prob2)
+        prob2 = torch.sigmoid(prob2)
 
         prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
-        prob = self.relu(prob)
+        prob = torch.sigmoid(prob)
 
         return prob2, logit, prob
 
