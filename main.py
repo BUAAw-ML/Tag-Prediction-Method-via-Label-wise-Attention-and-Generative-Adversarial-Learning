@@ -123,6 +123,7 @@ model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=a
 
 # define loss function (criterion)
 criterion = nn.BCELoss()
+criterion = nn.CrossEntropyLoss()
 
 # define optimizer
 optimizer = {}
