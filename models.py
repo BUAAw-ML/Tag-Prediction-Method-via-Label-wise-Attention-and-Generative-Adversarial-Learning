@@ -98,7 +98,8 @@ class MABert(nn.Module):
         prob2 = 0.5 - torch.max(logit, -1)[0]
         prob2 = self.relu(prob2)
 
-        prob = torch.mean(pred[:,:self.num_classes],-1)
+        prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
+        prob = self.relu(prob)
 
         return prob2, logit, prob
 
