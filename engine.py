@@ -483,8 +483,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # print(logits)
             # print("features：")
             # print(features)
-            prob2 = torch.max(logits, -1)
-            print(prob2)
+            prob2 = torch.max(logits, -1)[0]
+
             D_L_unsupervised2 = -1 * torch.mean(torch.log(prob2 + epsilon))
 
             d_loss = D_L_unsupervised + D_L_unsupervised2
