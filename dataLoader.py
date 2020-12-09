@@ -237,10 +237,10 @@ class dataEngine(Dataset):
         tags = torch.zeros(size=(len(batch), self.get_tags_num()))
         for i in range(len(batch)):
             tags[i, batch[i]['tag_ids']] = 1.
-        tags = torch.LongTensor(tags)
+
         dscp = [e['dscp'] for e in batch]
 
-        return (ids, token_type_ids, attention_mask), tags, dscp
+        return (ids, token_type_ids, attention_mask), tags.long(), dscp
 
     @classmethod
     def get_tfidf_dict(cls, document):
