@@ -45,9 +45,9 @@ class MABert(nn.Module):
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
 
-        similarity = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-            (1 - masks.byte()), torch.tensor(0))
-        similarity = torch.sum(similarity, -1).unsqueeze(-1)
+        # similarity = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+        #     (1 - masks.byte()), torch.tensor(0))
+        # similarity = torch.sum(similarity, -1).unsqueeze(-1)
 
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
@@ -60,9 +60,9 @@ class MABert(nn.Module):
         attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
             (1 - masks.byte()), torch.tensor(-np.inf))
 
-        similarity_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-            (1 - masks.byte()), torch.tensor(0))
-        similarity_fake = torch.sum(similarity_fake, -1).unsqueeze(-1)
+        # similarity_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+        #     (1 - masks.byte()), torch.tensor(0))
+        # similarity_fake = torch.sum(similarity_fake, -1).unsqueeze(-1)
 
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
@@ -88,15 +88,15 @@ class MABert(nn.Module):
 
         flatten = token_feat
 
-        prob = torch.cat((similarity_fake, similarity), -1)
-
-        prob = self.output(prob)
+        # prob = torch.cat((similarity_fake, similarity), -1)
+        #
+        # prob = self.output(prob)
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
         # prob = torch.sum(prob[:,:self.num_classes],-1)
 
-        return pred[:,:self.num_classes], logit, prob[:,:,1]
+        return pred[:,:self.num_classes], logit, pred[:,:self.num_classes]
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,

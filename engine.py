@@ -460,8 +460,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         self.state['output'] = logits
 
-        D_L_unsupervised = -1 * torch.mean(torch.mean(torch.log(1 - prob + epsilon)))
-        # D_L_unsupervised = criterion(prob, target_zeros)
+        # D_L_unsupervised = -1 * torch.mean(torch.mean(torch.log(1 - prob + epsilon)))
+        D_L_unsupervised = criterion(prob, target_zeros)
 
         if semi_supervised == False: #train with labeled data
             # log_probs = F.log_softmax(logits, dim=-1)
@@ -478,9 +478,9 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # log_probs = F.log_softmax(logits, dim=-1)
             # per_example_loss = -1 * torch.sum(pseudo_label * log_probs, dim=-1) / pseudo_label.shape[-1]
             # D_L_Supervised = torch.mean(per_example_loss)
-            print(logits)
-            print("features：")
-            print(features)
+            # print(logits)
+            # print("features：")
+            # print(features)
             d_loss = D_L_unsupervised
 
         if training:
@@ -495,8 +495,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g)
 
-        g_loss = -1 * torch.mean(torch.mean(torch.log(prob + epsilon)))
-        # g_loss = criterion(prob, 1 - target_zeros)
+        # g_loss = -1 * torch.mean(torch.mean(torch.log(prob + epsilon)))
+        g_loss = criterion(prob, 1 - target_zeros)
 
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
 
