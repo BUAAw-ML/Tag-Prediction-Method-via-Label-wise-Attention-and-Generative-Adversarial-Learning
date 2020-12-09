@@ -15,10 +15,10 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='All' \
         --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
-        --use_previousData=1 \
+        --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=900  \
+        --min_tagFrequence=700  \
         --max_tagFrequence=2000  \
         --intanceNum_limit=10000 \
         --data_split=0.6  \
