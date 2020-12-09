@@ -93,7 +93,7 @@ class MABert(nn.Module):
         #
         # prob = self.output(prob)
 
-        prob = self.relu(torch.mean(prob, -1) - torch.mean(logit, -1))
+        prob = self.relu(torch.max(prob, -1)[0] - torch.max(logit, -1)[0])
 
         prob2 = 0.5 - torch.max(logit, -1)[0]
         prob2 = self.relu(prob2)
@@ -101,7 +101,7 @@ class MABert(nn.Module):
         # prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
         # prob = self.relu(prob)
 
-        return prob2, logit, prob
+        return pred[:, :self.num_classes], logit, prob
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,
