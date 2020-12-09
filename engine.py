@@ -481,7 +481,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # print(logits)
             # print("features：")
             # print(features)
-            d_loss = criterion(self.state['output'], target_var)#D_L_unsupervised
+            d_loss = D_L_unsupervised
 
         if training:
             optimizer['enc'].zero_grad()
