@@ -488,7 +488,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
             d_loss = D_L_unsupervised #+ D_L_unsupervised2
 
-        print(logits)
+
         if training:
             optimizer['enc'].zero_grad()
             d_loss.backward()
@@ -520,6 +520,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['loss'] = [d_loss, g_loss]
 
         if not training:
+            print(self.state['output'])
             return self.state['output']
 
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
