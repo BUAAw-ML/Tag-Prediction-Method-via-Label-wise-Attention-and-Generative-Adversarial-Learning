@@ -95,9 +95,9 @@ class MABert(nn.Module):
 
         # prob = torch.sigmoid(torch.mean(prob, -1) - torch.mean(logit, -1))
 
-        # prob = torch.sum(prob[:,:self.num_classes],-1)
+        prob = torch.mean(pred[:,:self.num_classes],-1)
 
-        return pred[:,:self.num_classes], logit, pred[:,:self.num_classes]
+        return pred[:,:self.num_classes], logit, prob
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,
