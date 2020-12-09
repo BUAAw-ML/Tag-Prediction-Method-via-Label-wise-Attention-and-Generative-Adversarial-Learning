@@ -18,10 +18,10 @@ python main.py \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=200  \
+        --min_tagFrequence=900  \
+        --max_tagFrequence=2000  \
         --intanceNum_limit=10000 \
-        --data_split=0.05  \
+        --data_split=0.6  \
         --test_description=''  \
 
 #python main.py \
