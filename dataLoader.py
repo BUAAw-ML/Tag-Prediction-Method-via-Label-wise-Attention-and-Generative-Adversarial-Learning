@@ -240,7 +240,7 @@ class dataEngine(Dataset):
 
         dscp = [e['dscp'] for e in batch]
 
-        return (ids, token_type_ids, attention_mask), tags.long(), dscp
+        return (ids, token_type_ids, attention_mask), tags, dscp
 
     @classmethod
     def get_tfidf_dict(cls, document):

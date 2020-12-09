@@ -221,10 +221,10 @@ class Engine(object):
     def validate(self, data_loader, model, criterion, epoch):
         # switch to evaluate mode
 
-        model['Discriminator'].eval()
-        model['Generator'].eval()
-        model['Encoder'].eval()
-        model['MABert'].eval()
+        # model['Discriminator'].eval()
+        # model['Generator'].eval()
+        # model['Encoder'].eval()
+        # model['MABert'].eval()
 
         self.on_start_epoch(False, model, criterion, data_loader)
 
@@ -459,8 +459,6 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # self.state['output'] = F.softmax(logits, dim=-1)
 
         self.state['output'] = logits
-
-
 
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
         # D_L_unsupervised = criterion(prob, target_zeros)

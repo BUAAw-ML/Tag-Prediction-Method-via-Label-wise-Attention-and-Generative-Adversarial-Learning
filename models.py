@@ -84,7 +84,7 @@ class MABert(nn.Module):
         # pred = torch.sigmoid(pred)
 
         logit = pred[:,self.num_classes:]
-        logit = self.output(logit)
+
 
         prob = pred[:, :self.num_classes]
 
