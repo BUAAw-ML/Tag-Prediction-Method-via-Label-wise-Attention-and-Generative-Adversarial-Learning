@@ -81,7 +81,7 @@ class MABert(nn.Module):
         # pred = self.Linear1(pred)
         # pred = self.act(pred)
         # pred = self.Linear2(pred).squeeze(-1)
-        # pred = torch.sigmoid(pred)
+        pred = torch.sigmoid(pred)
 
         logit = pred[:,self.num_classes:]
 
