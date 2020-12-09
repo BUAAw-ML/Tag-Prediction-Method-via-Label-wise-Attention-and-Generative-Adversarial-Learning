@@ -72,7 +72,7 @@ class MABert(nn.Module):
         # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
         # discrimate = torch.sum(discrimate, -1, keepdim=True)
         #################
-        pred = torch.cat((discrimate, logit), -1)
+        # pred = torch.cat((discrimate, logit), -1)
 
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # attention_out = attention_out * self.class_weight
