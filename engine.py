@@ -486,7 +486,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
             D_L_unsupervised2 = -1 * torch.mean(torch.log(prob2 + epsilon))
 
-            d_loss = D_L_unsupervised
+            d_loss = D_L_unsupervised + D_L_unsupervised2
 
         if training:
             optimizer['enc'].zero_grad()
