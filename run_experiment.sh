@@ -6,7 +6,7 @@
 python main.py \
         --experiment_no='tagFrequence<200_Test'  \
         --epochs=50 \
-        --epoch_step=15 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
