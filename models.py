@@ -120,27 +120,29 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        attention_out = attention_out * self.class_weight
-        logit = torch.sum(attention_out, -1)
+        # attention_out = attention_out * self.class_weight
+        prob = torch.sum(attention_out, -1)
+        logit = torch.sigmoid(prob)
 
-        discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+        prob = self.relu(-1 * torch.max(prob)[0])
+        # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
         # pred = torch.sum(logit, -1, keepdim=True)
 
-        pred = torch.cat((discrimate, logit), -1)
+        # pred = torch.cat((discrimate, logit), -1)
 
         # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
         # pred = self.Linear1(attention_out)#.squeeze(-1)
         # pred = self.act(pred)
         # pred = self.Linear2(pred).squeeze(-1)
-        pred = torch.sigmoid(pred)
-        logit = pred[:,1:]
+        # pred = torch.sigmoid(pred)
+        # logit = pred[:,1:]
 
 
         #
         flatten = torch.mean(attention_out,-2)
 
-        prob = pred[:,0]
+        # prob = pred[:,0]
 
         return flatten, logit, prob
 
