@@ -122,7 +122,8 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         attention_out = attention_out * self.class_weight
         prob = torch.sum(attention_out, -1)
-        logit = torch.sigmoid(prob)
+        # logit = torch.sigmoid(prob)
+        logit = prob
 
         prob = self.relu(0.5 - torch.max(logit,-1)[0])
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
