@@ -490,7 +490,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         if training:
             optimizer['enc'].zero_grad()
             d_loss.backward()
-            # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
 
         #-----------train Generator-----------
