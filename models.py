@@ -68,6 +68,7 @@ class MABert(nn.Module):
 
 
         print(similarity -similarity_fake )
+        print( torch.sum(similarity, -1) - torch.sum(similarity_fake, -1))
 
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
