@@ -127,14 +127,14 @@ class MABert(nn.Module):
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
         attention = F.softmax(attention, -1)
 
-        print("1 {}".format(torch.max(torch.max(attention,-1)[0],-1)[1]))
-        print("2 {}".format(torch.max(torch.max(attention, -1)[0], -1)[0]))
+        # print("1 {}".format(torch.max(torch.max(attention,-1)[0],-1)[1]))
+        # print("2 {}".format(torch.max(torch.max(attention, -1)[0], -1)[0]))
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-
+        print("0 {}".format(torch.sum(token_feat, -1)))
         # attention_out = attention_out * self.class_weight
         prob = torch.sum(attention_out, -1)
-        print("3 {}".format(torch.max(prob,-1)[1]))
-        print("4 {}".format(torch.max(prob, -1)[0]))
+        # print("3 {}".format(torch.max(prob,-1)[1]))
+        # print("4 {}".format(torch.max(prob, -1)[0]))
 
         logit = torch.sigmoid(prob)
         # logit = prob
