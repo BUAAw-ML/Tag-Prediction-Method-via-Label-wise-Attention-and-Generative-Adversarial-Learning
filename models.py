@@ -27,125 +27,127 @@ class MABert(nn.Module):
         self.relu = nn.ReLU()
         self.output = nn.Softmax(dim=-1)
 
-    # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
-    #     token_feat = self.bert(ids,
-    #                            token_type_ids=token_type_ids,
-    #                            attention_mask=attention_mask)[0] #N, L, hidden_size
-    #
-    #     # print(token_feat.shape)
-    #
-    #     sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
-    #                     / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
-    #
-    #     embed = self.bert.get_input_embeddings()
-    #     tag_embedding = embed(encoded_tag)
-    #     tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-    #                     / torch.sum(tag_mask, dim=1, keepdim=True)  #labels_num, hidden_size
-    #
-    #     masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
-    #     attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
-    #
-    #     # similarity = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-    #     #     (1 - masks.byte()), torch.tensor(0))
-    #     # similarity = torch.sum(similarity, -1).unsqueeze(-1)
-    #
-    #     attention = F.softmax(attention, -1)
-    #     attention_out = attention @ token_feat   # N, labels_num, hidden_size
-    #     # attention_out = attention_out * self.class_weight
-    #     # logit = torch.sum(attention_out, -1)
-    #     # logit = torch.sigmoid(logit)
-    #     #################fake sample process#######
-    #     feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
-    #     # feat = torch.mean(feat, 1)
-    #     attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-    #         (1 - masks.byte()), torch.tensor(-np.inf))
-    #
-    #     # similarity_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
-    #     #     (1 - masks.byte()), torch.tensor(0))
-    #     # similarity_fake = torch.sum(similarity_fake, -1).unsqueeze(-1)
-    #
-    #     attention_fake = F.softmax(attention_fake, -1)
-    #     attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
-    #     # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
-    #     # discrimate = torch.sum(attention_out_fake, -1)
-    #     # attention_out_fake = attention_out_fake * self.class_weight
-    #     # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
-    #     # discrimate = torch.sum(discrimate, -1, keepdim=True)
-    #     #################
-    #     # pred = torch.cat((discrimate, logit), -1)
-    #
-    #     # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
-    #     # attention_out = attention_out * self.class_weight
-    #
-    #     pred = torch.cat((attention_out_fake, attention_out), -2)
-    #     pred = self.Linear1(pred)
-    #     pred = self.act(pred)
-    #     pred = self.Linear2(pred).squeeze(-1)
-    #     pred = torch.sigmoid(pred)
-    #
-    #     logit = pred[:,self.num_classes:]
-    #
-    #
-    #     prob = pred[:, :self.num_classes]
-    #
-    #     flatten = token_feat
-    #
-    #     # prob = torch.cat((similarity_fake, similarity), -1)
-    #     #
-    #     # prob = self.output(prob)
-    #
-    #     prob = self.relu(torch.max(prob, -1)[0] - torch.max(logit, -1)[0])
-    #
-    #     prob2 = 0.5 - torch.max(logit, -1)[0]
-    #     prob2 = self.relu(prob2)
-    #     #
-    #     # prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
-    #     # prob = self.relu(prob)
-    #
-    #     return pred[:, :self.num_classes], logit, prob
-
     def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0] #N, L, hidden_size
+
+        # print(token_feat.shape)
+
         sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
 
         embed = self.bert.get_input_embeddings()
         tag_embedding = embed(encoded_tag)
         tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-                        / torch.sum(tag_mask, dim=1, keepdim=True)
+                        / torch.sum(tag_mask, dim=1, keepdim=True)  #labels_num, hidden_size
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
+
+        similarity = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(0))
+        similarity = torch.sum(similarity, -1).unsqueeze(-1)
+
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        attention_out = attention_out * self.class_weight
-        prob = torch.sum(attention_out, -1)
-        logit = torch.sigmoid(prob)
-        # logit = prob
+        # attention_out = attention_out * self.class_weight
+        # logit = torch.sum(attention_out, -1)
+        # logit = torch.sigmoid(logit)
+        #################fake sample process#######
+        feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
+        # feat = torch.mean(feat, 1)
+        attention_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(-np.inf))
 
-        prob = self.relu(0.5 - torch.max(logit,-1)[0])
-        # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+        similarity_fake = (torch.matmul(feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(0))
+        similarity_fake = torch.sum(similarity_fake, -1).unsqueeze(-1)
+
+        print(similarity -similarity_fake )
+
+        attention_fake = F.softmax(attention_fake, -1)
+        attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
-        # pred = torch.sum(logit, -1, keepdim=True)
-
+        # discrimate = torch.sum(attention_out_fake, -1)
+        # attention_out_fake = attention_out_fake * self.class_weight
+        # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
+        # discrimate = torch.sum(discrimate, -1, keepdim=True)
+        #################
         # pred = torch.cat((discrimate, logit), -1)
 
-        # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
-        # pred = self.Linear1(attention_out)#.squeeze(-1)
-        # pred = self.act(pred)
-        # pred = self.Linear2(pred).squeeze(-1)
-        # pred = torch.sigmoid(pred)
-        # logit = pred[:,1:]
+        # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+        # attention_out = attention_out * self.class_weight
+
+        pred = torch.cat((attention_out_fake, attention_out), -2)
+        pred = self.Linear1(pred)
+        pred = self.act(pred)
+        pred = self.Linear2(pred).squeeze(-1)
+        pred = torch.sigmoid(pred)
+
+        logit = pred[:,self.num_classes:]
 
 
+        prob = pred[:, :self.num_classes]
+
+        flatten = token_feat
+
+        # prob = torch.cat((similarity_fake, similarity), -1)
         #
-        flatten = torch.mean(attention_out,-2)
+        # prob = self.output(prob)
 
-        # prob = pred[:,0]
+        prob = self.relu(torch.max(prob, -1)[0] - torch.max(logit, -1)[0])
 
-        return flatten, logit, prob
+        prob2 = 0.5 - torch.max(logit, -1)[0]
+        prob2 = self.relu(prob2)
+        #
+        # prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
+        # prob = self.relu(prob)
+
+        return pred[:, :self.num_classes], logit, prob
+
+    # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
+    #     token_feat = self.bert(ids,
+    #                            token_type_ids=token_type_ids,
+    #                            attention_mask=attention_mask)[0] #N, L, hidden_size
+    #     sentence_feat = torch.sum(token_feat * attention_mask.unsqueeze(-1), dim=1) \
+    #                     / torch.sum(attention_mask, dim=1, keepdim=True)#N, hidden_size
+    #
+    #     embed = self.bert.get_input_embeddings()
+    #     tag_embedding = embed(encoded_tag)
+    #     tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
+    #                     / torch.sum(tag_mask, dim=1, keepdim=True)
+    #
+    #     masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
+    #     attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
+    #     attention = F.softmax(attention, -1)
+    #     attention_out = attention @ token_feat   # N, labels_num, hidden_size
+    #     attention_out = attention_out * self.class_weight
+    #     prob = torch.sum(attention_out, -1)
+    #     logit = torch.sigmoid(prob)
+    #     # logit = prob
+    #
+    #     prob = self.relu(0.5 - torch.max(logit,-1)[0])
+    #     # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
+    #     # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
+    #     # pred = torch.sum(logit, -1, keepdim=True)
+    #
+    #     # pred = torch.cat((discrimate, logit), -1)
+    #
+    #     # attention_out = torch.cat((feat.unsqueeze(1), attention_out), 1)
+    #     # pred = self.Linear1(attention_out)#.squeeze(-1)
+    #     # pred = self.act(pred)
+    #     # pred = self.Linear2(pred).squeeze(-1)
+    #     # pred = torch.sigmoid(pred)
+    #     # logit = pred[:,1:]
+    #
+    #
+    #     #
+    #     flatten = torch.mean(attention_out,-2)
+    #
+    #     # prob = pred[:,0]
+    #
+    #     return flatten, logit, prob
 
     def get_config_optim(self, lr, lrp):
         return [
