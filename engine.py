@@ -160,10 +160,10 @@ class Engine(object):
             print("Train with labeled data:")
             self.train(train_loader, model, criterion, optimizer, epoch, False)
 
-            if self.state['method'] == 'semiGAN_MultiLabelMAP':
-                # train for one epoch
-                print("Train with unlabeled data:")
-                self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+            # if self.state['method'] == 'semiGAN_MultiLabelMAP':
+            #     # train for one epoch
+            #     print("Train with unlabeled data:")
+            #     self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -466,7 +466,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = logits
 
         # D_L_unsupervised2 = -1 * torch.mean(torch.log(1 - prob2))
-        D_L_unsupervised = 1 - torch.mean(torch.mean(prob * torch.log(prob), -1))
+        D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
         # D_L_unsupervised = criterion(prob, target_zeros)
 
         if semi_supervised == False: #train with labeled data
