@@ -122,7 +122,7 @@ class MABert(nn.Module):
         tag_embedding = embed(encoded_tag)
         tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(tag_mask, dim=1, keepdim=True)
-        print("similarity {}".format(torch.mean(torch.mean(tag_embedding, -1))))
+        # print("similarity {}".format(torch.mean(torch.mean(tag_embedding, -1))))
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.byte()), torch.tensor(-np.inf))
@@ -138,14 +138,17 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # print("0 {}".format(torch.sum(token_feat, -1)))
         # attention_out = attention_out * self.class_weight
-        prob = torch.sum(attention_out, -1)
+        attention_out = torch.sum(attention_out, -1)
         # print("3 {}".format(torch.max(prob,-1)[1]))
         # print("4 {}".format(torch.max(prob, -1)[0]))
 
-        logit = torch.sigmoid(prob)
+
+
+        logit = torch.sigmoid(attention_out)
         # logit = prob
 
-        prob = self.relu(0.5 - torch.max(logit,-1)[0])
+        prob = 2 * self.relu(0.5-torch.max(logit, -1)[0])
+
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
         # pred = torch.sum(logit, -1, keepdim=True)
