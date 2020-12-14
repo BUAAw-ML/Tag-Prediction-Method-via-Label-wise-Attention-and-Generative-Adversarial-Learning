@@ -464,7 +464,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(logits)
 
         self.state['output'] = logits
-        prob2 = self.relu(0.5 - torch.max(logits, -1)[0])
+
         D_L_unsupervised2 = -1 * torch.mean(torch.log(1 - prob2 + epsilon))
         D_L_unsupervised = -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
         # D_L_unsupervised = criterion(prob, target_zeros)
