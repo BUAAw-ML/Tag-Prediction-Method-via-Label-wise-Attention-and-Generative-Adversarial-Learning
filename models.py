@@ -21,7 +21,7 @@ class MABert(nn.Module):
         self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
-        self.Linear1 = nn.Linear(768, 500)
+        self.Linear1 = nn.Linear(71, 500)
         self.Linear2 = nn.Linear(500, 71)
         self.act = nn.LeakyReLU(0.2)
         self.relu = nn.ReLU()
@@ -138,7 +138,7 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # print("0 {}".format(torch.sum(token_feat, -1)))
         # attention_out = attention_out * self.class_weight
-        attention_out = torch.sum(attention_out, -2)
+        attention_out = torch.sum(attention_out, -1)
         # print("3 {}".format(torch.max(prob,-1)[1]))
         # print("4 {}".format(torch.max(prob, -1)[0]))
 
