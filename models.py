@@ -132,7 +132,6 @@ class MABert(nn.Module):
         # print("similarity {}".format(torch.mean(torch.sum(similarity, -1))))
 
         attention = F.softmax(attention, -1)
-        print(attention)
 
         # print("1 {}".format(torch.max(torch.max(attention,-1)[0],-1)[1]))
         # print("2 {}".format(torch.max(torch.max(attention, -1)[0], -1)[0]))
