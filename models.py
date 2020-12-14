@@ -148,7 +148,7 @@ class MABert(nn.Module):
         # logit = prob
 
         flatten = self.relu(0.5-torch.max(logit, -1)[0])
-        prob = self.output(attention_out)
+        prob = attention
 
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
