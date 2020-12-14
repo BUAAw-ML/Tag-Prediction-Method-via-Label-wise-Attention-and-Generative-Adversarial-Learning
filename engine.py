@@ -460,8 +460,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         # self.state['output'] = F.softmax(logits, dim=-1)
 
-        # print("logits：")
-        # print(logits)
+        print("logits：")
+        print(logits)
 
         self.state['output'] = logits
 
