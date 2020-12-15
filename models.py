@@ -219,10 +219,10 @@ class Generator(nn.Module):
         #                 / torch.sum(tag_mask, dim=1, keepdim=True)
         # tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
 
-        # tag_embedding = torch.eye(71).cuda(0).unsqueeze(0).expand(feat.shape[0],71,71)
+        tag_embedding = torch.eye(71).cuda(0).unsqueeze(0).expand(feat.shape[0],71,71)
         #
-        # x = torch.cat((feat,tag_embedding),-1)
-        x = feat
+        x = torch.cat((feat,tag_embedding),-1)
+        # x = feat
 
 
         for i in range(self.num_hidden_generator):
