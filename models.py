@@ -185,7 +185,7 @@ class MABert(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, bert, hidden_dim=768, input_dim=768+71, num_hidden_generator=2, hidden_dim_generator=2000):
+    def __init__(self, bert, hidden_dim=768, input_dim=768*2, num_hidden_generator=2, hidden_dim_generator=2000):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -217,7 +217,7 @@ class Generator(nn.Module):
                         / torch.sum(tag_mask, dim=1, keepdim=True)
         tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
         x = torch.cat((feat,tag_embedding),-1)
-        print(x.shape)
+
 
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
