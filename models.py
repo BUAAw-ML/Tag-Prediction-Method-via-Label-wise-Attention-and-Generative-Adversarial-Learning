@@ -185,7 +185,7 @@ class MABert(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self, hidden_dim=768, input_dim=768+71, num_hidden_generator=2, hidden_dim_generator=2000):
+    def __init__(self, bert, hidden_dim=768, input_dim=768+71, num_hidden_generator=2, hidden_dim_generator=2000):
         super(Generator, self).__init__()
 
         self.dropout = nn.Dropout(p=0.5)
@@ -203,6 +203,11 @@ class Generator(nn.Module):
         self.output = nn.Linear(hidden_dim_generator, hidden_dim)
 
         self.m1 = nn.BatchNorm1d(2000)
+
+        self.add_module('bert', bert)
+
+        for m in self.bert.parameters():
+            m.requires_grad = False
 
     def forward(self, feat, encoded_tag, tag_mask):
 

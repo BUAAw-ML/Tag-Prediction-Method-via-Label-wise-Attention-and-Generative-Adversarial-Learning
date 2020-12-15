@@ -118,7 +118,7 @@ bert = BertModel.from_pretrained('bert-base-uncased')
 model = {}
 model['Discriminator'] = Discriminator(num_classes=len(dataset.tag2id))
 model['Encoder'] = Bert_Encoder(bert, bert_trainable=args.bert_trainable)
-model['Generator'] = Generator()
+model['Generator'] = Generator(bert)
 model['MABert'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
 # define loss function (criterion)
