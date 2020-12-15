@@ -450,8 +450,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         z = torch.Tensor(ids.shape[0], 71, 768).uniform_(-1, 1).cuda(self.state['device_ids'][0])
         target_zeros = torch.zeros(ids.shape[0], 71).cuda(self.state['device_ids'][0])
-
-        x_g = model['Generator'](z)
+        print(target_var.shape)
+        x_g = model['Generator'](z, target_var)
 
         #-----------train enc-----------
         prob2, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
