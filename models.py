@@ -21,6 +21,9 @@ class MABert(nn.Module):
         self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
+        self.discriminator = Parameter(torch.Tensor(1, 768).uniform_(0, 1), requires_grad=False).cuda(device)
+        self.discriminator.requires_grad = True
+
         self.Linear1 = nn.Linear(71, 500)
         self.Linear2 = nn.Linear(500, 71)
         self.act = nn.LeakyReLU(0.2)
@@ -90,7 +93,21 @@ class MABert(nn.Module):
 
         prob =  torch.sigmoid(discrimate)
 
-        flatten = token_feat
+        #################
+        masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
+        attention = (torch.matmul(token_feat, self.discriminator.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(-np.inf))
+        attention = F.softmax(attention, -1)
+        attention_out = attention @ token_feat  # N, 1, hidden_size
+
+        feat = feat[:, :token_feat.shape[1], :]  # N, L, hidden_size
+        attention_fake = (torch.matmul(feat, self.discriminator.transpose(0, 1))).transpose(1, 2).masked_fill(
+            (1 - masks.byte()), torch.tensor(-np.inf))
+        attention_fake = F.softmax(attention_fake, -1)
+        attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
+        flatten = torch.cat((torch.mean(torch.sigmoid(torch.sum(attention_out, -1)),-1),torch.mean(torch.sigmoid(torch.sum(attention_out_fake, -1)),-1)),-1)
+        #################
+
 
         # prob = torch.cat((similarity_fake, similarity), -1)
         #
