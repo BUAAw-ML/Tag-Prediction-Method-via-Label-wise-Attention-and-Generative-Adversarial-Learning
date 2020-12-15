@@ -88,9 +88,7 @@ class MABert(nn.Module):
 
         # logit = pred[:,self.num_classes:]
 
-
         prob =  torch.sigmoid(discrimate)
-
 
         flatten = token_feat
 
