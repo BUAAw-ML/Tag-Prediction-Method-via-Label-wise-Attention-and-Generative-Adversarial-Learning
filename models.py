@@ -216,10 +216,8 @@ class Generator(nn.Module):
         tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
                         / torch.sum(tag_mask, dim=1, keepdim=True)
         tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
-        print(tag_embedding)
         x = torch.cat((feat,tag_embedding),-1)
 
-        exit()
         for i in range(self.num_hidden_generator):
             x = self.hidden_list_generator[i](x)
             # x = self.m1(x)
