@@ -142,16 +142,15 @@ class MABert(nn.Module):
         # print("3 {}".format(torch.max(prob,-1)[1]))
         # print("4 {}".format(torch.max(prob, -1)[0]))
 
-        attention_out = self.Linear1(attention_out)
-
-        attention_out = self.act(attention_out)
-        attention_out = self.Linear2(attention_out)
-
         logit = torch.sigmoid(attention_out)
         # logit = prob
 
         flatten = self.relu(0.5-torch.max(logit, -1)[0])
-        prob = attention
+
+        prob = torch.sum(feat, -1)
+        prob = torch.mean(torch.sigmoid(prob))
+
+        # prob = attention
 
         # discrimate = torch.sum(torch.matmul(feat, self.class_weight.transpose(0, 1)), -1, keepdim=True)
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
