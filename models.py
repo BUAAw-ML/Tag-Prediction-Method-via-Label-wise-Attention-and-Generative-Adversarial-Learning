@@ -105,11 +105,9 @@ class MABert(nn.Module):
             (1 - masks.byte()), torch.tensor(-np.inf))
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
-        print(attention_out.shape)
-        print(attention_out_fake.shape)
+
         flatten = torch.cat((torch.sigmoid(torch.sum(attention_out, -1)),torch.sigmoid(torch.sum(attention_out_fake, -1))),-1)
-        print(flatten.shape)
-        exit()
+
         #################
 
 
