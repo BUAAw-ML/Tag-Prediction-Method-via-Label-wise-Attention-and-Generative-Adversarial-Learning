@@ -137,7 +137,7 @@ class MABert(nn.Module):
         # print("2 {}".format(torch.max(torch.max(attention, -1)[0], -1)[0]))
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # print("0 {}".format(torch.sum(token_feat, -1)))
-        # attention_out = attention_out * self.class_weight
+        attention_out = attention_out * self.class_weight
         attention_out = torch.sum(attention_out, -1)
         # print("3 {}".format(torch.max(prob,-1)[1]))
         # print("4 {}".format(torch.max(prob, -1)[0]))
@@ -147,6 +147,7 @@ class MABert(nn.Module):
 
         flatten = self.relu(0.5-torch.max(logit, -1)[0])
 
+        feat = feat * self.class_weight
         prob = torch.sum(feat, -1)
         prob = torch.mean(torch.sigmoid(prob))
 
