@@ -54,7 +54,7 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
         # attention_out = attention_out * self.class_weight
         logit = torch.sum(attention_out, -1)
-        # logit = torch.sigmoid(logit)
+        logit = torch.sigmoid(logit)
         #################fake sample process#######
         feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
         # feat += token_feat.detach()
@@ -89,7 +89,8 @@ class MABert(nn.Module):
         # logit = pred[:,self.num_classes:]
 
 
-        prob = discrimate
+        prob =  torch.sigmoid(discrimate)
+
 
         flatten = token_feat
 
