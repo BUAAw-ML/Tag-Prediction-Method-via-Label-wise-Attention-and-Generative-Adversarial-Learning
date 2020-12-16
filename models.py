@@ -24,8 +24,8 @@ class MABert(nn.Module):
         self.discriminator = Parameter(torch.Tensor(1, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.discriminator.requires_grad = True
 
-        self.Linear1 = nn.Linear(71, 500)
-        self.Linear2 = nn.Linear(500, 71)
+        self.Linear1 = nn.Linear(768, 500)
+        self.Linear2 = nn.Linear(500, 1)
         self.act = nn.LeakyReLU(0.2)
         self.relu = nn.ReLU()
         self.output = nn.Softmax(dim=-1)
