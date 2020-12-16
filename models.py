@@ -18,7 +18,7 @@ class MABert(nn.Module):
 
         self.num_classes = num_classes
 
-        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
+        self.class_weight = Parameter(torch.Tensor(2, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
         self.discriminator = Parameter(torch.Tensor(1, 768).uniform_(0, 1), requires_grad=False).cuda(device)
@@ -107,6 +107,7 @@ class MABert(nn.Module):
         attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
 
         flatten = torch.cat((attention_out, attention_out_fake),-2)
+        flatten = flatten * self.class_weight
         flatten = torch.sum(flatten, -1)
 
         # flatten = self.Linear1(flatten)
