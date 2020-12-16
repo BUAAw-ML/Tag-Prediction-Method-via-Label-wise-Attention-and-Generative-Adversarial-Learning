@@ -106,13 +106,13 @@ class MABert(nn.Module):
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
 
-        flatten = torch.cat((attention_out, attention_out_fake),-2)
-        flatten = flatten * self.class_weight
-        flatten = torch.sum(flatten, -1)
+        # flatten = torch.cat((attention_out, attention_out_fake),-2)
+        # flatten = flatten * self.class_weight
+        # flatten = torch.sum(flatten, -1)
 
-        # flatten = self.Linear1(flatten)
-        # flatten = self.act(flatten)
-        # flatten = self.Linear2(flatten).squeeze(-1)
+        flatten = self.Linear1(flatten)
+        flatten = self.act(flatten)
+        flatten = self.Linear2(flatten).squeeze(-1)
         flatten = torch.sigmoid(flatten)
 
 
