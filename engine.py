@@ -486,7 +486,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             D_L_unsupervised2 = -1 * torch.mean(torch.log(flatten[:,0] + epsilon))
             D_L_unsupervised3 = -1 * torch.mean(torch.log(1 - flatten[:,1] + epsilon))
 
-            d_loss = D_L_unsupervised2 + D_L_unsupervised3#+ 0.1 * D_L_unsupervised2 #D_L_unsupervised +
+            d_loss = D_L_unsupervised#D_L_unsupervised2 + D_L_unsupervised3#+ 0.1 * D_L_unsupervised2 #D_L_unsupervised +
 
         if training:
             optimizer['enc'].zero_grad()
@@ -510,7 +510,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
         # G_feat_match = torch.mean(feature_error * feature_error)
         # print(G_feat_match)
-        g_loss = D_L_unsupervised3#+G_feat_match#g_loss +
+        g_loss = g_loss# +D_L_unsupervised3#+G_feat_match#
 
         # if training:
         #     optimizer['Generator'].zero_grad()
