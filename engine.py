@@ -484,7 +484,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # D_L_Supervised = torch.mean(per_example_loss)
 
             D_L_unsupervised2 = -1 * torch.mean(torch.log(logits + epsilon))
-            D_L_unsupervised3 = -1 * torch.mean(torch.log(1 - flatten[:,1] + epsilon))
+            # D_L_unsupervised3 = -1 * torch.mean(torch.log(1 - flatten[:,1] + epsilon))
 
             d_loss = D_L_unsupervised + D_L_unsupervised2 #D_L_unsupervised +
 
@@ -502,7 +502,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         g_loss = -1 * torch.mean(torch.log(prob + epsilon))
 
-        D_L_unsupervised3 = -1 * torch.mean(torch.log(flatten[:,1] + epsilon))
+        # D_L_unsupervised3 = -1 * torch.mean(torch.log(flatten[:,1] + epsilon))
         # g_loss = criterion(prob, 1 - target_zeros)
 
         # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
