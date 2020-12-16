@@ -101,6 +101,7 @@ class MABert(nn.Module):
         attention_out = attention @ token_feat  # N, 1, hidden_size
 
 
+
         feat = feat[:, :token_feat.shape[1], :]  # N, L, hidden_size
         attention_fake = (torch.matmul(feat, self.discriminator.transpose(0, 1))).transpose(1, 2).masked_fill(
             (1 - masks.byte()), torch.tensor(-np.inf))
@@ -108,10 +109,11 @@ class MABert(nn.Module):
         attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
 
         flatten = torch.cat((attention_out, attention_out_fake),-2)
+        flatten = torch.sum(flatten, -1)
 
-        flatten = self.Linear1(flatten)
-        flatten = self.act(flatten)
-        flatten = self.Linear2(flatten).squeeze(-1)
+        # flatten = self.Linear1(flatten)
+        # flatten = self.act(flatten)
+        # flatten = self.Linear2(flatten).squeeze(-1)
         flatten = torch.sigmoid(flatten)
 
 
