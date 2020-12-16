@@ -107,7 +107,7 @@ class MABert(nn.Module):
         attention_out_fake = attention_fake @ feat  # N, 1, hidden_size
 
         flatten = torch.cat((attention_out, attention_out_fake),-2)
-        # flatten = flatten * self.class_weight
+        flatten = flatten * self.class_weight
         flatten = torch.sum(flatten, -1)
 
         # flatten = self.Linear1(flatten)
