@@ -496,7 +496,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         #-----------train Generator-----------
 
-        features, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
+        flatten, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g)
 
