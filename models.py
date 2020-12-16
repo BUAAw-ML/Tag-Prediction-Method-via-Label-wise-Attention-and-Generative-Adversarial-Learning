@@ -55,7 +55,7 @@ class MABert(nn.Module):
 
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
-        # attention_out = attention_out * self.class_weight
+        attention_out = attention_out * self.class_weight
         logit = torch.sum(attention_out, -1)
         logit = torch.sigmoid(logit)
         #################fake sample process#######
@@ -73,8 +73,8 @@ class MABert(nn.Module):
         attention_fake = F.softmax(attention_fake, -1)
         attention_out_fake = attention_fake @ feat  # N, labels_num, hidden_size
         # discrimate = torch.matmul(feat, tag_embedding.transpose(0, 1))
-        discrimate = torch.sum(attention_out_fake, -1)
-        # attention_out_fake = attention_out_fake * self.class_weight
+        attention_out_fake = torch.sum(attention_out_fake, -1)
+        discrimate = attention_out_fake * self.class_weight
         # discrimate = torch.mean(attention_out_fake, -2, keepdim=True)
         # discrimate = torch.sum(discrimate, -1, keepdim=True)
         #################
