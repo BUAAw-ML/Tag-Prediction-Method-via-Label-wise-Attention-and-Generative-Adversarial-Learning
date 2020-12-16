@@ -18,7 +18,7 @@ class MABert(nn.Module):
 
         self.num_classes = num_classes
 
-        self.class_weight = Parameter(torch.Tensor(71, 768).uniform_(0, 1), requires_grad=False).cuda(device)
+        self.class_weight = Parameter(torch.Tensor(num_classes, 768).uniform_(0, 1), requires_grad=False).cuda(device)
         self.class_weight.requires_grad = True
 
         self.discriminator = Parameter(torch.Tensor(1, 768).uniform_(0, 1), requires_grad=False).cuda(device)
@@ -230,7 +230,7 @@ class Generator(nn.Module):
 
     def forward(self, feat, encoded_tag, tag_mask):
 
-        # feat = feat.expand(feat.shape[0], 71,feat.shape[2])
+        feat = feat.expand(feat.shape[0], 71,feat.shape[2])
 
         # embed = self.bert.get_input_embeddings()
         # tag_embedding = embed(encoded_tag)
