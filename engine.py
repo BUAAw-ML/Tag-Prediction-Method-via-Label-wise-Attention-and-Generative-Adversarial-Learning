@@ -454,7 +454,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         #-----------train enc-----------
         flatten, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], z)#x_g.detach()
+                                                                      self.state['tag_mask'], x_g.detach())#
 
         # self.state['output'] = F.softmax(logits, dim=-1)
 
@@ -512,11 +512,11 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(G_feat_match)
         g_loss = g_loss#+G_feat_match#
 
-        if training:
-            optimizer['Generator'].zero_grad()
-            g_loss.backward()
-            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            optimizer['Generator'].step()
+        # if training:
+        #     optimizer['Generator'].zero_grad()
+        #     g_loss.backward()
+        #     nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+        #     optimizer['Generator'].step()
 
         self.state['loss'] = [d_loss, g_loss]
 
