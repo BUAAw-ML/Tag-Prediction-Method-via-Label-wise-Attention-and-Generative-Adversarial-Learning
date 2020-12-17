@@ -170,8 +170,12 @@ class MABert(nn.Module):
         feat = feat * self.class_weight
         prob = torch.sum(feat, -1)
         prob = torch.sigmoid(prob)
+        print(prob.shape)
         prob = torch.cat((prob,logit),-1)
+        print(prob.shape)
         prob = self.output(prob)[:,0]
+        print(prob.shape)
+        exit()
 
 
         # prob = attention
