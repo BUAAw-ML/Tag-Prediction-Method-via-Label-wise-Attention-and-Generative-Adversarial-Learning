@@ -463,7 +463,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         self.state['output'] = logits
 
-        D_L_unsupervised = -1 * torch.mean(torch.log(prob + epsilon))
+        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
         # D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
         # D_L_unsupervised = criterion(prob, target_zeros)
 
@@ -500,7 +500,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g)
 
-        g_loss = -1 * torch.mean(torch.log(1 - prob + epsilon))
+        g_loss = -1 * torch.mean(torch.log(prob + epsilon))
 
         # D_L_unsupervised3 = -1 * torch.mean(torch.log(flatten[:,1] + epsilon))
         # g_loss = criterion(prob, 1 - target_zeros)
