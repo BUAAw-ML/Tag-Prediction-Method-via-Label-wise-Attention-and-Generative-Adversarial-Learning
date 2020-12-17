@@ -164,7 +164,7 @@ class MABert(nn.Module):
         logit = torch.sigmoid(attention_out)
         # logit = prob
 
-        # flatten = self.relu(0.5-torch.max(logit, -1)[0])
+        flatten = self.relu(0.5-torch.max(logit, -1)[0])
 
 
         feat = feat * self.class_weight
