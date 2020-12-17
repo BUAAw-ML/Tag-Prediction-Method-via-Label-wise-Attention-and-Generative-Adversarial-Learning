@@ -175,6 +175,7 @@ class MABert(nn.Module):
         prob = torch.cat((prob,logit),-1)
 
         prob = self.output(prob)[:,0]
+        print(prob.shape)
 
 
 
