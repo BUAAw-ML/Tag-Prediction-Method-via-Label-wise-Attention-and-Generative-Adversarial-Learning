@@ -165,11 +165,13 @@ class MABert(nn.Module):
         # logit = prob
 
         # flatten = self.relu(0.5-torch.max(logit, -1)[0])
-        flatten = torch.mean(logit)
+        flatten = torch.sum(logit,-1)
 
         feat = feat * self.class_weight
         prob = torch.sum(feat, -1)
-        prob = torch.mean(torch.sigmoid(prob),-1)
+        prob = torch.sum(torch.sigmoid(prob),-1)
+        prob = torch.cat((prob,flatten),-1)
+        prob = self.output(prob)[:,0]
 
 
         # prob = attention
