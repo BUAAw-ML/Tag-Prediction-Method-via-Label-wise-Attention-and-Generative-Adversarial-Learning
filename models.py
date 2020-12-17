@@ -164,7 +164,7 @@ class MABert(nn.Module):
         logit = torch.sigmoid(attention_out)
         # logit = prob
 
-        # flatten = torch.mean(logit, -1, keepdim=True)
+        flatten = torch.mean(logit, -1, keepdim=True)
 
 
         feat = feat * self.class_weight
