@@ -171,7 +171,7 @@ class MABert(nn.Module):
         # prob = torch.sigmoid(prob)
         prob = torch.sum(prob, -1, keepdim=True)
 
-        prob = torch.cat((prob,attention_out),-1)
+        prob = torch.cat((prob,flatten),-1)
         print(prob.shape)
         print(prob)
         exit()
