@@ -164,12 +164,13 @@ class MABert(nn.Module):
         logit = torch.sigmoid(attention_out)
         # logit = prob
 
-        flatten = self.relu(0.5-torch.max(logit, -1)[0])
+        flatten = torch.sum(logit, -1, keepdim=True)
 
 
         feat = feat * self.class_weight
         prob = torch.sum(feat, -1)
         prob = torch.sigmoid(prob)
+        prob = torch.sum(prob, -1, keepdim=True)
         print(prob.shape)
         prob = torch.cat((prob,logit),-1)
         print(prob.shape)
