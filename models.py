@@ -173,9 +173,10 @@ class MABert(nn.Module):
         prob = torch.sum(prob, -1, keepdim=True)
 
         prob = torch.cat((prob,logit),-1)
-
+        print(prob.shape)
         prob = self.output(prob)[:,0]
         print(prob.shape)
+        exit()
 
 
 
