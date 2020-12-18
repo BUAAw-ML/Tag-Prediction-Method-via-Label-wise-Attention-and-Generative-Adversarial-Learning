@@ -98,8 +98,8 @@ class MABert(nn.Module):
         attention_out_fake = torch.sum(attention_out_fake, -1, keepdim=True)
 
         prob = torch.cat((attention_out_fake,attention_out),-1)
-        print(prob)
-        print(self.output(prob))
+        # print(prob)
+        # print(self.output(prob))
         prob = self.output(prob)[:,0]
 
 
