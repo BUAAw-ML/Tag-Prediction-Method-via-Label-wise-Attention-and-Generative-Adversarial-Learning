@@ -237,13 +237,13 @@ class Generator(nn.Module):
 
         feat = feat.expand(feat.shape[0], 71,feat.shape[2])
 
-        # embed = self.bert.get_input_embeddings()
-        # tag_embedding = embed(encoded_tag)
-        # tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
-        #                 / torch.sum(tag_mask, dim=1, keepdim=True)
-        # tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
+        embed = self.bert.get_input_embeddings()
+        tag_embedding = embed(encoded_tag)
+        tag_embedding = torch.sum(tag_embedding * tag_mask.unsqueeze(-1), dim=1) \
+                        / torch.sum(tag_mask, dim=1, keepdim=True)
+        tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
 
-        tag_embedding = torch.eye(71).cuda(0).unsqueeze(0).expand(feat.shape[0],71,71)
+        # tag_embedding = torch.eye(71).cuda(0).unsqueeze(0).expand(feat.shape[0],71,71)
         x = torch.cat((feat,tag_embedding),-1)
         # x = feat
 
