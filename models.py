@@ -92,7 +92,7 @@ class MABert(nn.Module):
 
         # logit = pred[:,self.num_classes:]
 
-        prob =  torch.sigmoid(attention_out_fake)
+        # prob =  torch.sigmoid(attention_out_fake)
 
         attention_out = torch.sum(attention_out, -1, keepdim=True)
         attention_out_fake = torch.sum(attention_out_fake, -1, keepdim=True)
