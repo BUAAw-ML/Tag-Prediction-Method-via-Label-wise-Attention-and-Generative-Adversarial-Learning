@@ -55,9 +55,10 @@ class MABert(nn.Module):
 
         attention = F.softmax(attention, -1)
         attention_out = attention @ token_feat   # N, labels_num, hidden_size
+        logit = attention_out
         # attention_out = attention_out * self.class_weight
         attention_out = torch.sum(attention_out, -1)
-        logit = torch.sigmoid(attention_out)
+        # logit = torch.sigmoid(attention_out)
         #################fake sample process#######
         feat = feat[:,:token_feat.shape[1],:] # N, L, hidden_size
         # feat += token_feat.detach()
@@ -85,10 +86,10 @@ class MABert(nn.Module):
         # attention_out = attention_out * self.class_weight
 
         # pred = torch.cat((attention_out_fake, attention_out), -2)
-        # pred = self.Linear1(pred)
-        # pred = self.act(pred)
-        # pred = self.Linear2(pred).squeeze(-1)
-        # pred = torch.sigmoid(pred)
+        logit = self.Linear1(logit)
+        logit = self.act(logit)
+        logit = self.Linear2(logit).squeeze(-1)
+        logit = torch.sigmoid(logit)
 
         # logit = pred[:,self.num_classes:]
 
