@@ -5,8 +5,8 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=100 \
-        --epoch_step=90 \
+        --epochs=15 \
+        --epoch_step=8 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.0001 \
