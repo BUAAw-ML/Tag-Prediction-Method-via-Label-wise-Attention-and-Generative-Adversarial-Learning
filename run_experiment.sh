@@ -10,8 +10,8 @@ python main.py \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.0001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
+        --D-lr=0.01 \
+        --B-lr=0.0001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
