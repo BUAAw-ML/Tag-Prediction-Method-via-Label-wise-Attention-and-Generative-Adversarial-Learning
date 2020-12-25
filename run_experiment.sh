@@ -9,14 +9,14 @@ python main.py \
         --epoch_step=8 \
         --device_ids=0 \
         --batch-size=4 \
-        --G-lr=0.0001 \
+        --G-lr=0.001 \
         --D-lr=0.01 \
-        --B-lr=0.0001 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
         --use_previousData=1 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
