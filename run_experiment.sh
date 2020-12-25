@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='tagFrequence<200_Test'  \
+        --experiment_no='Test'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -13,15 +13,15 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='All' \
-        --data_path='../datasets/ProgrammerWeb/programweb-data.csv' \
+        --data_type='TrainTest_agNews' \
+        --data_path='../datasets/ag-news' \
         --use_previousData=1 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=200  \
-        --intanceNum_limit=10000 \
-        --data_split=0.05  \
+        --max_tagFrequence=99999  \
+        --intanceNum_limit=99999 \
+        --data_split=0.1  \
         --test_description=''  \
 
 #python main.py \
