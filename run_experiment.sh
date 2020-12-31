@@ -15,8 +15,8 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --use_previousData=1 \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
