@@ -3,26 +3,26 @@
 
 #EN='02'  #experiment_no
 
-#python main.py \
-#        --experiment_no='Test'  \
-#        --epochs=30 \
-#        --epoch_step=20 \
-#        --device_ids=0 \
-#        --batch-size=16 \
-#        --G-lr=0.01 \
-#        --D-lr=0.01 \
-#        --B-lr=0.0001 \
-#        --save_model_path='./checkpoint' \
-#        --data_type='TrainTest_agNews' \
-#        --data_path='../datasets/ag-news' \
-#        --use_previousData=1 \
-#        --method='MultiLabelMAP' \
-#        --overlength_handle='skip' \
-#        --min_tagFrequence=0  \
-#        --max_tagFrequence=99999  \
-#        --intanceNum_limit=99999 \
-#        --data_split=0.001  \
-#        --test_description=''  \
+python main.py \
+        --experiment_no='Test'  \
+        --epochs=50 \
+        --epoch_step=40 \
+        --device_ids=0 \
+        --batch-size=16 \
+        --G-lr=0.01 \
+        --D-lr=0.01 \
+        --B-lr=0.0001 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTest_agNews' \
+        --data_path='../datasets/ag-news' \
+        --use_previousData=1 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='skip' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
+        --intanceNum_limit=99999 \
+        --data_split=0.001  \
+        --test_description=''  \
 
 python main.py \
         --experiment_no='Test'  \
