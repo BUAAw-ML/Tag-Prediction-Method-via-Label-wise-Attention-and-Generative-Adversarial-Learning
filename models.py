@@ -250,7 +250,7 @@ class Generator(nn.Module):
 
     def forward(self, feat, encoded_tag, tag_mask):
 
-        # feat = feat.expand(feat.shape[0], 71,feat.shape[2])
+        feat = feat.expand(feat.shape[0], 4,feat.shape[2])
         #
         # embed = self.bert.get_input_embeddings()
         # tag_embedding = embed(encoded_tag)
@@ -258,9 +258,9 @@ class Generator(nn.Module):
         #                 / torch.sum(tag_mask, dim=1, keepdim=True)
         # tag_embedding = tag_embedding.detach().unsqueeze(0).expand_as(feat)
         #
-        # # tag_embedding = torch.eye(71).cuda(0).unsqueeze(0).expand(feat.shape[0],71,71)
-        # x = torch.cat((feat,tag_embedding),-1)
-        x = feat
+        tag_embedding = torch.eye(4).cuda(0).unsqueeze(0).expand(feat.shape[0],4,4)
+        x = torch.cat((feat,tag_embedding),-1)
+        # x = feat
 
 
         for i in range(self.num_hidden_generator):
