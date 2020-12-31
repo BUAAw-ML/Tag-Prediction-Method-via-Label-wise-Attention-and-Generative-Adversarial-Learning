@@ -170,14 +170,13 @@ class AveragePrecisionMeter(object):
         targets = self.targets.cpu().numpy()
         targets[targets == -1] = 0
         n, c = self.scores.size()
-        scores = np.zeros((n, c)) - 1
+        scores = np.zeros((n, c))
         index = self.scores.topk(k, 1, True, True)[1].cpu().numpy()
         tmp = self.scores.cpu().numpy()
         for i in range(n):
             for ind in index[i]:
-                scores[i, ind] = 1 if tmp[i, ind] >= 0 else -1
+                scores[i, ind] = 1 if tmp[i, ind] >= 0.5 else 0
         return self.evaluation(scores, targets)
-
 
     def evaluation(self, scores_, targets_):
         n, n_class = scores_.shape
