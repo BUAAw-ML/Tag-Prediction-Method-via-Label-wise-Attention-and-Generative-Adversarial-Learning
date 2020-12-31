@@ -5,10 +5,10 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --epochs=80 \
+        --epoch_step=70 \
         --device_ids=0 \
-        --batch-size=16 \
+        --batch-size=4 \
         --G-lr=0.01 \
         --D-lr=0.01 \
         --B-lr=0.0001 \
@@ -26,10 +26,10 @@ python main.py \
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --epochs=80 \
+        --epoch_step=70 \
         --device_ids=0 \
-        --batch-size=16 \
+        --batch-size=4 \
         --G-lr=0.01 \
         --D-lr=0.01 \
         --B-lr=0.0001 \
