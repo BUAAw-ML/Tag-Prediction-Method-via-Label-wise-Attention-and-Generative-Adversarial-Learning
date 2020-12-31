@@ -9,7 +9,7 @@ python main.py \
         --epoch_step=8 \
         --device_ids=0 \
         --batch-size=16 \
-        --G-lr=0.0001 \
+        --G-lr=0.01 \
         --D-lr=0.01 \
         --B-lr=0.0001 \
         --save_model_path='./checkpoint' \
