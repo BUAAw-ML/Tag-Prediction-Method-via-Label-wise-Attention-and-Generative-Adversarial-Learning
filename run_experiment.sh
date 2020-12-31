@@ -8,7 +8,7 @@ python main.py \
         --epochs=15 \
         --epoch_step=8 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=16 \
         --G-lr=0.0001 \
         --D-lr=0.01 \
         --B-lr=0.0001 \
