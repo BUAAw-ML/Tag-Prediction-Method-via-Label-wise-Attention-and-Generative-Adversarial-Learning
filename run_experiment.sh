@@ -26,8 +26,8 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=80 \
-        --epoch_step=70 \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.01 \
@@ -37,7 +37,7 @@ python main.py \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
         --use_previousData=1 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
