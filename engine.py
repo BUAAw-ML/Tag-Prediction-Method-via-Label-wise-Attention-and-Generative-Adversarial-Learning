@@ -316,7 +316,7 @@ class MultiLabelMAPEngine(Engine):
         self.state['ap_meter'] = AveragePrecisionMeter(self.state['difficult_examples'])
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
-        target_var = self.state['target']#.type(torch.LongTensor).cuda(self.state['device_ids'][0])
+        target_var = self.state['target'].type(torch.LongTensor).cuda(self.state['device_ids'][0])
         ids, token_type_ids, attention_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
