@@ -337,8 +337,8 @@ class MultiLabelMAPEngine(Engine):
         # self.state['output'] = F.softmax(logits, dim=-1)
         #
         log_probs = F.log_softmax(logits, dim=-1)
-        per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[0]
-        self.state['loss'] = per_example_loss#torch.mean(per_example_loss)
+        per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
+        self.state['loss'] = torch.mean(per_example_loss)
         self.state['output'] = logits
 
         # self.state['loss'] = criterion(self.state['output'], target_var)
@@ -346,7 +346,7 @@ class MultiLabelMAPEngine(Engine):
         if training:
             optimizer['enc'].zero_grad()
             self.state['loss'].backward()
-            # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
         else:
             return self.state['output']
