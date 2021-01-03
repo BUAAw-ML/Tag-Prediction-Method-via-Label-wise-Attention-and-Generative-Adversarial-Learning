@@ -178,7 +178,7 @@ class MABert(nn.Module):
 
         # logit = torch.sigmoid(attention_out)
 
-        logit = self.output(attention_out)
+        # logit = self.output(attention_out)
         # logit = prob
 
         flatten = torch.sum(attention_out, -1, keepdim=True)
