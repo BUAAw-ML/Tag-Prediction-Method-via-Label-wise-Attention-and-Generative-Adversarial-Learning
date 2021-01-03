@@ -3,7 +3,7 @@ from urllib.request import urlretrieve
 import torch
 from tqdm import tqdm
 import numpy as np
-
+from sklearn.metrics import accuracy_score, f1_score
 
 def download_url(url, destination=None, progress_bar=True):
     """Download a URL to a local file.
@@ -189,6 +189,14 @@ class AveragePrecisionMeter(object):
             Np[k] = np.sum(scores >= 0.5)
             Nc[k] = np.sum(targets * (scores >= 0.5))
 
+        for i in range(len(scores_)):
+            max_value = max(scores_[i])
+            for j in range(len(scores_[i])):
+                if max_value == scores_[i][j]:
+                    scores_[i][j] = 1
+                else:
+                    scores_[i][j] = 0
+        acc = accuracy_score(targets_,scores_)
         # Np[Np == 0] = 1
         OP = np.sum(Nc) / np.sum(Np + 1e-5)
         OR = np.sum(Nc) / np.sum(Ng + 1e-5)
@@ -198,7 +206,7 @@ class AveragePrecisionMeter(object):
         CR = np.sum(Nc / (Ng + 1e-5)) / n_class
         CF1 = (2 * CP * CR) / (CP + CR + 1e-5)
         
-        return OP, OR, OF1, CP, CR, CF1
+        return acc, OR, OF1, CP, CR, CF1
 
 
 def gen_A(num_classes, t, co_occur_mat):
