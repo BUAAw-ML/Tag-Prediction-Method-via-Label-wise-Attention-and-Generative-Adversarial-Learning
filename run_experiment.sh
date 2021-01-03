@@ -14,7 +14,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='All' \
-        --data_path='./datasets/ProgrammerWeb/programweb-category.csv' \
+        --data_path='../datasets/ProgrammerWeb/programweb-category.csv' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
