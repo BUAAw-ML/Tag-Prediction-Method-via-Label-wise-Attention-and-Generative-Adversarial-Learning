@@ -24,8 +24,6 @@ python main.py \
         --data_split=0.8  \
         --test_description=''  \
 
-
-
 #方法、epoch_step
 
 #batch-size：1，4，8，16
