@@ -73,11 +73,13 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             split = int(len(data) * data_config['data_split'])
             split2 = int(len(data) * 0.3)
 
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[:500]].tolist()
+            # dataset.train_data = data[ind[:split]].tolist()
+            # dataset.unlabeled_train_data = data[ind[:500]].tolist()
+            dataset.train_data = data[ind].tolist()
 
             file = os.path.join(data_path, 'test.csv')
             dataset.test_data = dataset.load_agNews(file)
+            dataset.unlabeled_train_data = dataset.test_data
             # tdate = dataset.load_agNews(file)
             # tdate = np.array(tdate)
             # ind = np.random.RandomState(seed=10).permutation(len(tdate))
@@ -454,7 +456,8 @@ class dataEngine(Dataset):
 
     def load_agNews(self, file):
         data = []
-        document = []
+
+        tag_occurance = {}
 
         with open(file, newline='') as csvfile:
             reader = csv.reader(csvfile)
@@ -484,16 +487,19 @@ class dataEngine(Dataset):
                         tag_id = len(self.tag2id)
                         self.tag2id[t] = tag_id
                         self.id2tag[tag_id] = t
+                        tag_occurance[tag] = 0
 
                 tag_ids = [self.tag2id[t] for t in tag]
+                tag_occurance[tag] += 1
 
-                data.append({
-                    'id': int(0),
-                    'dscp_ids': dscp_ids,
-                    'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
-                    'dscp': dscp
-                })
+                if tag_occurance[tag] < 10:
+                    data.append({
+                        'id': int(0),
+                        'dscp_ids': dscp_ids,
+                        'dscp_tokens': dscp_tokens,
+                        'tag_ids': tag_ids,
+                        'dscp': dscp
+                    })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
 
