@@ -183,3 +183,6 @@
 |label,unlabel,test:10000,,7600（标签数：4）|Bert微调+多注意力|epoch:16;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.01,B0.0001|95.605|
 |label,unlabel,test:10000,500,7600（标签数：4）|Bert微调+多注意力+GAN|epoch:20;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|95.504|
 |---|---|---|---|
+
+方法小结：
+- 生成对抗和一致性训练是两种不同的半监督学习方法，都是利用未标注数据集的。
