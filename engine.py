@@ -341,6 +341,10 @@ class MultiLabelMAPEngine(Engine):
         self.state['loss'] = torch.mean(per_example_loss)
         self.state['output'] = logits
 
+        print(target_var.shape)
+        print(torch.sum(target_var * log_probs, dim=-1).shape)
+        print(self.state['loss'].shape)
+        exit()
         # self.state['loss'] = criterion(self.state['output'], target_var)
 
         if training:
