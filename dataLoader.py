@@ -484,8 +484,12 @@ class dataEngine(Dataset):
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
+                print(tag)
                 tag = tag.strip()
+                print(tag)
                 tag = [t for t in tag if t != '']
+                print(tag)
+                exit()
 
                 for t in tag:
                     if t not in self.tag2id:
