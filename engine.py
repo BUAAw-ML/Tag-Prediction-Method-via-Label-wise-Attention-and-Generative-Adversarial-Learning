@@ -470,7 +470,12 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         if semi_supervised == False: #train with labeled data
             log_probs = F.log_softmax(logits, dim=-1)
             per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) #/ target_var.shape[-1]
+            print(target_var.shape)
+            print(torch.sum(target_var * log_probs, dim=-1).shape)
+
             d_loss = torch.mean(per_example_loss)
+            print(d_loss.shape)
+            exit()
             # d_loss = criterion(self.state['output'], target_var) #+ D_L_unsupervised
         else:
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
