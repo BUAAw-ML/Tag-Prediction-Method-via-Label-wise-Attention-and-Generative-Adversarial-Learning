@@ -182,6 +182,7 @@
 |---|---|---|---|
 |label,unlabel,test:10000,,7600（标签数：4）|Bert微调+多注意力|epoch:16;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.01,B0.0001|95.605|
 |label,unlabel,test:10000,500,7600（标签数：4）|Bert微调+多注意力+GAN|epoch:20;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|95.504|
+|label,unlabel,test:10000,500,7600（标签数：4）|Bert微调+多注意力+GAN|epoch:20;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|95.923|
 |---|---|---|---|
 
 方法小结：
