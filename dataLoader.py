@@ -79,7 +79,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             file = os.path.join(data_path, 'test.csv')
             dataset.test_data = dataset.load_agNews(file, train=False)
-            dataset.unlabeled_train_data = dataset.test_data
+            dataset.unlabeled_train_data = dataset.test_data[:500]
             # tdate = dataset.load_agNews(file)
             # tdate = np.array(tdate)
             # ind = np.random.RandomState(seed=10).permutation(len(tdate))
@@ -498,7 +498,7 @@ class dataEngine(Dataset):
                 tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
-                if tag_occurance[tag[0]] > 2500 and train:
+                if tag_occurance[tag[0]] > 10 and train:
                     continue
 
                 data.append({
