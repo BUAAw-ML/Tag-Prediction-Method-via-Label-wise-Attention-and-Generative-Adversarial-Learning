@@ -465,7 +465,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print("logits：")
         # print(logits)
 
-        self.state['output'] = logits
+        self.state['output'] = F.softmax(logits, dim=-1)
 
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
         # D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
