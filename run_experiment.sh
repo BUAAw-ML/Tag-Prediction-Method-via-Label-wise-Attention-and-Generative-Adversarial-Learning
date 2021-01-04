@@ -17,8 +17,8 @@ python main.py \
         --data_path='../datasets/ProgrammerWeb/programweb-category.csv' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=50  \
+        --overlength_handle='skip' \
+        --min_tagFrequence=20  \
         --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
         --data_split=0.8  \
