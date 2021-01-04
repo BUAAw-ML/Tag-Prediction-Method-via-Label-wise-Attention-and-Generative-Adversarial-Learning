@@ -498,6 +498,8 @@ class dataEngine(Dataset):
                 tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
+                if tag_occurance[tag[0]] >= 10 and train:
+                    continue
 
                 data.append({
                     'id': int(0),
@@ -507,8 +509,7 @@ class dataEngine(Dataset):
                     'dscp': dscp
                 })
 
-                if tag_occurance[tag[0]] >= 10 and train:
-                    break
+
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
 
