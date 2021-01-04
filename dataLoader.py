@@ -326,8 +326,11 @@ class dataEngine(Dataset):
 
                 if len(tag) == 0:
                     continue
+                if len(tag) != 1:
+                    print("error")
+                    continue
 
-                tag_occurance[tag] -= 1
+                tag_occurance[tag[0]] -= 1
 
                 for t in tag:
                     if t not in self.tag2id:
