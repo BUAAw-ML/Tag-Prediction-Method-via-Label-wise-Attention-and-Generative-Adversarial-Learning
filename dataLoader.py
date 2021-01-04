@@ -35,18 +35,20 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
         if data_type == 'All':
 
-            data = dataset.load_programWeb_AAPD(data_path)
+            # data = dataset.load_programWeb_AAPD(data_path)
+            #
+            # data = np.array(data)
+            # ind = np.random.RandomState(seed=10).permutation(len(data))
+            #
+            # split = int(len(data) * data_config['data_split'])
+            # split2 = int(len(data) * 0.8)
+            # split3 = int(len(data) * 1)
+            #
+            # dataset.train_data = data[ind[:split]].tolist()
+            dataset.unlabeled_train_data = []#data[ind[:split2]].tolist()
+            # dataset.test_data = data[ind[split2:split3]].tolist()
+            dataset.train_data, dataset.test_data = dataset.load_programWeb_TrainTest(data_path)
 
-            data = np.array(data)
-            ind = np.random.RandomState(seed=10).permutation(len(data))
-
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.8)
-            split3 = int(len(data) * 1)
-
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[:split2]].tolist()
-            dataset.test_data = data[ind[split2:split3]].tolist()
 
         elif data_type == 'TrainTest_ganBert':
 
@@ -261,6 +263,99 @@ class dataEngine(Dataset):
             tfidf_dict[item] = tfidf_model.idf_[tfidf_model.vocabulary_[item]]
 
         return tfidf_dict
+
+    def load_programWeb_TrainTest(self, f):
+        data = []
+        test_data = []
+
+        document = []
+        tag_occurance = {}
+        # csv.field_size_limit(sys.maxsize)
+        with open(f, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)
+            for row in reader:
+
+                if len(row) != 4:
+                    continue
+                _, _, _, tag = row
+
+                tag = tag.strip().split('###')
+                tag = [t for t in tag if t != '']
+
+                for t in tag:
+                    if t not in tag_occurance:
+                        tag_occurance[t] = 1
+                    tag_occurance[t] += 1
+
+        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
+        # 'Data-as-a-Service'])  #
+        for tag in tag_occurance:
+            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
+                self.use_tags.add(tag)
+                tag_occurance[tag] *= 0.8
+
+        print('Total number of tags: {}'.format(len(tag_occurance)))
+        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
+
+        with open(f, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)
+            for row in reader:
+
+                if len(row) != 4:
+                    continue
+                id, title, dscp, tag = row
+
+                title_tokens = tokenizer.tokenize(title.strip())
+                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
+
+                if len(dscp_tokens) > 510:
+                    if self.data_config['overlength_handle'] == 'truncation':
+                        dscp_tokens = dscp_tokens[:510]
+                    else:
+                        continue
+
+                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
+
+                if self.use_tags is not None:
+                    tag = [t for t in tag if t in self.use_tags]
+
+                if len(tag) == 0:
+                    continue
+
+                tag_occurance[tag] -= 1
+
+                for t in tag:
+                    if t not in self.tag2id:
+                        tag_id = len(self.tag2id)
+                        self.tag2id[t] = tag_id
+                        self.id2tag[tag_id] = t
+
+                tag_ids = [self.tag2id[t] for t in tag]
+
+
+                if tag_occurance[tag] >= 0:
+                    data.append({
+                        'id': int(id),
+                        'dscp_ids': dscp_ids,
+                        'dscp_tokens': dscp_tokens,
+                        'tag_ids': tag_ids,
+                        'dscp': dscp
+                    })
+                else:
+                    test_data.append({
+                        'id': int(id),
+                        'dscp_ids': dscp_ids,
+                        'dscp_tokens': dscp_tokens,
+                        'tag_ids': tag_ids,
+                        'dscp': dscp
+                    })
+
+        print("The number of tags for training: {}".format(len(self.tag2id)))
+        # os.makedirs('cache', exist_ok=True)
+
+        return data,test_data
 
     def load_programWeb_AAPD(self, f):
         data = []
