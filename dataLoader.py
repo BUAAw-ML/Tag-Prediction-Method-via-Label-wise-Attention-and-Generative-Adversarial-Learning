@@ -341,7 +341,7 @@ class dataEngine(Dataset):
                 tag_ids = [self.tag2id[t] for t in tag]
 
 
-                if tag_occurance[tag] >= 0:
+                if tag_occurance[tag[0]] >= 0:
                     data.append({
                         'id': int(id),
                         'dscp_ids': dscp_ids,
