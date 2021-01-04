@@ -493,7 +493,7 @@ class dataEngine(Dataset):
                 tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
-                if tag_occurance[tag] < 10:
+                if tag_occurance[tag[0]] < 10:
                     data.append({
                         'id': int(0),
                         'dscp_ids': dscp_ids,
