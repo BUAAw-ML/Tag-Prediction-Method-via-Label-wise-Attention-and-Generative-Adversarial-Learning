@@ -487,22 +487,23 @@ class dataEngine(Dataset):
                         tag_id = len(self.tag2id)
                         self.tag2id[t] = tag_id
                         self.id2tag[tag_id] = t
-                        tag_occurance[tag[0]] = 0
+                        # tag_occurance[tag[0]] = 0
 
                 tag_ids = [self.tag2id[t] for t in tag]
-                tag_occurance[tag[0]] += 1
+                # tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
-                if tag_occurance[tag[0]] < 10:
-                    data.append({
-                        'id': int(0),
-                        'dscp_ids': dscp_ids,
-                        'dscp_tokens': dscp_tokens,
-                        'tag_ids': tag_ids,
-                        'dscp': dscp
-                    })
+                # if tag_occurance[tag[0]] < 10:
+                data.append({
+                    'id': int(0),
+                    'dscp_ids': dscp_ids,
+                    'dscp_tokens': dscp_tokens,
+                    'tag_ids': tag_ids,
+                    'dscp': dscp
+                })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
+        print(self.tag2id)
 
         return data
 
