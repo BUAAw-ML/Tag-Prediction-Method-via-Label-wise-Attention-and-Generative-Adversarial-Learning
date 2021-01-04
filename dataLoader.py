@@ -48,6 +48,10 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.unlabeled_train_data = []#data[ind[:split2]].tolist()
             # dataset.test_data = data[ind[split2:split3]].tolist()
             dataset.train_data, dataset.test_data = dataset.load_programWeb_TrainTest(data_path)
+            ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
+            dataset.train_data = np.array(dataset.train_data)[ind].tolist()
+            ind = np.random.RandomState(seed=10).permutation(len(dataset.test_data))
+            dataset.test_data = np.array(dataset.test_data)[ind].tolist()
 
 
         elif data_type == 'TrainTest_ganBert':
