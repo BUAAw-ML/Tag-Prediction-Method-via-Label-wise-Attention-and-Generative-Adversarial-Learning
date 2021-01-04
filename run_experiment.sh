@@ -18,7 +18,7 @@ python main.py \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='skip' \
-        --min_tagFrequence=20  \
+        --min_tagFrequence=10  \
         --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
         --data_split=0.8  \
