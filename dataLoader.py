@@ -498,7 +498,7 @@ class dataEngine(Dataset):
                 tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
-                if tag_occurance[tag[0]] > 10 and train:
+                if tag_occurance[tag[0]] > 200 and train:
                     continue
 
                 data.append({
