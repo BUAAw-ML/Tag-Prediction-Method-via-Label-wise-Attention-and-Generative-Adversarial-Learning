@@ -78,7 +78,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.train_data = data[ind].tolist()
 
             file = os.path.join(data_path, 'test.csv')
-            dataset.test_data = dataset.load_agNews(file)
+            dataset.test_data = dataset.load_agNews(file, train=False)
             dataset.unlabeled_train_data = dataset.test_data
             # tdate = dataset.load_agNews(file)
             # tdate = np.array(tdate)
@@ -454,7 +454,7 @@ class dataEngine(Dataset):
 
         return data
 
-    def load_agNews(self, file):
+    def load_agNews(self, file, train =True):
         data = []
 
         tag_occurance = {}
@@ -484,12 +484,8 @@ class dataEngine(Dataset):
 
                 dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-                print(tag)
                 tag = tag.strip()
-                print(tag)
                 tag = [t for t in tag if t != '']
-                print(tag)
-                exit()
 
                 for t in tag:
                     if t not in self.tag2id:
@@ -502,14 +498,17 @@ class dataEngine(Dataset):
                 tag_occurance[tag[0]] += 1
                 assert len(tag) == 1
 
-                if tag_occurance[tag[0]] <= 10:
-                    data.append({
-                        'id': int(0),
-                        'dscp_ids': dscp_ids,
-                        'dscp_tokens': dscp_tokens,
-                        'tag_ids': tag_ids,
-                        'dscp': dscp
-                    })
+
+                data.append({
+                    'id': int(0),
+                    'dscp_ids': dscp_ids,
+                    'dscp_tokens': dscp_tokens,
+                    'tag_ids': tag_ids,
+                    'dscp': dscp
+                })
+
+                if tag_occurance[tag[0]] >= 10 and train:
+                    break
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
 
