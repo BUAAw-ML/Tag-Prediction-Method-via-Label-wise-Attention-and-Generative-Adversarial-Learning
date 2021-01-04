@@ -337,15 +337,14 @@ class MultiLabelMAPEngine(Engine):
         # self.state['output'] = F.softmax(logits, dim=-1)
         #
         log_probs = F.log_softmax(logits, dim=-1)
-        print(target_var[0,:])
         per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) #/ target_var.shape[-1]
         self.state['loss'] = torch.mean(per_example_loss)
         self.state['output'] = logits
 
-        print(target_var.shape)
-        print(torch.sum(target_var * log_probs, dim=-1).shape)
-        print(self.state['loss'].shape)
-        exit()
+        # print(target_var.shape)
+        # print(torch.sum(target_var * log_probs, dim=-1).shape)
+        # print(self.state['loss'].shape)
+        # exit()
         # self.state['loss'] = criterion(self.state['output'], target_var)
 
         if training:
