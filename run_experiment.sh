@@ -16,7 +16,7 @@ python main.py \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
