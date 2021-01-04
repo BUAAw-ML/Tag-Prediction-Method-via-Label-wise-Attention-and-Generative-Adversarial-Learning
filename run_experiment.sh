@@ -21,7 +21,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=0.001  \
+        --data_split=0.0002  \
         --test_description=''  \
 
 #方法、epoch_step
