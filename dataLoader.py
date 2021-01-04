@@ -487,10 +487,11 @@ class dataEngine(Dataset):
                         tag_id = len(self.tag2id)
                         self.tag2id[t] = tag_id
                         self.id2tag[tag_id] = t
-                        tag_occurance[tag] = 0
+                        tag_occurance[tag[0]] = 0
 
                 tag_ids = [self.tag2id[t] for t in tag]
-                tag_occurance[tag] += 1
+                tag_occurance[tag[0]] += 1
+                assert len(tag) == 1
 
                 if tag_occurance[tag] < 10:
                     data.append({
