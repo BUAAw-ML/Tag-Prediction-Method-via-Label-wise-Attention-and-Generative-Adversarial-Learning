@@ -338,9 +338,6 @@ class MultiLabelMAPEngine(Engine):
         #
         log_probs = F.log_softmax(logits, dim=-1)
         per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) #/ target_var.shape[-1]
-        print((target_var * log_probs)[0, :])
-        print(torch.sum(target_var * log_probs, dim=-1))
-        exit()
         self.state['loss'] = torch.mean(per_example_loss)
         self.state['output'] = logits
 
