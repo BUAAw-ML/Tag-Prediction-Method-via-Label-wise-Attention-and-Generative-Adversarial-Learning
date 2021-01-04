@@ -164,3 +164,15 @@
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
 |label,unlabel,test:12000,,7600（标签数：4）（split:0.1）|Bert微调+多注意力|epoch:13;epoch_step:8;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|96.494|
+
+
+# 实验结果 0104-
+## agnews数据集
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|label,unlabel,test:40,,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|75.866|
+|label,unlabel,test:40,500,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|83.882|
+|label,unlabel,test:800,,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001||
+|label,unlabel,test:800,500,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|87.271|
+|label,unlabel,test:10000,,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001||
+|label,unlabel,test:10000,500,7600（标签数：4）|Bert微调+多注意力|epoch:70;epoch_step:60;batch-size:4;optimizer:SGD;learning-rate:G0.0001,D0.01,B0.0001|95.504|
