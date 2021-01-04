@@ -5,8 +5,8 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=30 \
-        --epoch_step=20 \
+        --epochs=80 \
+        --epoch_step=70 \
         --device_ids=0 \
         --batch-size=10 \
         --G-lr=0.001 \
@@ -15,13 +15,13 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_agNews' \
         --data_path='../datasets/ag-news' \
-        --use_previousData=1 \
+        --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='skip' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=0.0002  \
+        --data_split=0.001  \
         --test_description=''  \
 
 #方法、epoch_step
