@@ -107,9 +107,9 @@ class MABert(nn.Module):
         # print(prob)
         # print(self.output(prob))
         prob = self.output(prob)[:,0]
-        print(prob)
-        prob = torch.sum(prob,-1)
-        print(prob)
+
+        prob = torch.mean(prob,-1)
+
         #################
         # masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool()
         # attention = (torch.matmul(token_feat, self.discriminator.transpose(0, 1))).transpose(1, 2).masked_fill(
