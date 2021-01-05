@@ -35,24 +35,37 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
         if data_type == 'All':
 
-            # data = dataset.load_programWeb_AAPD(data_path)
-            #
-            # data = np.array(data)
-            # ind = np.random.RandomState(seed=10).permutation(len(data))
-            #
-            # split = int(len(data) * data_config['data_split'])
-            # split2 = int(len(data) * 0.8)
-            # split3 = int(len(data) * 1)
-            #
-            # dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = []#data[ind[:split2]].tolist()
-            # dataset.test_data = data[ind[split2:split3]].tolist()
-            dataset.train_data, dataset.test_data = dataset.load_programWeb_TrainTest(data_path)
-            ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
-            dataset.train_data = np.array(dataset.train_data)[ind].tolist()
-            ind = np.random.RandomState(seed=10).permutation(len(dataset.test_data))
-            dataset.test_data = np.array(dataset.test_data)[ind].tolist()
+            data = dataset.load_programWeb_AAPD(data_path)
 
+            data = np.array(data)
+            ind = np.random.RandomState(seed=10).permutation(len(data))
+
+            split = int(len(data) * data_config['data_split'])
+            split2 = int(len(data) * 0.8)
+            split3 = int(len(data) * 1)
+
+            dataset.train_data = data[ind[:split]].tolist()
+            dataset.unlabeled_train_data = data[ind[:split2]].tolist()
+            dataset.test_data = data[ind[split2:split3]].tolist()
+
+
+        elif data_type == 'TrainTest_programWeb':
+
+            file = os.path.join(data_path, 'train.pkl')
+            dataset.filter_tags_programWeb(file)
+            data = dataset.load_TrainTest_programWeb(file)
+
+            data = np.array(data)
+            ind = np.random.RandomState(seed=10).permutation(len(data))
+            split = int(len(data) * data_config['data_split'])
+            # split2 = int(len(data) * 0.3)
+
+            dataset.train_data = data[ind[:split]].tolist()
+            dataset.unlabeled_train_data = data[ind[:500]].tolist()
+
+            file = os.path.join(data_path, 'test.pkl')
+
+            dataset.test_data = dataset.load_TrainTest_programWeb(file)
 
         elif data_type == 'TrainTest_ganBert':
 
@@ -270,105 +283,6 @@ class dataEngine(Dataset):
 
         return tfidf_dict
 
-    def load_programWeb_TrainTest(self, f):
-        data = []
-        test_data = []
-
-        document = []
-        tag_occurance = {}
-        # csv.field_size_limit(sys.maxsize)
-        with open(f, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)
-            for row in reader:
-
-                if len(row) != 4:
-                    continue
-                _, _, _, tag = row
-
-                tag = tag.strip().split('###')
-                tag = [t for t in tag if t != '']
-
-                for t in tag:
-                    if t not in tag_occurance:
-                        tag_occurance[t] = 1
-                    tag_occurance[t] += 1
-
-        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
-        # 'Data-as-a-Service'])  #
-        for tag in tag_occurance:
-            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
-                self.use_tags.add(tag)
-                tag_occurance[tag] *= 0.8
-
-        print('Total number of tags: {}'.format(len(tag_occurance)))
-        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
-
-        with open(f, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)
-            for row in reader:
-
-                if len(row) != 4:
-                    continue
-                id, title, dscp, tag = row
-
-                title_tokens = tokenizer.tokenize(title.strip())
-                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
-
-                if len(dscp_tokens) > 510:
-                    if self.data_config['overlength_handle'] == 'truncation':
-                        dscp_tokens = dscp_tokens[:510]
-                    else:
-                        continue
-
-                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-
-                tag = tag.strip().split('###')
-                tag = [t for t in tag if t != '']
-
-                if self.use_tags is not None:
-                    tag = [t for t in tag if t in self.use_tags]
-
-                if len(tag) == 0:
-                    continue
-                if len(tag) != 1:
-                    print("error")
-                    continue
-
-                tag_occurance[tag[0]] -= 1
-
-                for t in tag:
-                    if t not in self.tag2id:
-                        tag_id = len(self.tag2id)
-                        self.tag2id[t] = tag_id
-                        self.id2tag[tag_id] = t
-
-                tag_ids = [self.tag2id[t] for t in tag]
-
-
-                if tag_occurance[tag[0]] >= 0:
-                    data.append({
-                        'id': int(id),
-                        'dscp_ids': dscp_ids,
-                        'dscp_tokens': dscp_tokens,
-                        'tag_ids': tag_ids,
-                        'dscp': dscp
-                    })
-                else:
-                    test_data.append({
-                        'id': int(id),
-                        'dscp_ids': dscp_ids,
-                        'dscp_tokens': dscp_tokens,
-                        'tag_ids': tag_ids,
-                        'dscp': dscp
-                    })
-
-        print("The number of tags for training: {}".format(len(self.tag2id)))
-        # os.makedirs('cache', exist_ok=True)
-
-        return data,test_data
-
     def load_programWeb_AAPD(self, f):
         data = []
 
@@ -452,6 +366,106 @@ class dataEngine(Dataset):
         print("The number of tags for training: {}".format(len(self.tag2id)))
         # os.makedirs('cache', exist_ok=True)
 
+        return data
+
+    def filter_tags_programWeb(self, file):
+        tag_occurance = {}
+
+        ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
+        'Data-as-a-Service','Widgets'])
+
+        with open(file,'rb') as pklfile:
+            reader = pickle.load(pklfile)
+            for row in reader:
+
+                # if len(row) != 4:
+                #     continue
+
+                tag = row["tags"]
+
+                # tag = [t for t in tag if t != '']
+
+                tag = list(set(tag))
+
+                for t in tag:
+                    if t in ignored_tags:
+                        continue
+                    elif t not in tag_occurance:
+                        tag_occurance[t] = 1
+                    else:
+                        tag_occurance[t] += 1
+
+        print('Total number of tags: {}'.format(len(tag_occurance)))
+        tags = sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True)
+
+        print(tags)
+
+        for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
+            self.use_tags.add(item[0])
+
+        # for tag in tag_occurance:
+        #     if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
+        #         self.use_tags.add(tag)
+
+    def load_TrainTest_programWeb(self, file):
+        data = []
+        document = []
+
+        taglen = 0
+        item = 0
+
+        with open(file, 'rb') as pklfile:
+
+            reader = pickle.load(pklfile)
+
+            for row in reader:
+
+                if len(row) != 4:
+                    continue
+
+                id = row["id"]
+                title = row["api_name"]
+                dscp = row["descr"]
+                tag = row["tags"]
+
+                title_tokens = tokenizer.tokenize(title.strip())
+                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
+
+                if len(dscp_tokens) > 510:
+                    if self.data_config['overlength_handle'] == 'truncation':
+                        dscp_tokens = dscp_tokens[:510]
+                    else:
+                        continue
+
+                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
+
+                if self.use_tags is not None:
+                    tag = [t for t in tag if t in self.use_tags]
+
+                if len(tag) == 0:
+                    continue
+                taglen += len(tag)
+                item += 1
+
+                for t in tag:
+                    if t not in self.tag2id:
+                        tag_id = len(self.tag2id)
+                        self.tag2id[t] = tag_id
+                        self.id2tag[tag_id] = t
+
+                tag_ids = [self.tag2id[t] for t in tag]
+
+                data.append({
+                    'id': int(id),
+                    'dscp_ids': dscp_ids,
+                    'dscp_tokens': dscp_tokens,
+                    'tag_ids': tag_ids,
+                    'dscp': dscp
+                })
+
+        print("The number of tags for training: {}".format(len(self.tag2id)))
+        # print(self.id2tag)
+        print("taglen: {}".format(taglen/item))
         return data
 
     def load_agNews(self, file, train =True):
