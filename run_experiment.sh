@@ -37,12 +37,12 @@ python main.py \
         --data_type='TrainTest_programWeb' \
         --data_path='../datasets/ProgrammerWeb' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
-        --data_split=1  \
+        --data_split=0.05  \
         --test_description=''  \
 
 
