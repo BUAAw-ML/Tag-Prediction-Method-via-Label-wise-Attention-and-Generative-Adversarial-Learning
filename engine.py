@@ -317,7 +317,7 @@ class MultiLabelMAPEngine(Engine):
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']#.type(torch.LongTensor).cuda(self.state['device_ids'][0])
-        ids, token_type_ids, attention_mask = self.state['input']
+        ids, token_type_ids, attention_mask, label_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
@@ -436,11 +436,11 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']
-        ids, token_type_ids, attention_mask = self.state['input']
+        ids, token_type_ids, attention_mask, label_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-        # label_mask = label_mask.cuda(self.state['device_ids'][0])
+        label_mask = label_mask.cuda(self.state['device_ids'][0])
 
         if training:
             self.state['train_iters'] += 1
@@ -467,9 +467,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(logits)
 
         self.state['output'] = logits
-        print(logits)
-        print(target_var)
-        d_loss = criterion(logits, target_var)
+
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
         # D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
         # D_L_unsupervised = criterion(prob, target_zeros)
@@ -481,7 +479,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         # print(logits.index_select(0, label_mask).shape)
         # print(target_var.index_select(0, label_mask).shape)
-        # d_loss = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask)) #+ D_L_unsupervised
+        d_loss = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask)) #+ D_L_unsupervised
 
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
             # pseudo_label = self.state['output'] - pseudo_label
