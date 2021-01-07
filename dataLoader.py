@@ -59,33 +59,33 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             ind = np.random.RandomState(seed=10).permutation(len(data))
             data = data[ind]
 
-            dataset.train_data = []
-            dataset.unlabeled_train_data = []
-            rest = []
-            for item in data:
-                if len(dataset.train_data) < data_config['data_split']:
-                    dataset.train_data.append(item)
-                    continue
-                elif len(dataset.train_data) < data_config['data_split'] + 500 \
-                        and data_config['method'] == 'semiGAN_MultiLabelMAP':
-                    item['label'] = 0
-                    dataset.train_data.append(item)
-                    continue
-                else:
-                    rest.append(item)
-                    continue
-            # dataset.train_data = np.array(dataset.train_data)
-            # ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
-            # dataset.train_data = dataset.train_data[ind]
-            print(len(dataset.train_data))
-            print(len(rest))
-            assert len(data) == len(dataset.train_data) + len(rest)
+            # dataset.train_data = []
+            # dataset.unlabeled_train_data = []
+            # rest = []
+            # for item in data:
+            #     if len(dataset.train_data) < data_config['data_split']:
+            #         dataset.train_data.append(item)
+            #         continue
+            #     elif len(dataset.train_data) < data_config['data_split'] + 500 \
+            #             and data_config['method'] == 'semiGAN_MultiLabelMAP':
+            #         item['label'] = 0
+            #         dataset.train_data.append(item)
+            #         continue
+            #     else:
+            #         rest.append(item)
+            #         continue
+            # # dataset.train_data = np.array(dataset.train_data)
+            # # ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
+            # # dataset.train_data = dataset.train_data[ind]
+            # print(len(dataset.train_data))
+            # print(len(rest))
+            # assert len(data) == len(dataset.train_data) + len(rest)
 
-            # split = int(len(data) * data_config['data_split'])
-            # split2 = int(len(data))
-            #
-            # dataset.train_data = data[ind[:split]].tolist()
-            # dataset.unlabeled_train_data = data[ind[split:split+500]].tolist()
+            split = int(len(data) * data_config['data_split'])
+            split2 = int(len(data))
+
+            dataset.train_data = data[ind[:data_config['data_split']]].tolist()
+            dataset.unlabeled_train_data = data[ind[data_config['data_split']:data_config['data_split']+500]].tolist()
 
             file = os.path.join(data_path, 'test.pkl')
 
