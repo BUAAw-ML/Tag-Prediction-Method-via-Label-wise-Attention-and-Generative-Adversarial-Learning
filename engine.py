@@ -477,8 +477,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             # d_loss = torch.mean(per_example_loss)
 
-        print(logits.index_select(0, label_mask).shape)
-        print(target_var.index_select(0, label_mask).shape)
+        # print(logits.index_select(0, label_mask).shape)
+        # print(target_var.index_select(0, label_mask).shape)
         # d_loss = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask)) #+ D_L_unsupervised
         d_loss = criterion(logits, target_var)
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]

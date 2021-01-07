@@ -58,27 +58,28 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
             data = data[ind]
+            dataset.train_data = data
 
-            dataset.train_data = []
+            # dataset.train_data = []
             dataset.unlabeled_train_data = []
-            rest = []
-            for item in data:
-                if len(dataset.train_data) < data_config['data_split']:
-                    item['label'] = 1
-                    dataset.train_data.append(item)
-                    continue
-                elif len(dataset.train_data) < data_config['data_split'] + 500:
-                    dataset.train_data.append(item)
-                    continue
-                else:
-                    rest.append(item)
-                    continue
-            dataset.train_data = np.array(dataset.train_data)
-            ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
-            dataset.train_data = dataset.train_data[ind]
-            print(len(dataset.train_data))
-            print(len(rest))
-            assert len(data) == len(dataset.train_data) + len(rest)
+            # rest = []
+            # for item in data:
+            #     if len(dataset.train_data) < data_config['data_split']:
+            #         item['label'] = 1
+            #         dataset.train_data.append(item)
+            #         continue
+            #     elif len(dataset.train_data) < data_config['data_split'] + 500:
+            #         dataset.train_data.append(item)
+            #         continue
+            #     else:
+            #         rest.append(item)
+            #         continue
+            # dataset.train_data = np.array(dataset.train_data)
+            # ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
+            # dataset.train_data = dataset.train_data[ind]
+            # print(len(dataset.train_data))
+            # print(len(rest))
+            # assert len(data) == len(dataset.train_data) + len(rest)
 
             # split = int(len(data) * data_config['data_split'])
             # split2 = int(len(data))
