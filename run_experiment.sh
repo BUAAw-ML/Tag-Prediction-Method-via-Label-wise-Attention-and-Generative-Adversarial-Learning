@@ -32,12 +32,12 @@ python main.py \
         --batch-size=12 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb' \
         --data_path='../datasets/ProgrammerWeb' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \

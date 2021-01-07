@@ -101,7 +101,7 @@ fo.write(setting_str)
 
 data_config = {'overlength_handle': args.overlength_handle, 'intanceNum_limit': args.intanceNum_limit,
                'min_tagFrequence': args.min_tagFrequence, 'max_tagFrequence': args.max_tagFrequence,
-               'data_split': args.data_split}
+               'data_split': args.data_split, 'method': args.method}
 
 dataset, encoded_tag, tag_mask = load_data(data_config=data_config,
                                            data_path=args.data_path,

@@ -66,7 +66,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
                 if len(dataset.train_data) < data_config['data_split']:
                     dataset.train_data.append(item)
                     continue
-                elif len(dataset.train_data) < data_config['data_split'] + 500:
+                elif len(dataset.train_data) < data_config['data_split'] + 500 \
+                        and data_config['method'] == 'semiGAN_MultiLabelMAP':
                     item['label'] = 0
                     dataset.train_data.append(item)
                     continue
