@@ -346,17 +346,17 @@ class MultiLabelMAPEngine(Engine):
         # print(torch.sum(target_var * log_probs, dim=-1).shape)
         # print(self.state['loss'].shape)
         # exit()
-        if label_mask.shape == 0:
-            self.state['loss'] = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
-        else:
-            self.state['loss'] = torch.zeros(1).cuda(self.state['device_ids'][0])
 
-        if training:
+        self.state['loss'] = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
+
+
+        if training and label_mask.shape != 0:
             optimizer['enc'].zero_grad()
             self.state['loss'].backward()
             # nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
             optimizer['enc'].step()
         else:
+            self.state['loss'] = torch.zeros(1).cuda(self.state['device_ids'][0])
             return self.state['output']
 
     def on_start_epoch(self, training, model, criterion, data_loader, optimizer=None, display=True):
