@@ -26,13 +26,13 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --epochs=100 \
+        --epoch_step=90 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=12 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb' \
         --data_path='../datasets/ProgrammerWeb' \
