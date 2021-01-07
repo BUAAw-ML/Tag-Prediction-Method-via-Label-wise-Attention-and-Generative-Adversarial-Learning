@@ -346,7 +346,10 @@ class MultiLabelMAPEngine(Engine):
         # print(torch.sum(target_var * log_probs, dim=-1).shape)
         # print(self.state['loss'].shape)
         # exit()
+
         self.state['loss'] = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
+        if label_mask.shape[0] == 0:
+            print(self.state['loss'])
 
         if training:
             optimizer['enc'].zero_grad()
