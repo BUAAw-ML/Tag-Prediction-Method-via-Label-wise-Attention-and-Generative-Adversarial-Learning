@@ -188,11 +188,11 @@ class MABert(nn.Module):
         prob = torch.sum(feat, -1)
 
         prob = torch.sum(prob, -1, keepdim=True)
-        # prob = torch.sigmoid(prob)
+        prob = torch.sigmoid(prob)
 
-        prob = torch.cat((prob,flatten),-1)
-        #
-        prob = self.output(prob)[:,0]
+        # prob = torch.cat((prob,flatten),-1)
+        # #
+        # prob = self.output(prob)[:,0]
 
 
         # prob = attention
