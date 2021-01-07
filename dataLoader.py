@@ -66,13 +66,13 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
                 if len(dataset.train_data) <= data_config['data_split']:
                     item['label'] = 1
                     dataset.train_data.append(item)
-                    break
+                    continue
                 elif len(dataset.unlabeled_train_data) <= 500:
                     dataset.train_data.append(item)
-                    break
+                    continue
                 else:
                     rest.append(item)
-                    break
+                    continue
             dataset.train_data = np.array(dataset.train_data)
             ind = np.random.RandomState(seed=10).permutation(len(dataset.train_data))
             dataset.train_data = dataset.train_data[ind]
