@@ -67,7 +67,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
                     item['label'] = 1
                     dataset.train_data.append(item)
                     continue
-                elif len(dataset.unlabeled_train_data) <= 500:
+                elif len(dataset.train_data) <= 500:
                     dataset.train_data.append(item)
                     continue
                 else:
