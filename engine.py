@@ -482,7 +482,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         print(label_mask)
 
-        logits.index_select(0, torch.tensor([1,3]))
+        logits.index_select(0, torch.tensor([1,3]).cuda(self.state['device_ids'][0]))
         print(logits)
         print(logits.shape)
         target_var.index_select(0, torch.tensor(label_mask))
