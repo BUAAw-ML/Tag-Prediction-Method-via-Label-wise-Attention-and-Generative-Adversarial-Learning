@@ -440,6 +440,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
+        label_mask = label_mask.cuda(self.state['device_ids'][0])
 
         if training:
             self.state['train_iters'] += 1
@@ -478,7 +479,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         print(logits.shape)
         print(target_var.shape)
         print("----")
-        label_mask = torch.tensor(label_mask).unsqueeze(-1)
+
         print(label_mask)
         logits = torch.masked_select(logits, label_mask)
         print(logits)
