@@ -32,7 +32,7 @@ python main.py \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb' \
         --data_path='../datasets/ProgrammerWeb' \
@@ -42,7 +42,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=99999  \
         --test_description=''  \
 
 

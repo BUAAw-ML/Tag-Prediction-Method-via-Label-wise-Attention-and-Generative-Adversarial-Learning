@@ -321,6 +321,7 @@ class MultiLabelMAPEngine(Engine):
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
+        label_mask = label_mask.cuda(self.state['device_ids'][0])
 
         if training:
             self.state['train_iters'] += 1
@@ -345,7 +346,7 @@ class MultiLabelMAPEngine(Engine):
         # print(torch.sum(target_var * log_probs, dim=-1).shape)
         # print(self.state['loss'].shape)
         # exit()
-        self.state['loss'] = criterion(self.state['output'], target_var)
+        d_loss = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
 
         if training:
             optimizer['enc'].zero_grad()
@@ -480,7 +481,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print(logits.index_select(0, label_mask).shape)
         # print(target_var.index_select(0, label_mask).shape)
         d_loss = criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask)) #+ D_L_unsupervised
-
+        d_loss += D_L_unsupervised
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
             # pseudo_label = self.state['output'] - pseudo_label
             #
