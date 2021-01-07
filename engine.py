@@ -481,6 +481,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         print("----")
 
         print(label_mask)
+        label_mask = torch.nonzero(label_mask)
+        print(label_mask)
         exit()
 
         print(logits.index_select(0, torch.tensor([1,3]).cuda(self.state['device_ids'][0])))
