@@ -288,7 +288,7 @@ class dataEngine(Dataset):
             tags[i, batch[i]['tag_ids']] = 1.
 
         dscp = [e['dscp'] for e in batch]
-        label_mask = torch.tensor([e['label'] for e in batch]).unsqueeze(-1).byte()
+        label_mask = torch.tensor([e['label'] for e in batch])#.unsqueeze(-1).byte()
 
         return (ids, token_type_ids, attention_mask, label_mask), tags, dscp
 

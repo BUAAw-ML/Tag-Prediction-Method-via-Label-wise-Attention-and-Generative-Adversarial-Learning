@@ -481,10 +481,11 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         print("----")
 
         print(label_mask)
-        logits = torch.masked_select(logits, label_mask)
+
+        logits.index_select(0, torch.tensor(label_mask))
         print(logits)
         print(logits.shape)
-        target_var = torch.masked_select(target_var, label_mask)
+        target_var.index_select(0, torch.tensor(label_mask))
         print(target_var)
         print(target_var.shape)
         exit()
