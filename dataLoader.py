@@ -288,7 +288,7 @@ class dataEngine(Dataset):
             tags[i, batch[i]['tag_ids']] = 1.
 
         dscp = [e['dscp'] for e in batch]
-        label_mask = torch.tensor([e['label'] for e in batch]).unsqueeze(-1)
+        label_mask = torch.tensor([e['label'] for e in batch]).unsqueeze(-1).byte()
 
         return (ids, token_type_ids, attention_mask, label_mask), tags, dscp
 
@@ -395,8 +395,9 @@ class dataEngine(Dataset):
     def filter_tags_programWeb(self, file):
         tag_occurance = {}
 
-        ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
-        'Data-as-a-Service','Widgets'])
+        ignored_tags = set(['Tools', 'Applications', 'Other', 'API', 'Platform-as-a-Service',
+                            'Data-as-a-Service', 'Database', 'Application Development', 'Text', 'Business', 'Location',
+                            'Office', 'Content'])  # 'Software-as-a-Service','Widgets',
 
         with open(file,'rb') as pklfile:
             reader = pickle.load(pklfile)
