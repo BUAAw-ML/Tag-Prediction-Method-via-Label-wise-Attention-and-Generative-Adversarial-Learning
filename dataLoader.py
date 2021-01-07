@@ -64,10 +64,10 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             rest = []
             for item in data:
                 if len(dataset.train_data) < data_config['data_split']:
-                    item['label'] = 1
                     dataset.train_data.append(item)
                     continue
                 elif len(dataset.train_data) < data_config['data_split'] + 500:
+                    item['label'] = 0
                     dataset.train_data.append(item)
                     continue
                 else:
@@ -487,7 +487,7 @@ class dataEngine(Dataset):
                     'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
                     'dscp': dscp,
-                    'label': 0
+                    'label': 1
                 })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
