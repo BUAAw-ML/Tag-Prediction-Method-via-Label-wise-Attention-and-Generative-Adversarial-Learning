@@ -59,6 +59,45 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             ind = np.random.RandomState(seed=10).permutation(len(data))
             data = data[ind]
 
+            for tag in dataset.use_tags.keys():
+                dataset.use_tags[tag] *= data_config['data_split'] / len(data)
+
+            tag_count = copy.deepcopy(dataset.use_tags)
+            dataset.train_data = []
+            candidate = []
+            rest = []
+            for item in data:
+                for tag_id in item['tag_ids']:
+                    if tag_count[dataset.id2tag[tag_id]] == dataset.use_tags[dataset.id2tag[tag_id]]:
+                        for tag_id in item['tag_ids']:
+                            tag_count[dataset.id2tag[tag_id]] -= 1
+                        dataset.train_data.append(item)
+                        break
+
+                    elif tag_count[dataset.id2tag[tag_id]] >= 1:
+                        for tag_id in item['tag_ids']:
+                            tag_count[dataset.id2tag[tag_id]] -= 1
+                        candidate.append(item)
+                        break
+                    else:
+                        rest.append(item)
+                        break
+
+                if len(dataset.train_data) >= data_config['data_split']:
+                    print("len(dataset.train_data):{}".format(len(dataset.train_data)))
+                    break
+
+            assert len(data) == len(dataset.train_data) + len(candidate) + len(rest)
+
+            if len(candidate) >= data_config['data_split']-len(dataset.train_data):
+                dataset.train_data.extend(candidate[:int(data_config['data_split']-len(dataset.train_data))])
+            else:
+                dataset.train_data.extend(candidate)
+                dataset.train_data.extend(rest[:int(data_config['data_split']-len(dataset.train_data))])
+
+            print(tag_count)
+            # dataset.train_data = data[ind[:data_config['data_split']]].tolist()
+            # dataset.unlabeled_train_data = data[ind[:500]].tolist()
             # dataset.train_data = []
             # dataset.unlabeled_train_data = []
             # rest = []
@@ -81,15 +120,16 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             # print(len(rest))
             # assert len(data) == len(dataset.train_data) + len(rest)
 
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data))
-
-            dataset.train_data = data[ind[:int(data_config['data_split'])]].tolist()
-            dataset.unlabeled_train_data = data[ind[int(data_config['data_split']):int(data_config['data_split']+500)]].tolist()
+            # split = int(len(data) * data_config['data_split'])
+            # split2 = int(len(data))
+            #
+            # dataset.train_data = data[ind[:int(data_config['data_split'])]].tolist()
+            # dataset.unlabeled_train_data = data[ind[int(data_config['data_split']):int(data_config['data_split']+500)]].tolist()
 
             file = os.path.join(data_path, 'test.pkl')
 
             dataset.test_data = dataset.load_TrainTest_programWeb(file)
+            dataset.unlabeled_train_data = []
 
         elif data_type == 'TrainTest_ganBert':
 
@@ -160,7 +200,7 @@ class dataEngine(Dataset):
         self.tag2id = tag2id
         self.id2tag = id2tag
 
-        self.use_tags = set()
+        self.use_tags = {}
 
         self.co_occur_mat = co_occur_mat
         self.tfidf_dict = tfidf_dict
@@ -428,7 +468,7 @@ class dataEngine(Dataset):
         print(tags)
 
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
-            self.use_tags.add(item[0])
+            self.use_tags[item[0]] = item[1]
 
         # for tag in tag_occurance:
         #     if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
