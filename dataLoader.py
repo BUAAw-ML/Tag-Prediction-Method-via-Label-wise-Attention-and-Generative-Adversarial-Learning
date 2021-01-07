@@ -49,7 +49,6 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.unlabeled_train_data = data[ind[:split2]].tolist()
             dataset.test_data = data[ind[split2:split3]].tolist()
 
-
         elif data_type == 'TrainTest_programWeb':
 
             file = os.path.join(data_path, 'train.pkl')
@@ -58,11 +57,30 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data))
+            data = data[ind]
 
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[split:split+500]].tolist()
+            dataset.train_data = []
+            dataset.unlabeled_train_data = []
+            rest = []
+            for item in data:
+                if len(dataset.train_data) <= data_config['data_split']:
+                    item['label'] = 1
+                    dataset.train_data.append(item)
+                    break
+                elif len(dataset.unlabeled_train_data) <= 500:
+                    dataset.unlabeled_train_data.append(item)
+                    break
+                else:
+                    rest.append(item)
+                    break
+
+            assert len(data) == len(dataset.train_data) + len(dataset.unlabeled_train_data) + len(rest)
+
+            # split = int(len(data) * data_config['data_split'])
+            # split2 = int(len(data))
+            #
+            # dataset.train_data = data[ind[:split]].tolist()
+            # dataset.unlabeled_train_data = data[ind[split:split+500]].tolist()
 
             file = os.path.join(data_path, 'test.pkl')
 
@@ -266,8 +284,9 @@ class dataEngine(Dataset):
             tags[i, batch[i]['tag_ids']] = 1.
 
         dscp = [e['dscp'] for e in batch]
+        label_mask = [e['label'] for e in batch]
 
-        return (ids, token_type_ids, attention_mask), tags, dscp
+        return (ids, token_type_ids, attention_mask, label_mask), tags, dscp
 
     @classmethod
     def get_tfidf_dict(cls, document):
@@ -461,7 +480,8 @@ class dataEngine(Dataset):
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
-                    'dscp': dscp
+                    'dscp': dscp,
+                    'label': 0
                 })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
