@@ -84,8 +84,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             split = int(len(data) * data_config['data_split'])
             split2 = int(len(data))
 
-            dataset.train_data = data[ind[:data_config['data_split']]].tolist()
-            dataset.unlabeled_train_data = data[ind[data_config['data_split']:data_config['data_split']+500]].tolist()
+            dataset.train_data = data[ind[:int(data_config['data_split'])]].tolist()
+            dataset.unlabeled_train_data = data[ind[int(data_config['data_split']):int(data_config['data_split']+500)]].tolist()
 
             file = os.path.join(data_path, 'test.pkl')
 
