@@ -317,7 +317,7 @@ class MultiLabelMAPEngine(Engine):
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']#.type(torch.LongTensor).cuda(self.state['device_ids'][0])
-        ids, token_type_ids, attention_mask, label_mask = self.state['input']
+        ids, token_type_ids, attention_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
@@ -436,11 +436,11 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
         target_var = self.state['target']
-        ids, token_type_ids, attention_mask, label_mask = self.state['input']
+        ids, token_type_ids, attention_mask = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-        label_mask = label_mask.cuda(self.state['device_ids'][0])
+        # label_mask = label_mask.cuda(self.state['device_ids'][0])
 
         if training:
             self.state['train_iters'] += 1

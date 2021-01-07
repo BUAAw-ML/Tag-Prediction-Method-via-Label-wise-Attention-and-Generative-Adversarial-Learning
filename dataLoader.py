@@ -292,7 +292,7 @@ class dataEngine(Dataset):
         label_mask = torch.tensor([e['label'] for e in batch]).byte()
         label_mask = torch.nonzero(label_mask).squeeze(-1)
 
-        return (ids, token_type_ids, attention_mask, label_mask), tags, dscp
+        return (ids, token_type_ids, attention_mask), tags, dscp
 
     @classmethod
     def get_tfidf_dict(cls, document):
