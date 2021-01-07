@@ -478,7 +478,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         print(logits.shape)
         print(target_var.shape)
         print("----")
-        label_mask = torch.tensor(label_mask)
+        label_mask = torch.tensor(label_mask).unsqueeze(-1)
         print(label_mask)
         logits = torch.masked_select(logits, label_mask)
         print(logits)

@@ -63,11 +63,11 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.unlabeled_train_data = []
             rest = []
             for item in data:
-                if len(dataset.train_data) <= data_config['data_split']:
+                if len(dataset.train_data) < data_config['data_split']:
                     item['label'] = 1
                     dataset.train_data.append(item)
                     continue
-                elif len(dataset.train_data) <= data_config['data_split'] + 500:
+                elif len(dataset.train_data) < data_config['data_split'] + 500:
                     dataset.train_data.append(item)
                     continue
                 else:
