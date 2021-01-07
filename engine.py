@@ -465,19 +465,27 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         # print("logits：")
         # print(logits)
 
-        self.state['output'] = F.softmax(logits, dim=-1)
+        self.state['output'] = logits
 
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
         # D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
         # D_L_unsupervised = criterion(prob, target_zeros)
 
-        if semi_supervised == False: #train with labeled data
+
             # log_probs = F.log_softmax(logits, dim=-1)
             # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
             # d_loss = torch.mean(per_example_loss)
 
-            d_loss = criterion(logits, target_var) #+ D_L_unsupervised
-        else:
+        logits = torch.masked_select(logits, label_mask)
+        print(logits)
+        print(logits.shape)
+        target_var = torch.masked_select(target_var, label_mask)
+        print(target_var)
+        print(target_var.shape)
+        exit()
+
+        d_loss = criterion(logits, target_var) #+ D_L_unsupervised
+
             # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
             # pseudo_label = self.state['output'] - pseudo_label
             #
@@ -491,7 +499,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             # D_L_unsupervised2 = -1 * torch.mean(torch.log(logits + epsilon))
             # D_L_unsupervised3 = -1 * torch.mean(torch.log(1 - flatten[:,1] + epsilon))
 
-            d_loss = D_L_unsupervised #+ D_L_unsupervised2 #D_L_unsupervised +
+        # d_loss = D_L_unsupervised #+ D_L_unsupervised2 #D_L_unsupervised +
 
         if training:
             optimizer['enc'].zero_grad()
