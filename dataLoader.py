@@ -93,11 +93,11 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             if len(candidate) >= data_config['data_split']-len(dataset.train_data):
                 dataset.train_data.extend(candidate[:int(data_config['data_split']-len(dataset.train_data))])
-                dataset.unlabeled_train_data.extend(rest[:])
+                dataset.unlabeled_train_data.extend(rest[:200])
             else:
                 dataset.train_data.extend(candidate)
                 dataset.train_data.extend(rest[:int(data_config['data_split']-len(dataset.train_data))])
-                dataset.unlabeled_train_data.extend(rest[int(data_config['data_split']-len(dataset.train_data)):])
+                dataset.unlabeled_train_data.extend(rest[int(data_config['data_split']-len(dataset.train_data)):200])
 
             for item in dataset.unlabeled_train_data:
                 item['label'] = 0
