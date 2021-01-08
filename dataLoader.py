@@ -66,6 +66,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.train_data = []
             candidate = []
             rest = []
+            dataset.unlabeled_train_data = []
+
             for item in data:
                 for tag_id in item['tag_ids']:
                     if tag_count[dataset.id2tag[tag_id]] == dataset.use_tags[dataset.id2tag[tag_id]]:
@@ -91,11 +93,16 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             if len(candidate) >= data_config['data_split']-len(dataset.train_data):
                 dataset.train_data.extend(candidate[:int(data_config['data_split']-len(dataset.train_data))])
+                dataset.unlabeled_train_data.extend(rest[:200])
             else:
                 dataset.train_data.extend(candidate)
                 dataset.train_data.extend(rest[:int(data_config['data_split']-len(dataset.train_data))])
+                dataset.unlabeled_train_data.extend(rest[int(data_config['data_split']-len(dataset.train_data)):200])
 
-            print(tag_count)
+            for item in dataset.unlabeled_train_data:
+                item['label'] = 0
+                dataset.train_data.append(item)
+
             # dataset.train_data = data[ind[:data_config['data_split']]].tolist()
             # dataset.unlabeled_train_data = data[ind[:500]].tolist()
             # dataset.train_data = []
@@ -127,9 +134,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             # dataset.unlabeled_train_data = data[ind[int(data_config['data_split']):int(data_config['data_split']+500)]].tolist()
 
             file = os.path.join(data_path, 'test.pkl')
-
             dataset.test_data = dataset.load_TrainTest_programWeb(file)
-            dataset.unlabeled_train_data = []
+
 
         elif data_type == 'TrainTest_ganBert':
 
