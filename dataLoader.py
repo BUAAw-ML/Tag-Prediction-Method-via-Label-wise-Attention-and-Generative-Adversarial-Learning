@@ -695,7 +695,7 @@ class dataEngine(Dataset):
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
-            tag = tag.strip().split()
+            tag = tag.strip().split('#')
             tag = [t for t in tag if t != '']
 
             if self.use_tags is not None:
@@ -769,6 +769,8 @@ class dataEngine(Dataset):
                 print("len(train_data):{}".format(len(train_data)))
                 break
 
+        print(tag_count)
+
         assert len(data) == len(train_data) + len(candidate) + len(rest)
 
         if len(candidate) >= self.data_config['data_split'] - len(train_data):
@@ -779,7 +781,7 @@ class dataEngine(Dataset):
             train_data.extend(rest[:int(self.data_config['data_split'] - len(train_data))])
 
         if self.data_config['method'] == 'semiGAN_MultiLabelMAP':
-            unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):200])
+            unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):500])
 
         for item in unlabeled_train_data:
             item['label'] = 0
