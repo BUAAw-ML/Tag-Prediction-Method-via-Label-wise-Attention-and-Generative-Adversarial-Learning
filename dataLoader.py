@@ -206,7 +206,7 @@ class dataEngine(Dataset):
         self.tag2id = tag2id
         self.id2tag = id2tag
 
-        self.use_tags = {}
+        self.use_tags = set()#{}
 
         self.co_occur_mat = co_occur_mat
         self.tfidf_dict = tfidf_dict
