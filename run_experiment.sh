@@ -41,7 +41,7 @@ python main.py \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
-        --intanceNum_limit=99999 \
+        --intanceNum_limit=5000 \
         --data_split=200  \
         --test_description=''  \
 
