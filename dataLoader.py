@@ -168,25 +168,25 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             # ind = np.random.RandomState(seed=10).permutation(len(tdate))
             # dataset.test_data = data[ind[:1]].tolist()
 
-
         elif data_type == 'TrainTestTextTag':
 
             file1 = os.path.join(data_path, 'train_texts.txt')
             file2 = os.path.join(data_path, 'train_labels.txt')
-            dataset.filter_tags(file2)
-            data = dataset.load_EurLex_RCV2(file1, file2)
+            dataset.filterTags_EurLex_RCV2_SO(file2)
+            data = dataset.load_EurLex_RCV2_SO(file1, file2)
 
-            data = np.array(data)
-            ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.5)
-
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[split:]].tolist()
+            dataset.train_data, dataset.unlabeled_train_data = dataset.data_preprocess(data)
+            # data = np.array(data)
+            # ind = np.random.RandomState(seed=10).permutation(len(data))
+            # split = int(len(data) * data_config['data_split'])
+            # split2 = int(len(data) * 0.5)
+            # 
+            # dataset.train_data = data[ind[:split]].tolist()
+            # dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
             file1 = os.path.join(data_path, 'valid+test_texts.txt')
             file2 = os.path.join(data_path, 'valid+test_labels.txt')
-            dataset.test_data = dataset.load_EurLex_RCV2(file1, file2)
+            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
@@ -206,7 +206,7 @@ class dataEngine(Dataset):
         self.tag2id = tag2id
         self.id2tag = id2tag
 
-        self.use_tags = set()#{}
+        self.use_tags = {}
 
         self.co_occur_mat = co_occur_mat
         self.tfidf_dict = tfidf_dict
@@ -651,7 +651,7 @@ class dataEngine(Dataset):
 
         return data
 
-    def filter_tags(self, file):
+    def filterTags_EurLex_RCV2_SO(self, file):
         tag_occurance = {}
 
         with open(file, 'r') as f_tag:
@@ -663,15 +663,19 @@ class dataEngine(Dataset):
                 for t in tag:
                     if t not in tag_occurance:
                         tag_occurance[t] = 1
-                    tag_occurance[t] += 1
+                    else:
+                        tag_occurance[t] += 1
 
-        for tag in tag_occurance:
-            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
-                self.use_tags.add(tag)
         print('Total number of tags: {}'.format(len(tag_occurance)))
-        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
+        tags = sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True)
 
-    def load_EurLex_RCV2(self, file1, file2):
+        print(tags)
+
+        for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
+            self.use_tags[item[0]] = item[1]
+
+
+    def load_EurLex_RCV2_SO(self, file1, file2):
         data = []
 
         f_text = open(file1, 'r')
@@ -727,3 +731,62 @@ class dataEngine(Dataset):
         f_tag.close()
 
         return data
+    
+    def data_preprocess(self, data):
+        train_data = []
+        unlabeled_train_data = []
+        
+        data = np.array(data)
+        ind = np.random.RandomState(seed=10).permutation(len(data))
+        data = data[ind]
+
+        for tag in self.use_tags.keys():
+            self.use_tags[tag] *= self.data_config['data_split'] / len(data)
+
+        tag_count = copy.deepcopy(self.use_tags)
+        
+        candidate = []
+        rest = []
+    
+        for item in data:
+            for tag_id in item['tag_ids']:
+                if tag_count[self.id2tag[tag_id]] == self.use_tags[self.id2tag[tag_id]]:
+                    for tag_id in item['tag_ids']:
+                        tag_count[self.id2tag[tag_id]] -= 1
+                    train_data.append(item)
+                    break
+
+                elif tag_count[self.id2tag[tag_id]] >= 1:
+                    for tag_id in item['tag_ids']:
+                        tag_count[self.id2tag[tag_id]] -= 1
+                    candidate.append(item)
+                    break
+                else:
+                    rest.append(item)
+                    break
+
+            if len(train_data) >= self.data_config['data_split']:
+                print("len(train_data):{}".format(len(train_data)))
+                break
+
+        assert len(data) == len(train_data) + len(candidate) + len(rest)
+
+        if len(candidate) >= self.data_config['data_split'] - len(train_data):
+            train_data.extend(candidate[:int(self.data_config['data_split'] - len(train_data))])
+
+        else:
+            train_data.extend(candidate)
+            train_data.extend(rest[:int(self.data_config['data_split'] - len(train_data))])
+
+        if self.data_config['method'] == 'semiGAN_MultiLabelMAP':
+            unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):200])
+
+        for item in unlabeled_train_data:
+            item['label'] = 0
+            train_data.append(item)
+
+        train_data = np.array(train_data)
+        ind = np.random.RandomState(seed=10).permutation(len(train_data))
+        train_data = train_data[ind]
+        
+        return train_data, unlabeled_train_data
