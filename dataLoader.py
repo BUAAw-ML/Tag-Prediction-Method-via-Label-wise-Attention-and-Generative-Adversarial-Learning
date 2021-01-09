@@ -781,7 +781,7 @@ class dataEngine(Dataset):
             train_data.extend(rest[:int(self.data_config['data_split'] - len(train_data))])
 
         if self.data_config['method'] == 'semiGAN_MultiLabelMAP':
-            unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):500])
+            unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):200])
 
         for item in unlabeled_train_data:
             item['label'] = 0

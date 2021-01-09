@@ -26,8 +26,8 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=80 \
-        --epoch_step=70 \
+        --epochs=110 \
+        --epoch_step=100 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
