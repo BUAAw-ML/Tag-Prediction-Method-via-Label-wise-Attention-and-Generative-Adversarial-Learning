@@ -26,23 +26,23 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=110 \
-        --epoch_step=100 \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=200  \
         --intanceNum_limit=99999 \
-        --data_split=500  \
+        --data_split=1000  \
         --test_description=''  \
 
 
