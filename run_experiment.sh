@@ -26,10 +26,10 @@
 
 python main.py \
         --experiment_no='Test'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --epochs=30 \
+        --epoch_step=20 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
