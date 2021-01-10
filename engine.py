@@ -59,7 +59,7 @@ class Engine(object):
         if self._state('print_freq') is None:
             self.state['print_freq'] = 0
         # best score
-        self.state['best_score'] = 0.
+        self.state['best_score'] = {}
         self.state['train_iters'] = 0
         self.state['eval_iters'] = 0
 
@@ -167,6 +167,28 @@ class Engine(object):
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
+
+            # remember best prec@1 and save checkpoint
+            # is_best = prec1 > self.state['best_score']
+
+            self.state['best_score']['map'] = max(prec1['map'], self.state['best_score']['map'])
+            if prec1['OF1'] >= self.state['best_score']['OF1']:
+                self.state['best_score']['OF1'] = prec1['OF1']
+                self.state['best_score']['OP'] = prec1['OP']
+                self.state['best_score']['OR'] = prec1['OR']
+            if prec1['CF1'] >= self.state['best_score']['CF1']:
+                self.state['best_score']['CF1'] = prec1['CF1']
+                self.state['best_score']['CP'] = prec1['CP']
+                self.state['best_score']['CR'] = prec1['CR']
+
+            best_str = '**best** map={map:.3f} OP={OP:.3f} OR={OR:.3f} OF1={OF1:.3f} CP={CP:.3f} CR={CR:.3f} CF1={CF1:.3f}'.format(
+                map=self.state['best_score']['map'], OP=self.state['best_score']['OP'],
+                OR=self.state['best_score']['OR'],
+                OF1=self.state['best_score']['OF1'], CP=self.state['best_score']['CP'],
+                CR=self.state['best_score']['CR'], CF1=self.state['best_score']['CF1'])
+
+            print(best_str)
+            self.result_file.write(best_str + '\n')
 
             # remember best prec@1 and save checkpoint
             is_best = prec1 > self.state['best_score']
@@ -382,6 +404,8 @@ class MultiLabelMAPEngine(Engine):
             print(reselt_str)
             self.result_file.write(reselt_str + '\n')
 
+            result = {'map': map, 'OP': OP, 'OR': OR, 'OF1': OF1, 'CP': CP, 'CR': CR, 'CF1': CF1}
+
         if training:
             self.writer.add_scalar('loss/train_epoch_loss', loss, self.state['epoch'])
             self.writer.add_scalar('mAP/train_mAP', map, self.state['epoch'])
@@ -392,7 +416,8 @@ class MultiLabelMAPEngine(Engine):
             self.writer.add_scalar('mAP/eval_mAP', map, self.state['epoch'])
             self.writer.add_scalar('OF1/eval_OF1', OF1, self.state['epoch'])
             self.writer.add_scalar('CF1/eval_CF1', CF1, self.state['epoch'])
-        return map
+
+        return result
 
     def on_start_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
