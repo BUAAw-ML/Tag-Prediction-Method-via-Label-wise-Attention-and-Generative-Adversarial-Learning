@@ -35,7 +35,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -45,195 +45,29 @@ python main.py \
         --data_split=200  \
         --test_description=''  \
 
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=200  \
-        --test_description=''  \
+#python main.py \
+#        --experiment_no='zyc_tag<100'  \
+#        --epochs=120 \
+#        --epoch_step=110 \
+#        --device_ids=0 \
+#        --batch-size=4 \
+#        --G-lr=0.001 \
+#        --D-lr=0.1 \
+#        --B-lr=0.001 \
+#        --save_model_path='./checkpoint' \
+#        --data_type='TrainTestTextTag' \
+#        --data_path='../datasets/stack-overflow' \
+#        --use_previousData=0 \
+#        --method='semiGAN_MultiLabelMAP' \
+#        --overlength_handle='truncation' \
+#        --min_tagFrequence=0  \
+#        --max_tagFrequence=100  \
+#        --intanceNum_limit=99999 \
+#        --data_split=200  \
+#        --test_description=''  \
 
 
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
 
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=1600  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=1600  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=6400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=6400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=12800  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_tag<100'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=12800  \
-        --test_description=''  \
 
 #方法、epoch_step
 
