@@ -657,7 +657,7 @@ class dataEngine(Dataset):
         with open(file, 'r') as f_tag:
             tags = f_tag.readlines()
             for tag in tags:
-                tag = tag.strip().split()
+                tag = tag.strip().split('#')
                 tag = [t for t in tag if t != '']
 
                 for t in tag:
@@ -674,6 +674,7 @@ class dataEngine(Dataset):
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
             self.use_tags[item[0]] = item[1]
 
+        print(self.use_tags)
 
     def load_EurLex_RCV2_SO(self, file1, file2):
         data = []
