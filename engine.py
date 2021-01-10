@@ -59,7 +59,7 @@ class Engine(object):
         if self._state('print_freq') is None:
             self.state['print_freq'] = 0
         # best score
-        self.state['best_score'] = {}
+        self.state['best_score'] = {'map': 0., 'OP': 0., 'OR': 0., 'OF1': 0., 'CP': 0., 'CR': 0., 'CF1': 0.}
         self.state['train_iters'] = 0
         self.state['eval_iters'] = 0
 
@@ -187,14 +187,6 @@ class Engine(object):
                 OF1=self.state['best_score']['OF1'], CP=self.state['best_score']['CP'],
                 CR=self.state['best_score']['CR'], CF1=self.state['best_score']['CF1'])
 
-            print(best_str)
-            self.result_file.write(best_str + '\n')
-
-            # remember best prec@1 and save checkpoint
-            is_best = prec1 > self.state['best_score']
-            self.state['best_score'] = max(prec1, self.state['best_score'])
-
-            best_str = ' *** best={best:.3f}'.format(best=self.state['best_score'])
             print(best_str)
             self.result_file.write(best_str + '\n')
 
