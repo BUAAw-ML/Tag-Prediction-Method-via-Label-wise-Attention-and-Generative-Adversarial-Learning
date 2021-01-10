@@ -658,7 +658,7 @@ class dataEngine(Dataset):
             tags = f_tag.readlines()
             for tag in tags:
                 tag = tag.strip().split()
-                tag = [t.strip('#') for t in tag]  #if t != ''
+                tag = [t for t in tag if t != '']  #
 
                 for t in tag:
                     if t not in tag_occurance:
