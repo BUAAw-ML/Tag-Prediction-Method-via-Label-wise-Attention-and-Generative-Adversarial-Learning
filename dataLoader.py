@@ -658,9 +658,8 @@ class dataEngine(Dataset):
             tags = f_tag.readlines()
             for tag in tags:
                 tag = tag.strip().split()
-                print(tag)
-                tag = [t.strip('#') for t in tag if t != '']  #
-                print(tag)
+                tag = [t for t in tag if t != '']  #
+
                 for t in tag:
                     if t not in tag_occurance:
                         tag_occurance[t] = 1
@@ -698,7 +697,7 @@ class dataEngine(Dataset):
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
             tag = tag.strip().split()
-            tag = [t.strip('#') for t in tag if t != '']
+            tag = [t.strip() for t in tag if t != '']
 
             if self.use_tags is not None:
                 tag = [t for t in tag if t in self.use_tags]
