@@ -24,6 +24,26 @@
 #        --data_split=0.0002  \
 #        --test_description=''  \
 
+python main.py \
+        --experiment_no='wqb_DLunsupervised2_0<tag'  \
+        --epochs=50 \
+        --epoch_step=40 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTest_programWeb' \
+        --data_path='../datasets/AAPD' \
+        --use_previousData=0 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='truncation' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
+        --intanceNum_limit=99999 \
+        --data_split=200  \
+        --test_description=''  \
 
 python main.py \
         --experiment_no='wqb_DLunsupervised2_0<tag'  \
