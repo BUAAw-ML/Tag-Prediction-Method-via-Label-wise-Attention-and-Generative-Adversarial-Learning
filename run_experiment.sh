@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_10<tag<60'  \
+        --experiment_no='wqb_0<tag<50'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -34,80 +34,17 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_type='All' \
+        --data_path='../datasets/AAPD/aapd2.csv' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
-python main.py \
-        --experiment_no='wqb_10<tag<60'  \
-        --epochs=110 \
-        --epoch_step=100 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
-        --intanceNum_limit=99999 \
-        --data_split=200  \
-        --test_description=''  \
-
-
-python main.py \
-        --experiment_no='wqb_10<tag<60'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='wqb_10<tag<60'  \
-        --epochs=110 \
-        --epoch_step=100 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
 
 #方法、epoch_step
 
