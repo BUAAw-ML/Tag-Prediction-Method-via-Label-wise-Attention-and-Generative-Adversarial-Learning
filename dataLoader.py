@@ -707,9 +707,9 @@ class dataEngine(Dataset):
         if self.data_config['method'] == 'semiGAN_MultiLabelMAP':
             unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):400])
 
-        for item in unlabeled_train_data:
-            item['label'] = 0
-            train_data.append(item)
+        # for item in unlabeled_train_data:
+        #     item['label'] = 0
+        #     train_data.append(item)
 
         train_data = np.array(train_data)
         ind = np.random.RandomState(seed=10).permutation(len(train_data))

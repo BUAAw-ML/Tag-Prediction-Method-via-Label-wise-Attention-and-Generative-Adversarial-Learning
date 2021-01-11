@@ -189,7 +189,7 @@
 - 生成对抗和一致性训练是两种不同的半监督学习方法，都是利用未标注数据集的。
 
 # 实验结果 0109
-
+## Stack Overflow数据集
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
 |L,U,T:200,,701（标签数：97）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|33.823|
@@ -215,7 +215,7 @@
 |---|---|---|---|
 
 # 实验结果 0110
-
+## Stack Overflow数据集
 把有'#'的标签的'#'去除，原来四百三十多的标签合并为了三百七十多个
 
 |数据配置|模型方法|训练参数|实验结果|
@@ -245,3 +245,8 @@
 |L,U,T:12800,,（标签数：200）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |L,U,T:12800,400,（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+
+数据按类别分割、打乱，GAN（不用未标注样本）方法试验（0<tag<100_RCV2、0<tag_AAPD、10<tag<60_EUR-Lex、60<tag<100_RCV2）：
+-在RCV2数据集没有效果
+-在AAPD数据集没有效果
+-在EUR-Lex数据集没有效果

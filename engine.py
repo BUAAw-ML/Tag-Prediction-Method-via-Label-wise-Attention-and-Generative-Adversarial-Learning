@@ -160,10 +160,10 @@ class Engine(object):
             print("Train with labeled data:")
             self.train(train_loader, model, criterion, optimizer, epoch, False)
             #
-            # if self.state['method'] == 'semiGAN_MultiLabelMAP':
-            #     # train for one epoch
-            #     print("Train with unlabeled data:")
-            #     self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
+            if self.state['method'] == 'semiGAN_MultiLabelMAP':
+                # train for one epoch
+                print("Train with unlabeled data:")
+                self.train(unlabeled_train_loader, model, criterion, optimizer, epoch, True)
 
             # evaluate on validation set
             prec1 = self.validate(val_loader, model, criterion, epoch)
@@ -488,36 +488,12 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         self.state['output'] = logits
 
         D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
-        # D_L_unsupervised =  -1 * torch.mean(torch.mean(prob * torch.log(prob), -1))
-        # D_L_unsupervised = criterion(prob, target_zeros)
-
-
-            # log_probs = F.log_softmax(logits, dim=-1)
-            # per_example_loss = -1 * torch.sum(target_var * log_probs, dim=-1) / target_var.shape[-1]
-            # d_loss = torch.mean(per_example_loss)
-
-        # print(logits.index_select(0, label_mask).shape)
-        # print(target_var.index_select(0, label_mask).shape)
-        # print(label_mask)
 
         d_loss = D_L_unsupervised
         if label_mask.shape[0] != 0:
-            d_loss += criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask)) #+ D_L_unsupervised
+            d_loss += criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
 
-            # pseudo_label = torch.max(self.state['output'], -1, keepdim=True)[0]
-            # pseudo_label = self.state['output'] - pseudo_label
-            #
-            # pseudo_label[pseudo_label >= 0] = 1.
-            # pseudo_label[pseudo_label < 0] = 0.
-            #
-            # log_probs = F.log_softmax(logits, dim=-1)
-            # per_example_loss = -1 * torch.sum(pseudo_label * log_probs, dim=-1) / pseudo_label.shape[-1]
-            # D_L_Supervised = torch.mean(per_example_loss)
 
-            # D_L_unsupervised2 = -1 * torch.mean(torch.log(logits + epsilon))
-            # D_L_unsupervised3 = -1 * torch.mean(torch.log(1 - flatten[:,1] + epsilon))
-
-        # d_loss = D_L_unsupervised #+ D_L_unsupervised2 #D_L_unsupervised +
 
         if training:
             optimizer['enc'].zero_grad()

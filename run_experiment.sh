@@ -26,45 +26,45 @@
 
 
 python main.py \
-        --experiment_no='wqb_10<tag<60'  \
-        --epochs=110 \
-        --epoch_step=100 \
+        --experiment_no='zyc_test_0<tag'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_type='TrainTest_programWeb' \
+        --data_path='../datasets/AAPD' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_10<tag<60'  \
-        --epochs=110 \
-        --epoch_step=100 \
+        --experiment_no='zyc_test_0<tag'  \
+        --epochs=100 \
+        --epoch_step=90 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/EUR-Lex' \
+        --data_type='TrainTest_programWeb' \
+        --data_path='../datasets/AAPD' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=400  \
+        --data_split=200  \
         --test_description=''  \
 
 #方法、epoch_step
@@ -75,8 +75,8 @@ python main.py \
 #overlength_handle: truncation  skip
 
 #苏州服务器上数据：
-#../datasets/ProgrammerWeb/programweb-data.csv  programweb-category
-#../datasets/AAPD/aapd2.csv
+#../datasets/ProgrammerWeb/programweb-data.csv  programweb-category  （TrainTest_programWeb）
+#../datasets/AAPD  （TrainTest_programWeb）
 #../datasets/gan-bert
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
