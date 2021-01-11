@@ -24,31 +24,32 @@
 #        --data_split=0.0002  \
 #        --test_description=''  \
 
+
 python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=30 \
-        --epoch_step=20 \
+        --experiment_no='wqb_10<tag<60'  \
+        --epochs=110 \
+        --epoch_step=100 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --min_tagFrequence=10  \
+        --max_tagFrequence=60  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --experiment_no='wqb_10<tag<60'  \
+        --epochs=110 \
+        --epoch_step=100 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
@@ -56,98 +57,14 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=200  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=30 \
-        --epoch_step=20 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --min_tagFrequence=10  \
+        --max_tagFrequence=60  \
         --intanceNum_limit=99999 \
         --data_split=400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=50 \
-        --epoch_step=40 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=30 \
-        --epoch_step=20 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=1600  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyz_0<tag<100'  \
-        --epochs=50 \
-        --epoch_step=40 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
-        --intanceNum_limit=99999 \
-        --data_split=1600  \
         --test_description=''  \
 
 #方法、epoch_step
