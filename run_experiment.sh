@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_0<tag<50'  \
+        --experiment_no='zyc_0<tag<50'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -34,7 +34,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='All' \
+        --data_type='TrainTest_programWeb' \
         --data_path='../datasets/AAPD/aapd2.csv' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
