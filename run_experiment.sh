@@ -26,7 +26,7 @@
 
 
 python main.py \
-        --experiment_no='zyc_test_0<tag'  \
+        --experiment_no='zyz_test_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
