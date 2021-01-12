@@ -453,86 +453,157 @@ class MultiLabelMAPEngine(Engine):
 
 class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
-    def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
-        target_var = self.state['target']
-        ids, token_type_ids, attention_mask, label_mask = self.state['input']
-        ids = ids.cuda(self.state['device_ids'][0])
-        token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
-        attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-        label_mask = label_mask.cuda(self.state['device_ids'][0])
+    # def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True, semi_supervised=False):
+    #     target_var = self.state['target']
+    #     ids, token_type_ids, attention_mask, label_mask = self.state['input']
+    #     ids = ids.cuda(self.state['device_ids'][0])
+    #     token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
+    #     attention_mask = attention_mask.cuda(self.state['device_ids'][0])
+    #     label_mask = label_mask.cuda(self.state['device_ids'][0])
+    #
+    #     if training:
+    #         self.state['train_iters'] += 1
+    #     else:
+    #         self.state['eval_iters'] += 1
+    #
+    #     epsilon = 1e-8
+    #
+    #     # z = torch.rand(ids.shape[0], 512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+    #
+    #     z = torch.Tensor(ids.shape[0],1, 768).uniform_(0, 1).cuda(self.state['device_ids'][0])
+    #     # target_zeros = torch.zeros(ids.shape[0], 71).cuda(self.state['device_ids'][0])
+    #
+    #     x_g = model['Generator'](z, self.state['encoded_tag'], self.state['tag_mask'])
+    #
+    #     #-----------train enc-----------
+    #     flatten, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
+    #                                                                   self.state['encoded_tag'],
+    #                                                                   self.state['tag_mask'], x_g.detach())#
+    #
+    #     # self.state['output'] = F.softmax(logits, dim=-1)
+    #
+    #     # print("logits：")
+    #     # print(logits)
+    #
+    #     self.state['output'] = logits
+    #
+    #     D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
+    #     D_L_unsupervised2 = -1 * torch.mean(torch.log(prob + epsilon))
+    #
+    #     # d_loss = D_L_unsupervised
+    #     # if label_mask.shape[0] != 0:
+    #     #     d_loss += criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
+    #
+    #     if semi_supervised == False:  # train with labeled data
+    #         d_loss = criterion(self.state['output'], target_var)
+    #     else:
+    #         d_loss = D_L_unsupervised + D_L_unsupervised2
+    #
+    #     if training:
+    #         optimizer['enc'].zero_grad()
+    #         d_loss.backward()
+    #         nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+    #         optimizer['enc'].step()
+    #
+    #     #-----------train Generator-----------
+    #
+    #     flatten, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
+    #                                                                   self.state['encoded_tag'],
+    #                                                                   self.state['tag_mask'], x_g)
+    #
+    #     g_loss = -1 * torch.mean(torch.log(prob + epsilon))
+    #
+    #     # D_L_unsupervised3 = -1 * torch.mean(torch.log(flatten[:,1] + epsilon))
+    #     # g_loss = criterion(prob, 1 - target_zeros)
+    #
+    #     # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
+    #
+    #     # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
+    #     # G_feat_match = torch.mean(feature_error * feature_error)
+    #     # print(G_feat_match)
+    #     g_loss = g_loss#+G_feat_match#
+    #
+    #     if training:
+    #         optimizer['Generator'].zero_grad()
+    #         g_loss.backward()
+    #         nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+    #         optimizer['Generator'].step()
+    #
+    #     self.state['loss'] = [d_loss, g_loss]
+    #
+    #     if not training:
+    #         return self.state['output']
 
-        if training:
-            self.state['train_iters'] += 1
-        else:
-            self.state['eval_iters'] += 1
+        def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True,
+                       semi_supervised=False):
+            target_var = self.state['target']
+            ids, token_type_ids, attention_mask = self.state['input']
+            ids = ids.cuda(self.state['device_ids'][0])
+            token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
+            attention_mask = attention_mask.cuda(self.state['device_ids'][0])
 
-        epsilon = 1e-8
+            if training:
+                self.state['train_iters'] += 1
+            else:
+                self.state['eval_iters'] += 1
 
-        # z = torch.rand(ids.shape[0], 512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
+            epsilon = 1e-8
 
-        z = torch.Tensor(ids.shape[0],1, 768).uniform_(0, 1).cuda(self.state['device_ids'][0])
-        # target_zeros = torch.zeros(ids.shape[0], 71).cuda(self.state['device_ids'][0])
+            # z = torch.rand(ids.shape[0], 512, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
 
-        x_g = model['Generator'](z, self.state['encoded_tag'], self.state['tag_mask'])
+            z = torch.Tensor(ids.shape[0], 1, 768).uniform_(0, 1).cuda(self.state['device_ids'][0])
+            # target_zeros = torch.zeros(ids.shape[0], 71).cuda(self.state['device_ids'][0])
 
-        #-----------train enc-----------
-        flatten, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
-                                                                      self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())#
+            x_g = model['Generator'](z)
 
-        # self.state['output'] = F.softmax(logits, dim=-1)
+            # -----------train enc-----------
+            flatten, logits, prob = model['MABert'](ids, token_type_ids, attention_mask,
+                                                    self.state['encoded_tag'],
+                                                    self.state['tag_mask'], x_g.detach())  #
 
-        # print("logits：")
-        # print(logits)
+            self.state['output'] = logits
 
-        self.state['output'] = logits
+            D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
+            D_L_unsupervised2 = -1 * torch.mean(torch.log(flatten + epsilon))
 
-        D_L_unsupervised = -1 * torch.mean(torch.log(1 - prob + epsilon))
-        D_L_unsupervised2 = -1 * torch.mean(torch.log(prob + epsilon))
+            if semi_supervised == False:  # train with labeled data
+                d_loss = criterion(self.state['output'], target_var)
 
-        # d_loss = D_L_unsupervised
-        # if label_mask.shape[0] != 0:
-        #     d_loss += criterion(logits.index_select(0, label_mask), target_var.index_select(0, label_mask))
+                # d_loss = criterion(self.state['output'], target_var) + D_L_unsupervised + D_L_unsupervised2
 
-        if semi_supervised == False:  # train with labeled data
-            d_loss = criterion(self.state['output'], target_var)
-        else:
-            d_loss = D_L_unsupervised + D_L_unsupervised2
+                if training:
+                    optimizer['enc'].zero_grad()
+                    d_loss.backward()
+                    nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+                    optimizer['enc'].step()
 
-        if training:
-            optimizer['enc'].zero_grad()
-            d_loss.backward()
-            nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
-            optimizer['enc'].step()
+                self.state['loss'] = [d_loss, d_loss]
 
-        #-----------train Generator-----------
+            else:
+                # -----------train Generator-----------
+                d_loss = D_L_unsupervised + D_L_unsupervised2
+                if training:
+                    optimizer['enc'].zero_grad()
+                    d_loss.backward()
+                    nn.utils.clip_grad_norm_(optimizer['enc'].param_groups[0]["params"], max_norm=10.0)
+                    optimizer['enc'].step()
 
-        flatten, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
-                                                                      self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g)
+                flatten, _, prob = model['MABert'](ids, token_type_ids, attention_mask,
+                                                   self.state['encoded_tag'],
+                                                   self.state['tag_mask'], x_g)
 
-        g_loss = -1 * torch.mean(torch.log(prob + epsilon))
+                g_loss = -1 * torch.mean(torch.log(prob + epsilon))
 
-        # D_L_unsupervised3 = -1 * torch.mean(torch.log(flatten[:,1] + epsilon))
-        # g_loss = criterion(prob, 1 - target_zeros)
+                if training:
+                    optimizer['Generator'].zero_grad()
+                    g_loss.backward()
+                    nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
+                    optimizer['Generator'].step()
 
-        # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g[:,:features.shape[1],:], dim=0), dim=0)
+                self.state['loss'] = [d_loss, g_loss]
 
-        # feature_error = torch.mean(torch.mean(features.detach(), dim=0) - torch.mean(x_g, dim=0), dim=0)
-        # G_feat_match = torch.mean(feature_error * feature_error)
-        # print(G_feat_match)
-        g_loss = g_loss#+G_feat_match#
-
-        if training:
-            optimizer['Generator'].zero_grad()
-            g_loss.backward()
-            nn.utils.clip_grad_norm_(model['Generator'].parameters(), max_norm=10.0)
-            optimizer['Generator'].step()
-
-        self.state['loss'] = [d_loss, g_loss]
-
-        if not training:
-            return self.state['output']
+            if not training:
+                return self.state['output']
 
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
