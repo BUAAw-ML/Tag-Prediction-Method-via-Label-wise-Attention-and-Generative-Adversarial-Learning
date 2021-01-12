@@ -250,3 +250,19 @@
 -在RCV2数据集没有效果
 -在AAPD数据集没有效果
 -在EUR-Lex数据集没有效果
+
+# 实验结果 0111-
+label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
+
+##AAPD数据集
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|L,U,T:200,,12398（标签数：54）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=26.338 OP=0.000 OR=0.369 OF1=0.490 CP=0.427 CR=0.158 CF1=0.231|
+|L,U,T:200,400,12398（标签数：54）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=29.934 OP=0.000 OR=0.392 OF1=0.505 CP=0.373 CR=0.179 CF1=0.242|
+|L,U,T:400,,12398（标签数：54）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=31.470 OP=0.002 OR=0.430 OF1=0.544 CP=0.465 CR=0.206 CF1=0.286|
+|L,U,T:400,400,12398（标签数：54）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=36.022 OP=0.001 OR=0.475 OF1=0.567 CP=0.494 CR=0.250 CF1=0.332|
+|L,U,T:1600,,12398（标签数：54）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=42.951 OP=0.002 OR=0.554 OF1=0.624 CP=0.551 CR=0.357 CF1=0.433|
+|L,U,T:1600,400,12398（标签数：54）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=43.622 OP=0.040 OR=0.575 OF1=0.622 CP=0.517 CR=0.363 CF1=0.427|
+|L,U,T:6400,,12398（标签数：54）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:6400,400,12398（标签数：54）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|---|---|---|---|
