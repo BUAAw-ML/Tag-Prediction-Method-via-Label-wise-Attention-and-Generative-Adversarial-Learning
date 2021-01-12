@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -46,7 +46,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -67,7 +67,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -88,7 +88,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -109,7 +109,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -130,7 +130,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -151,7 +151,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -172,7 +172,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_DLunsupervised2_0<tag'  \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
