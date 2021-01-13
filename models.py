@@ -195,7 +195,7 @@ class MABert(nn.Module):
 
         prob = torch.cat((prob,flatten),-1)
         prob = self.output(prob)[:,0]
-        flatten = self.output(prob)[:,1]
+        flatten = prob[:,1]
         #
         # prob = attention
 
