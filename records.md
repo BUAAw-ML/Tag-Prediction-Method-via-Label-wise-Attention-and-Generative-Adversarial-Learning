@@ -266,7 +266,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:6400,,12398（标签数：54）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=49.288,48.740 OP=0.000,0.003 OR=0.614,0.604 OF1=0.654,0.654 CP=0.550,0.554 CR=0.435,0.426 CF1=0.486,0.481|
 |L,U,T:6400,400,12398（标签数：54）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
-|L,U,T:200,800,12398（标签数：54）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:200,800,12398（标签数：54）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=29.406 OP=0.000 OR=0.361 OF1=0.483 CP=0.427 CR=0.151 CF1=0.223|
 |L,U,T:400,800,12398（标签数：54）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |L,U,T:1600,800,12398（标签数：54）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |L,U,T:6400,800,12398（标签数：54）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
@@ -280,8 +280,9 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:1600,,1191（标签数：103）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=44.848 OP=0.018 OR=0.661 OF1=0.722 CP=0.475 CR=0.316 CF1=0.380|
 |L,U,T:6400,,1191（标签数：103）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=53.451 OP=0.018 OR=0.711 OF1=0.760 CP=0.559 CR=0.390 CF1=0.460|
 |---|---|---|---|
-|L,U,T:200,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:200,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:200,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:200,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: 200,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: 400,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:1600,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:6400,800,1191（标签数：103）|Bert微调+多注意力GAN3|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+- GAN3效果补好
