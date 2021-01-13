@@ -724,5 +724,9 @@ class dataEngine(Dataset):
         train_data = np.array(train_data)
         ind = np.random.RandomState(seed=10).permutation(len(train_data))
         train_data = train_data[ind]
+
+        unlabeled_train_data = np.array(unlabeled_train_data)
+        ind = np.random.RandomState(seed=10).permutation(len(unlabeled_train_data))
+        unlabeled_train_data = unlabeled_train_data[ind]
         
         return train_data, unlabeled_train_data
