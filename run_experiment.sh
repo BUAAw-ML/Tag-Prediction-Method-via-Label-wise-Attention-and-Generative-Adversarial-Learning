@@ -26,8 +26,8 @@
 
 python main.py \
         --experiment_no='zyz_GAN3_0<tag'  \
-        --epochs=80 \
-        --epoch_step=70 \
+        --epochs=120 \
+        --epoch_step=110 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
