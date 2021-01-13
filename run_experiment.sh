@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyz_GAN3_0<tag'  \
+        --experiment_no='zyc_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -35,12 +35,12 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/RCV2' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
