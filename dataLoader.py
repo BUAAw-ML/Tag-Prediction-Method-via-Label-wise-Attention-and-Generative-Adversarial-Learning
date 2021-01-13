@@ -709,10 +709,12 @@ class dataEngine(Dataset):
 
         unlabeled_train_data = copy.deepcopy(train_data)
 
-        if len(unlabeled_train_data) >= 3200:
-            unlabeled_train_data = train_data[:3200]
+        unlabeled_data_num = 200
 
-        while len(unlabeled_train_data) < 3200:
+        if len(unlabeled_train_data) >= unlabeled_data_num:
+            unlabeled_train_data = train_data[:unlabeled_data_num]
+
+        while len(unlabeled_train_data) < unlabeled_data_num:
             unlabeled_train_data.extend(train_data)
 
         # for item in unlabeled_train_data:
