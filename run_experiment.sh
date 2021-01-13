@@ -26,6 +26,27 @@
 
 python main.py \
         --experiment_no='zyz_GAN3_0<tag'  \
+        --epochs=50 \
+        --epoch_step=40 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.01 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/RCV2' \
+        --use_previousData=0 \
+        --method='MultiLabelMAP' \
+        --overlength_handle='truncation' \
+        --min_tagFrequence=50  \
+        --max_tagFrequence=100  \
+        --intanceNum_limit=99999 \
+        --data_split=200  \
+        --test_description=''  \
+
+python main.py \
+        --experiment_no='zyz_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
