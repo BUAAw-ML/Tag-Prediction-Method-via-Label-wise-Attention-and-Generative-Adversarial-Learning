@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_GAN3_0<tag'  \
+        --experiment_no='wqb_GAN3_0<tag'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -34,8 +34,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_type='TrainTest_programWeb' \
+        --data_path='../datasets/AAPD' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
