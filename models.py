@@ -194,8 +194,7 @@ class MABert(nn.Module):
         # flatten = torch.sigmoid(flatten)
 
         prob = torch.cat((prob,flatten),-1)
-        prob = self.output(prob)[:,0]
-        flatten = prob[:,1]
+        prob = self.output(prob)
         #
         # prob = attention
 
@@ -218,7 +217,7 @@ class MABert(nn.Module):
         #
         # prob = pred[:,0]
 
-        return flatten, logit, prob
+        return prob[:,1], logit, prob[:,0]
 
     def get_config_optim(self, lr, lrp):
         return [
