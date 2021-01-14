@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -47,7 +47,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -69,7 +69,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -91,7 +91,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -113,7 +113,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -135,7 +135,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -156,7 +156,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -178,7 +178,7 @@ python main.py \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<300'  \
+        --experiment_no='zyz_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
