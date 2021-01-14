@@ -310,13 +310,13 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T: 400,,537（标签数：50）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=55.497 OP=0.518 OR=0.452 OF1=0.577 CP=0.690 CR=0.438 CF1=0.536|
 |L,U,T:1600,,537（标签数：50）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=65.899 OP=0.559 OR=0.626 OF1=0.671 CP=0.720 CR=0.621 CF1=0.667|
 |L,U,T:6400,,537（标签数：50）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=70.768 OP=0.594 OR=0.657 OF1=0.689 CP=0.780 CR=0.637 CF1=0.701|
-|L,U,T:12800,,537（标签数：50）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:12800,,537（标签数：50）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=73.578 OP=0.607 OR=0.653 OF1=0.697 CP=0.744 CR=0.651 CF1=0.695|
 |---|---|---|---|
 |L,U,T: 200,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=50.757 OP=0.477 OR=0.397 OF1=0.529 CP=0.627 CR=0.386 CF1=0.478|
 |L,U,T: 400,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=56.251 OP=0.529 OR=0.459 OF1=0.580 CP=0.720 CR=0.451 CF1=0.555|
 |L,U,T:1600,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=66.488 OP=0.564 OR=0.583 OF1=0.658 CP=0.757 CR=0.587 CF1=0.661|
 |L,U,T:6400,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=70.845 OP=0.581 OR=0.645 OF1=0.686 CP=0.724 CR=0.666 CF1=0.694|
-|L,U,T:12800,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:12800,1600,537（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=73.928 OP=0.588 OR=0.645 OF1=0.697 CP=0.778 CR=0.656 CF1=0.712|
 |---|---|---|---|
 
 |数据配置|模型方法|训练参数|实验结果|

@@ -25,7 +25,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -40,58 +40,14 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
-        --intanceNum_limit=99999 \
-        --data_split=200  \
-        --test_description=''  \
-
-
-python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
-        --intanceNum_limit=99999 \
-        --data_split=200  \
-        --test_description=''  \
-
-
-python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
-        --epochs=100 \
-        --epoch_step=90 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=400  \
         --test_description=''  \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -106,13 +62,14 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=400  \
         --test_description=''  \
 
+
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -127,14 +84,14 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=1600  \
         --test_description=''  \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -149,13 +106,14 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=1600  \
         --test_description=''  \
 
+
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -170,14 +128,14 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=6400  \
         --test_description=''  \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -192,13 +150,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=6400  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -213,14 +171,14 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=12800  \
         --test_description=''  \
 
 
 python main.py \
-        --experiment_no='wqb_unlabel1600_0<tag<150'  \
+        --experiment_no='wqb_unlabel1600_0<tag<300'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -235,7 +193,7 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=150  \
+        --max_tagFrequence=300  \
         --intanceNum_limit=99999 \
         --data_split=12800  \
         --test_description=''  \
