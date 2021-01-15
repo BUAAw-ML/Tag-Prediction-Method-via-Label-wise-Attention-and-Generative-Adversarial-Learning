@@ -671,7 +671,9 @@ class dataEngine(Dataset):
         
         candidate = []
         rest = []
-    
+
+        print('The size of all data: {}'.format(len(data)))
+
         for item in data:
             for tag_id in item['tag_ids']:
                 if tag_count[self.id2tag[tag_id]] == self.use_tags[self.id2tag[tag_id]]:
