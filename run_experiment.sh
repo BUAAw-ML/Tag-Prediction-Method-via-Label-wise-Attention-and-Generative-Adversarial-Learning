@@ -24,26 +24,26 @@
 #        --data_split=0.0002  \
 #        --test_description=''  \
 
-python main.py \
-        --experiment_no='zyc_alldatta_unlabel1600_0<tag'  \
-        --epochs=50 \
-        --epoch_step=40 \
-        --device_ids=0 \
-        --batch-size=10 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=99999  \
-        --intanceNum_limit=99999 \
-        --data_split=84000  \
-        --test_description=''  \
+#python main.py \
+#        --experiment_no='zyc_alldatta_unlabel1600_0<tag'  \
+#        --epochs=50 \
+#        --epoch_step=40 \
+#        --device_ids=0 \
+#        --batch-size=10 \
+#        --G-lr=0.001 \
+#        --D-lr=0.1 \
+#        --B-lr=0.01 \
+#        --save_model_path='./checkpoint' \
+#        --data_type='TrainTestTextTag' \
+#        --data_path='../datasets/stack-overflow' \
+#        --use_previousData=0 \
+#        --method='MultiLabelMAP' \
+#        --overlength_handle='truncation' \
+#        --min_tagFrequence=0  \
+#        --max_tagFrequence=99999  \
+#        --intanceNum_limit=99999 \
+#        --data_split=84000  \
+#        --test_description=''  \
 
 python main.py \
         --experiment_no='test_alldatta_unlabel1600_0<tag'  \
