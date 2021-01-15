@@ -42,10 +42,29 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=400  \
+        --data_split=84000  \
         --test_description=''  \
 
-
+python main.py \
+        --experiment_no='test_unlabel1600_0<tag<300'  \
+        --epochs=120 \
+        --epoch_step=110 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.001 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/stack-overflow' \
+        --use_previousData=0 \
+        --method='semiGAN_MultiLabelMAP' \
+        --overlength_handle='truncation' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
+        --intanceNum_limit=99999 \
+        --data_split=84000  \
+        --test_description=''  \
 
 
 #方法、epoch_step
