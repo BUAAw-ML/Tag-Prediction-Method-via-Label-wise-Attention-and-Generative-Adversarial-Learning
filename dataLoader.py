@@ -110,6 +110,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             file1 = os.path.join(data_path, 'test_texts.txt')
             file2 = os.path.join(data_path, 'test_labels.txt')
             dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2)
+            print('The size of test data: {}'.format(len(dataset.test_data)))
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
@@ -672,7 +673,7 @@ class dataEngine(Dataset):
         candidate = []
         rest = []
 
-        print('The size of all data: {}'.format(len(data)))
+        print('The size of all train data: {}'.format(len(data)))
 
         for item in data:
             for tag_id in item['tag_ids']:
