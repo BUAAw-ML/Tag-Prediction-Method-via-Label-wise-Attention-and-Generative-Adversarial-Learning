@@ -25,9 +25,9 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='test_unlabel1600_0<tag<300'  \
-        --epochs=100 \
-        --epoch_step=90 \
+        --experiment_no='zyc_alldatta_unlabel1600_0<tag'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=10 \
         --G-lr=0.001 \
@@ -46,9 +46,9 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='test_unlabel1600_0<tag<300'  \
-        --epochs=120 \
-        --epoch_step=110 \
+        --experiment_no='test_alldatta_unlabel1600_0<tag'  \
+        --epochs=100 \
+        --epoch_step=90 \
         --device_ids=0 \
         --batch-size=10 \
         --G-lr=0.001 \
