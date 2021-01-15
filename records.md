@@ -325,13 +325,29 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T: 400,,760（标签数：100）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=53.799 OP=0.414 OR=0.410 OF1=0.535 CP=0.621 CR=0.400 CF1=0.486|
 |L,U,T:1600,,760（标签数：100）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=63.976 OP=0.486 OR=0.560 OF1=0.637 CP=0.705 CR=0.582 CF1=0.637|
 |L,U,T:6400,,760（标签数：100）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=68.603 OP=0.529 OR=0.633 OF1=0.683 CP=0.737 CR=0.637 CF1=0.684|
-|L,U,T:12800,,537（标签数：100）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:12800,,537（标签数：100）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=69.506 OP=0.534 OR=0.609 OF1=0.683 CP=0.763 CR=0.620 CF1=0.684|
 |---|---|---|---|
 |L,U,T: 200,1600,760（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=45.046 OP=0.376 OR=0.280 OF1=0.415 CP=0.464 CR=0.264 CF1=0.337|
 |L,U,T: 400,1600,760（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=54.898 OP=0.443 OR=0.436 OF1=0.544 CP=0.604 CR=0.422 CF1=0.497|
 |L,U,T:1600,1600,760（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=63.460 OP=0.497 OR=0.574 OF1=0.639 CP=0.705 CR=0.604 CF1=0.651|
-|L,U,T:6400,1600,760（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:12800,1600,537（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:6400,1600,760（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=68.527 OP=0.511 OR=0.630 OF1=0.676 CP=0.740 CR=0.635 CF1=0.684|
+|L,U,T:12800,1600,537（标签数：100）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=69.343 OP=0.538 OR=0.611 OF1=0.687 CP=0.794 CR=0.602 CF1=0.685|
+|---|---|---|---|
+
+
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|L,U,T: 200,,877（标签数：150）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=34.580 OP=0.233 OR=0.180 OF1=0.284 CP=0.296 CR=0.142 CF1=0.192|
+|L,U,T: 400,,877（标签数：150）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=45.021 OP=0.333 OR=0.339 OF1=0.460 CP=0.504 CR=0.306 CF1=0.381|
+|L,U,T:1600,,877（标签数：150）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=57.114 OP=0.422 OR=0.555 OF1=0.597 CP=0.626 CR=0.533 CF1=0.575|
+|L,U,T:6400,,877（标签数：150）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:12800,,877（标签数：150）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|---|---|---|---|
+|L,U,T: 200,1600,877（标签数：150）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=41.755 OP=0.301 OR=0.211 OF1=0.326 CP=0.288 CR=0.166 CF1=0.211|
+|L,U,T: 400,1600,877（标签数：150）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=49.022 OP=0.350 OR=0.376 OF1=0.480 CP=0.461 CR=0.334 CF1=0.387|
+|L,U,T:1600,1600,877（标签数：150）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=56.177 OP=0.423 OR=0.565 OF1=0.597 CP=0.603 CR=0.546 CF1=0.573|
+|L,U,T:6400,1600,877（标签数：150）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:12800,1600,877（标签数：150）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |---|---|---|---|
 
 |数据配置|模型方法|训练参数|实验结果|
@@ -339,12 +355,26 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T: 200,,972（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=32.445 OP=0.195 OR=0.140 OF1=0.231 CP=0.291 CR=0.118 CF1=0.168|
 |L,U,T: 400,,972（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=46.142 OP=0.294 OR=0.297 OF1=0.420 CP=0.401 CR=0.280 CF1=0.330|
 |L,U,T:1600,,972（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=57.902 OP=0.401 OR=0.508 OF1=0.585 CP=0.614 CR=0.524 CF1=0.565|
-|L,U,T:6400,,972（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
-|L,U,T:12800,,537（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:6400,,972（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=61.983 OP=0.432 OR=0.564 OF1=0.628 CP=0.651 CR=0.562 CF1=0.603|
+|L,U,T:12800,,537（标签数：200）|Bert微调+多注意力|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=63.727 OP=0.443 OR=0.555 OF1=0.625 CP=0.643 CR=0.559 CF1=0.598|
 |---|---|---|---|
 |L,U,T: 200,1600,972（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=37.993 OP=0.267 OR=0.164 OF1=0.263 CP=0.207 CR=0.135 CF1=0.163|
 |L,U,T: 400,1600,972（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=46.461 OP=0.313 OR=0.297 OF1=0.411 CP=0.389 CR=0.286 CF1=0.330|
 |L,U,T:1600,1600,972（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=53.887 OP=0.383 OR=0.489 OF1=0.560 CP=0.582 CR=0.481 CF1=0.527|
-|L,U,T:6400,1600,972（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:6400,1600,972（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=60.887 OP=0.422 OR=0.562 OF1=0.623 CP=0.628 CR=0.578 CF1=0.602|
 |L,U,T:12800,1600,537（标签数：200）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|---|---|---|---|
+
+
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|L,U,T: 400,,1065（标签数：300）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=43.337 OP=0.254 OR=0.261 OF1=0.377 CP=0.342 CR=0.200 CF1=0.253|
+|L,U,T:1600,,1065（标签数：300）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=54.558 OP=0.353 OR=0.527 OF1=0.560 CP=0.532 CR=0.495 CF1=0.513|
+|L,U,T:6400,,1065（标签数：300）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:12800,,1065（标签数：300）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|---|---|---|---|
+|L,U,T: 400,1600,1065（标签数：300）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=38.000 OP=0.231 OR=0.214 OF1=0.320 CP=0.237 CR=0.173 CF1=0.200|
+|L,U,T:1600,1600,1065（标签数：300）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=48.587 OP=0.295 OR=0.402 OF1=0.493 CP=0.430 CR=0.364 CF1=0.394|
+|L,U,T:6400,1600,1065（标签数：300）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:12800,1600,1065（标签数：300）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |---|---|---|---|
