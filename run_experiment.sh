@@ -29,7 +29,7 @@ python main.py \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=10 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -50,7 +50,7 @@ python main.py \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=10 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
