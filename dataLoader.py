@@ -397,12 +397,13 @@ class dataEngine(Dataset):
                     else:
                         tag_occurance[t] += 1
 
-        for tag in tag_occurance:
-            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
-                self.use_tags[item[0]] = item[1]
-
         print('Total number of tags: {}'.format(len(tag_occurance)))
-        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
+        tags = sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True)
+
+        print(tags)
+
+        for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
+            self.use_tags[item[0]] = item[1]
 
         with open(file, newline='') as f:
             reader = json.load(f)
