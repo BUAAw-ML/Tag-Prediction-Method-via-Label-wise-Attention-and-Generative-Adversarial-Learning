@@ -83,9 +83,9 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=400  \
+        --max_tagFrequence=200  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=400  \
         --test_description=''  \
 
 
