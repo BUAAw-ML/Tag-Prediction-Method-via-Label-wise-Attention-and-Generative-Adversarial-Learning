@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -19,13 +19,13 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -40,14 +40,14 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -62,13 +62,13 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=400  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -83,14 +83,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=400  \
         --test_description=''  \
 
-
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -105,13 +104,13 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=1600  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -126,13 +125,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=1600  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -147,13 +146,13 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=6400  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -168,13 +167,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=6400  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -189,13 +188,13 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=99999  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_0<tag<50'  \
+        --experiment_no='zyz_0<tag<100'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -210,7 +209,7 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
         --data_split=99999  \
         --test_description=''  \
