@@ -386,7 +386,7 @@ class dataEngine(Dataset):
         tag_occurance = {}
         # csv.field_size_limit(sys.maxsize)
         with open(file, newline='') as f:
-            reader = json.loads(f)
+            reader = json.load(f)
             for row in reader:
 
                 tag = row["tags"]
@@ -405,7 +405,7 @@ class dataEngine(Dataset):
         print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
 
         with open(file, newline='') as f:
-            reader = json.loads(f)
+            reader = json.load(f)
             for row in reader:
 
                 title = row["name"]
