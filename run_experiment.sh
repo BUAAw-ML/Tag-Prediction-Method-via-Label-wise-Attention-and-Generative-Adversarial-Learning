@@ -14,7 +14,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='All_freecode' \
-        --data_path='../datasets/Freecode' \
+        --data_path='../datasets/Freecode/freecode_data_all.json' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
