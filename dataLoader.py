@@ -50,24 +50,11 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             dataset.unlabeled_train_data = data[ind[:split2]].tolist()
             dataset.test_data = data[ind[split2:split3]].tolist()
 
-        elif data_type == 'All_freecode':
-            data = dataset.load_freecode(data_path)
 
-            data = np.array(data)
-            ind = np.random.RandomState(seed=10).permutation(len(data))
-
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.8)
-            split3 = int(len(data) * 1)
-
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[:split2]].tolist()
-            dataset.test_data = data[ind[split2:split3]].tolist()
-
-        elif data_type == 'TrainTest_programWeb':
+        elif data_type == 'TrainTest_programWeb_freecode':
 
             file = os.path.join(data_path, 'train.pkl')
-            dataset.filter_tags_programWeb(file)
+            dataset.filter_tags_programWeb_freecode(file)
             data = dataset.load_TrainTest_programWeb(file)
             dataset.train_data, dataset.unlabeled_train_data = dataset.data_preprocess(data)
 
@@ -450,7 +437,7 @@ class dataEngine(Dataset):
 
         return data
 
-    def filter_tags_programWeb(self, file):
+    def filter_tags_programWeb_freecode(self, file):
         tag_occurance = {}
 
         ignored_tags = set(['Tools', 'Applications', 'Other', 'API', 'Platform-as-a-Service',
@@ -485,10 +472,6 @@ class dataEngine(Dataset):
 
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
             self.use_tags[item[0]] = item[1]
-
-        # for tag in tag_occurance:
-        #     if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
-        #         self.use_tags.add(tag)
 
     def load_TrainTest_programWeb(self, file):
         data = []

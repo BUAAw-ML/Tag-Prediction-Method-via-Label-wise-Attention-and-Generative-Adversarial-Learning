@@ -13,15 +13,15 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='All_freecode' \
-        --data_path='../datasets/Freecode/freecode_data_all.json' \
+        --data_type='TrainTest_programWeb_freecode' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
+        --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=99999  \
         --test_description=''  \
 
 
