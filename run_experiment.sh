@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='zyc_sigmoid_0<tag<100'  \
+        --experiment_no='wqb_sigmoid_0<tag<50'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -19,13 +19,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_sigmoid_0<tag<100'  \
+        --experiment_no='wqb_sigmoid_0<tag<50'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -40,13 +40,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=400  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_sigmoid_0<tag<100'  \
+        --experiment_no='wqb_sigmoid_0<tag<50'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -61,13 +61,13 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=1600  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_sigmoid_0<tag<100'  \
+        --experiment_no='wqb_sigmoid_0<tag<50'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -82,11 +82,10 @@ python main.py \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=100  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=6400  \
         --test_description=''  \
-
 #方法、epoch_step
 
 #batch-size：1，4，8，16
