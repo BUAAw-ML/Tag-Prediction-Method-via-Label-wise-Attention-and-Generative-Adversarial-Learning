@@ -4,19 +4,19 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='wqb_sigmoid_0<tag<50'  \
-        --epochs=120 \
-        --epoch_step=110 \
+        --experiment_no='test_0<tag<50'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_type='All_freecode' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
@@ -24,68 +24,7 @@ python main.py \
         --data_split=200  \
         --test_description=''  \
 
-python main.py \
-        --experiment_no='wqb_sigmoid_0<tag<50'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=99999 \
-        --data_split=400  \
-        --test_description=''  \
 
-python main.py \
-        --experiment_no='wqb_sigmoid_0<tag<50'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=99999 \
-        --data_split=1600  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='wqb_sigmoid_0<tag<50'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=99999 \
-        --data_split=6400  \
-        --test_description=''  \
 #方法、epoch_step
 
 #batch-size：1，4，8，16

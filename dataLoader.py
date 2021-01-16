@@ -12,6 +12,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from word_embedding import *
 import pickle
+import json
 
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 token_table = {'ecommerce': 'electronic commerce'}
@@ -37,6 +38,20 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
         if data_type == 'All':
 
             data = dataset.load_programWeb_AAPD(data_path)
+
+            data = np.array(data)
+            ind = np.random.RandomState(seed=10).permutation(len(data))
+
+            split = int(len(data) * data_config['data_split'])
+            split2 = int(len(data) * 0.8)
+            split3 = int(len(data) * 1)
+
+            dataset.train_data = data[ind[:split]].tolist()
+            dataset.unlabeled_train_data = data[ind[:split2]].tolist()
+            dataset.test_data = data[ind[split2:split3]].tolist()
+
+        elif data_type == 'All_freecode':
+            data = dataset.load_freecode(data_path)
 
             data = np.array(data)
             ind = np.random.RandomState(seed=10).permutation(len(data))
@@ -299,7 +314,8 @@ class dataEngine(Dataset):
                 for t in tag:
                     if t not in tag_occurance:
                         tag_occurance[t] = 1
-                    tag_occurance[t] += 1
+                    else:
+                        tag_occurance[t] += 1
 
         # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
         # 'Data-as-a-Service'])  #
@@ -360,6 +376,76 @@ class dataEngine(Dataset):
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
         # os.makedirs('cache', exist_ok=True)
+
+        return data
+
+    def load_freecode(self, file):
+        data = []
+
+        document = []
+        tag_occurance = {}
+        # csv.field_size_limit(sys.maxsize)
+        with open(file, newline='') as f:
+            reader = json.loads(f)
+            for row in reader:
+
+                tag = row["tags"]
+
+                for t in tag:
+                    if t not in tag_occurance:
+                        tag_occurance[t] = 1
+                    else:
+                        tag_occurance[t] += 1
+
+        for tag in tag_occurance:
+            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
+                self.use_tags.add(tag)
+
+        print('Total number of tags: {}'.format(len(tag_occurance)))
+        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
+
+        with open(file, newline='') as f:
+            reader = json.loads(f)
+            for row in reader:
+
+                title = row["name"]
+                dscp = row["description"]
+                tag = row["tags"]
+
+                title_tokens = tokenizer.tokenize(title.strip())
+                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
+
+                if len(dscp_tokens) > 510:
+                    if self.data_config['overlength_handle'] == 'truncation':
+                        dscp_tokens = dscp_tokens[:510]
+                    else:
+                        continue
+
+                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
+
+                if self.use_tags is not None:
+                    tag = [t for t in tag if t in self.use_tags]
+
+                if len(tag) == 0:
+                    continue
+
+                for t in tag:
+                    if t not in self.tag2id:
+                        tag_id = len(self.tag2id)
+                        self.tag2id[t] = tag_id
+                        self.id2tag[tag_id] = t
+
+                tag_ids = [self.tag2id[t] for t in tag]
+
+                data.append({
+                    'id': 0,
+                    'dscp_ids': dscp_ids,
+                    'dscp_tokens': dscp_tokens,
+                    'tag_ids': tag_ids,
+                    'dscp': dscp
+                })
+
+        print("The number of tags for training: {}".format(len(self.tag2id)))
 
         return data
 

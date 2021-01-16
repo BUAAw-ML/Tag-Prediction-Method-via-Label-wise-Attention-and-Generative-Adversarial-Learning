@@ -392,3 +392,6 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T: ,,（标签数：全部）|Bert微调+多注意力|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |---|---|---|---|
 |L,U,T:,,（标签数：全部）|Bert微调+多注意力+GAN|epoch:46;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=54.336 OP=0.353 OR=0.523 OF1=0.599 CP=0.520 CR=0.447 CF1=0.481|
+
+
+- 另外，进行了采用sigmoid进行声称对抗，效果不太好
