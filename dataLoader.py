@@ -429,10 +429,10 @@ class dataEngine(Dataset):
 
     def filter_tags_programWeb_freecode_AAPD(self, file):
         tag_occurance = {}
-
-        ignored_tags = set(['Tools', 'Applications', 'Other', 'API', 'Platform-as-a-Service',
-                            'Data-as-a-Service', 'Database', 'Application Development', 'Text', 'Business', 'Location',
-                            'Office', 'Content'])  # 'Software-as-a-Service','Widgets',
+        ignored_tags = set()
+        # ignored_tags = set(['Tools', 'Applications', 'Other', 'API', 'Platform-as-a-Service',
+        #                     'Data-as-a-Service', 'Database', 'Application Development', 'Text', 'Business', 'Location',
+        #                     'Office', 'Content'])
 
         with open(file,'rb') as pklfile:
             reader = pickle.load(pklfile)
@@ -480,7 +480,7 @@ class dataEngine(Dataset):
                     continue
 
                 id = row["id"]
-                title = row["api_name"]
+                title = row["name"]
                 dscp = row["descr"]
                 tag = row["tags"]
 
