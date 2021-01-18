@@ -490,7 +490,7 @@ class dataEngine(Dataset):
                     continue
 
                 id = row["id"]
-                title = row["name"]
+                title = row["api_name"]
                 dscp = row["descr"]
                 tag = row["tags"]
 
@@ -535,6 +535,7 @@ class dataEngine(Dataset):
         # print(self.id2tag)
         print("taglen: {}".format(taglen/item))
         print(i)
+        print(item)
         return data
 
     def load_agNews(self, file, train =True):
