@@ -128,6 +128,11 @@ class dataEngine(Dataset):
 
         self.data_config = data_config
 
+    def random_permutation(self, data):
+        data = np.array(data)
+        ind = np.random.RandomState(seed=10).permutation(len(data))
+        data = data[ind]
+        return data
 
     @classmethod
     def from_dict(cls, data_dict):
@@ -680,7 +685,7 @@ class dataEngine(Dataset):
         data = data[ind]
 
         for tag in self.use_tags.keys():
-            self.use_tags[tag] *= self.data_config['data_split'] / len(data)
+            self.use_tags[tag] *= self.data_config['data_split'] / len(data) if self.data_config['data_split'] < len(data) else 1
 
         tag_count = copy.deepcopy(self.use_tags)
         
