@@ -55,11 +55,11 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             file = os.path.join(data_path, 'train.pkl')
             dataset.filter_tags_programWeb_freecode(file)
-            data = dataset.load_TrainTest_programWeb(file)
+            data = dataset.load_TrainTest_programWeb_freecode(file)
             dataset.train_data, dataset.unlabeled_train_data = dataset.data_preprocess(data)
 
             file = os.path.join(data_path, 'test.pkl')
-            dataset.test_data = dataset.load_TrainTest_programWeb(file)
+            dataset.test_data = dataset.load_TrainTest_programWeb_freecode(file)
 
 
         elif data_type == 'TrainTest_ganBert':
@@ -473,13 +473,13 @@ class dataEngine(Dataset):
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
             self.use_tags[item[0]] = item[1]
 
-    def load_TrainTest_programWeb(self, file):
+    def load_TrainTest_programWeb_freecode(self, file):
         data = []
         document = []
 
         taglen = 0
         item = 0
-
+        i = 0
         with open(file, 'rb') as pklfile:
 
             reader = pickle.load(pklfile)
@@ -500,6 +500,7 @@ class dataEngine(Dataset):
                 if len(dscp_tokens) > 510:
                     if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
+                        i += 1
                     else:
                         continue
 
@@ -532,7 +533,7 @@ class dataEngine(Dataset):
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
         # print(self.id2tag)
-        print("taglen: {}".format(taglen/item))
+        print("taglen: {}".format(i/item))
         return data
 
     def load_agNews(self, file, train =True):
