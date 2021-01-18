@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='zyz_0<tag<100'  \
+        --experiment_no='test'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
