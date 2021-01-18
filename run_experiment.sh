@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='test'  \
+        --experiment_no='zyc_alldata'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -13,10 +13,31 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode' \
-        --data_path='../datasets/Freecode' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/AAPD' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
+        --overlength_handle='truncation' \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
+        --intanceNum_limit=99999 \
+        --data_split=99999  \
+        --test_description=''  \
+
+python main.py \
+        --experiment_no='zyc_alldata'  \
+        --epochs=100 \
+        --epoch_step=90 \
+        --device_ids=0 \
+        --batch-size=4 \
+        --G-lr=0.001 \
+        --D-lr=0.1 \
+        --B-lr=0.001 \
+        --save_model_path='./checkpoint' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/AAPD' \
+        --use_previousData=0 \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=99999  \
@@ -32,9 +53,9 @@ python main.py \
 #overlength_handle: truncation  skip
 
 #苏州服务器上数据：
-#../datasets/ProgrammerWeb/programweb-data.csv  programweb-category  （TrainTest_programWeb）
-#../datasets/AAPD  （TrainTest_programWeb）
-#../datasets/gan-bert
+#../datasets/ProgrammerWeb/programweb-data.csv  programweb-category
+#../datasets/AAPD
+
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
 #../datasets/stack-overflow  (TrainTestTextTag)
