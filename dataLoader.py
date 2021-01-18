@@ -479,7 +479,7 @@ class dataEngine(Dataset):
 
         taglen = 0
         item = 0
-        i = 0
+        i=0
         with open(file, 'rb') as pklfile:
 
             reader = pickle.load(pklfile)
@@ -498,9 +498,9 @@ class dataEngine(Dataset):
                 dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
                 if len(dscp_tokens) > 510:
+                    i+=1
                     if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
-                        i += 1
                     else:
                         continue
 
@@ -533,7 +533,8 @@ class dataEngine(Dataset):
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
         # print(self.id2tag)
-        print("taglen: {}".format(i/item))
+        print("taglen: {}".format(taglen/item))
+        print(i)
         return data
 
     def load_agNews(self, file, train =True):
