@@ -715,7 +715,7 @@ class dataEngine(Dataset):
                 print("len(train_data):{}".format(len(train_data)))
                 break
 
-        # print(tag_count)
+        print(tag_count)
 
         assert len(data) == len(train_data) + len(candidate) + len(rest)
 

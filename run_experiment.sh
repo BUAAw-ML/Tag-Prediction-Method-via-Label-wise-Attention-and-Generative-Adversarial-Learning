@@ -4,7 +4,7 @@
 #EN='02'  #experiment_no
 
 python main.py \
-        --experiment_no='zyc_alldata'  \
+        --experiment_no='zyz_alldata'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -14,7 +14,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/AAPD' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -25,7 +25,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alldata'  \
+        --experiment_no='zyz_alldata'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -35,7 +35,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/AAPD' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -55,6 +55,7 @@ python main.py \
 #苏州服务器上数据：
 #../datasets/ProgrammerWeb/programweb-data.csv  programweb-category
 #../datasets/AAPD
+#../datasets/Freecode
 
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
