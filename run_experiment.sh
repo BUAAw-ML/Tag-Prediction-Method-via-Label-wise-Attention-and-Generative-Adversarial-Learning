@@ -15,7 +15,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -36,7 +36,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -57,7 +57,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -78,7 +78,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -99,7 +99,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -120,7 +120,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -141,7 +141,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -162,7 +162,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-largeTagFirst' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
