@@ -464,7 +464,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 ##AAPD
 数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|L,U,T:全部,,（标签数：200）|Bert微调+多注意力|epoch:50;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=56.267 OP=0.000 OR=0.644 OF1=0.681 CP=0.574 CR=0.473 CF1=0.519|
+|L,U,T:全部,,（标签数：200）|Bert微调+多注意力|epoch:45;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=56.267 OP=0.000 OR=0.644 OF1=0.681 CP=0.574 CR=0.473 CF1=0.519|
 |---|---|---|---|
-|L,U,T:全部,1600,（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=59.075 OP=0.005 OR=0.622 OF1=0.693 CP=0.635 CR=0.481 CF1=0.547|
+|L,U,T:全部,1600,（标签数：200）|Bert微调+多注意力+GAN|epoch:20;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=59.075 OP=0.005 OR=0.622 OF1=0.693 CP=0.635 CR=0.481 CF1=0.547|
 |---|---|---|---|
