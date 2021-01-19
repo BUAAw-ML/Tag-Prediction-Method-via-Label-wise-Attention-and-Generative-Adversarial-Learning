@@ -5,8 +5,8 @@
 
 python main.py \
         --experiment_no='zyz_alldata'  \
-        --epochs=50 \
-        --epoch_step=40 \
+        --epochs=40 \
+        --epoch_step=30 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
@@ -26,8 +26,8 @@ python main.py \
 
 python main.py \
         --experiment_no='zyz_alldata'  \
-        --epochs=100 \
-        --epoch_step=90 \
+        --epochs=80 \
+        --epoch_step=70 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
