@@ -15,14 +15,14 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow-origin' \
+        --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=99999  \
+        --min_tagFrequence=50  \
+        --max_tagFrequence=100  \
         --intanceNum_limit=99999 \
-        --data_split=99999  \
+        --data_split=200  \
         --test_description=''  \
 
 
