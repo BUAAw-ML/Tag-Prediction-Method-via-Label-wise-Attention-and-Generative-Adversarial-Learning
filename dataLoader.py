@@ -596,7 +596,7 @@ class dataEngine(Dataset):
 
     def filterTags_EurLex_RCV2_SO(self, file):
         tag_occurance = {}
-
+        ignored_tags = set(['design-patterns', 'design', 'osx','internet-explorer' ])
         with open(file, 'r') as f_tag:
             tags = f_tag.readlines()
             for tag in tags:
@@ -604,7 +604,9 @@ class dataEngine(Dataset):
                 tag = [t.strip('#') for t in tag if t != '']  #
 
                 for t in tag:
-                    if t not in tag_occurance:
+                    if t in ignored_tags:
+                        continue
+                    elif t not in tag_occurance:
                         tag_occurance[t] = 1
                     else:
                         tag_occurance[t] += 1
