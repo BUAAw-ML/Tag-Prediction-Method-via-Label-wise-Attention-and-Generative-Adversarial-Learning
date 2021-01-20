@@ -202,6 +202,13 @@ class AveragePrecisionMeter(object):
         OR = np.sum(Nc) / np.sum(Ng + 1e-5)
         OF1 = (2 * OP * OR) / (OP + OR + 1e-5)
 
+        P = Nc / (Np + 1e-5)
+        R = Nc / (Ng + 1e-5)
+
+        print(P)
+        print(R)
+        print((2 * P * R) / (P + R + 1e-5))
+
         CP = np.sum(Nc / (Np + 1e-5)) / n_class
         CR = np.sum(Nc / (Ng + 1e-5)) / n_class
         CF1 = (2 * CP * CR) / (CP + CR + 1e-5)
