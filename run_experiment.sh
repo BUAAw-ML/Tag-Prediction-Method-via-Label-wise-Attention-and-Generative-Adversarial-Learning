@@ -5,7 +5,7 @@
 
 
 python main.py \
-        --experiment_no='zyz_test'  \
+        --experiment_no='wqb_test'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -14,15 +14,15 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=25  \
-        --max_tagFrequence=75  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=99999  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=99999  \
         --test_description=''  \
 
 
