@@ -5,9 +5,9 @@
 
 
 python main.py \
-        --experiment_no='wqb_test'  \
-        --epochs=60 \
-        --epoch_step=50 \
+        --experiment_no='wqb_allData'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
