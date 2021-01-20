@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -48,7 +48,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -69,7 +69,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -90,7 +90,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -111,7 +111,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -132,7 +132,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wcm_tag<50'  \
+        --experiment_no='wqb_ignoredtags_tag<50'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
