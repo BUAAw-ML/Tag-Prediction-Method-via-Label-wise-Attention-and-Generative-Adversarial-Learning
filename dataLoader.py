@@ -670,6 +670,7 @@ class dataEngine(Dataset):
             })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
+        print(self.tag2id)
 
         f_text.close()
         f_tag.close()
