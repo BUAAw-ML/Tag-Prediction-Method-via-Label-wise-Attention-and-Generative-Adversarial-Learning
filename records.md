@@ -462,6 +462,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 #0119-
 
 ##Stack Overflow
+数据集是过滤掉tag_freq<200的，剩254个tag
 
 小数量tag优先划分的数据集
 |数据配置|模型方法|训练参数|实验结果|
@@ -482,13 +483,20 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:200,,（标签数：50）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=36.505 OP=0.222 OR=0.338 OF1=0.466 CP=0.592 CR=0.251 CF1=0.352|
 |L,U,T:200,400,（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=41.553 OP=0.232 OR=0.361 OF1=0.480 CP=0.563 CR=0.285 CF1=0.378|
 |L,U,T:400,,（标签数：50）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=45.956 OP=0.264 OR=0.432 OF1=0.552 CP=0.684 CR=0.371 CF1=0.481|
-|L,U,T:400,400,（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:400,400,（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=48.006 OP=0.264 OR=0.433 OF1=0.540 CP=0.673 CR=0.383 CF1=0.488|
 |L,U,T:1600,,（标签数：50）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |L,U,T:1600,400,（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |L,U,T:6400,,（标签数：50）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |L,U,T:6400,400,（标签数：50）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
 
+全部数据集
+|数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|L,U,T:97454,,25508（标签数：254）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=51.437 OP=0.146 OR=0.493 OF1=0.603 CP=0.610 CR=0.438 CF1=0.510|
+|---|---|---|---|
+|L,U,T:97454,1600,25508（标签数：254）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=54.065 OP=0.151 OR=0.541 OF1=0.629 CP=0.639 CR=0.468 CF1=0.540|
+|---|---|---|---|
 
 ##AAPD
 数据配置|模型方法|训练参数|实验结果|

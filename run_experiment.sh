@@ -5,7 +5,7 @@
 
 
 python main.py \
-        --experiment_no='zyc_tag<50'  \
+        --experiment_no='zyz_test'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
