@@ -26,7 +26,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alldata'  \
+        --experiment_no='wcm_alldata'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -35,8 +35,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/Freecode' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -47,7 +47,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alldata'  \
+        --experiment_no='wcm_alldata'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -56,8 +56,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/Freecode' \
+        --data_type='TrainTestTextTag' \
+        --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
