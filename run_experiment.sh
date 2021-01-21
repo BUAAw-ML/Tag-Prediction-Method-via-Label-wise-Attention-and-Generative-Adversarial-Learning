@@ -37,12 +37,12 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=10  \
-        --max_tagFrequence=60  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
         --data_split=200  \
         --test_description=''  \
