@@ -523,10 +523,6 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 
 其他试验：
 - 有一次（不去频率最大的标签）从小和从大分割出的数据集gan性能都不好，并且200时只有36。但有一次这样的数据又是正常的。
-- 过滤5000以上的，200：map=40.874 OP=0.300 OR=0.335 OF1=0.467 CP=0.643 CR=0.308 CF1=0.417
-- 过滤2000以上的 200： map=45.123 OP=0.377 OR=0.342 OF1=0.479 CP=0.655 CR=0.339 CF1=0.447；Gan map=46.214 OP=0.389 OR=0.270 OF1=0.405 CP=0.692 CR=0.245 CF1=0.362
--不过滤最大标签 全部数据训练 2 epoch：map=51.778 OP=0.143 OR=0.501 OF1=0.606 CP=0.590 CR=0.427 CF1=0.496
--过滤前两个 全部数据训练 2 epoch：map=53.747 OP=0.173 OR=0.469 OF1=0.599 CP=0.588 CR=0.385 CF1=0.465
 
 全部数据集
 |数据配置|模型方法|训练参数|实验结果|
@@ -570,7 +566,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |---|---|---|---|
 |L,U,T:200,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|42，0.5，0.42|
 |L,U,T:200,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=44.873 OP=0.275 OR=0.367 OF1=0.497 CP=0.627 CR=0.283 CF1=0.390|
-|L,U,T:400,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|ap=48.642 OP=0.304 OR=0.445 OF1=0.576 CP=0.714 CR=0.384 CF1=0.500|
+|L,U,T:400,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=48.642 OP=0.304 OR=0.445 OF1=0.576 CP=0.714 CR=0.384 CF1=0.500|
 |L,U,T:400,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=50.098 OP=0.303 OR=0.441 OF1=0.566 CP=0.702 CR=0.389 CF1=0.500|
 |L,U,T:1600,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=59.645 OP=0.341 OR=0.548 OF1=0.646 CP=0.711 CR=0.538 CF1=0.612|
 |L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:30;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
@@ -597,3 +593,9 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:1600,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=67.767 OP=0.520 OR=0.595 OF1=0.683 CP=0.793 CR=0.594 CF1=0.679|
 |L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:30;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+
+其他试验：
+- 过滤5000以上的，200：map=40.874 OP=0.300 OR=0.335 OF1=0.467 CP=0.643 CR=0.308 CF1=0.417
+- 过滤2000以上的 200： map=45.123 OP=0.377 OR=0.342 OF1=0.479 CP=0.655 CR=0.339 CF1=0.447；Gan map=46.214 OP=0.389 OR=0.270 OF1=0.405 CP=0.692 CR=0.245 CF1=0.362
+-不过滤最大标签 全部数据训练 2 epoch：map=51.778 OP=0.143 OR=0.501 OF1=0.606 CP=0.590 CR=0.427 CF1=0.496
+-过滤前两个 全部数据训练 2 epoch：map=53.747 OP=0.173 OR=0.469 OF1=0.599 CP=0.588 CR=0.385 CF1=0.465
