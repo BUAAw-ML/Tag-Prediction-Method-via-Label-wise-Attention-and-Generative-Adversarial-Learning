@@ -25,30 +25,8 @@
 #        --data_split=99999  \
 #        --test_description=''  \
 
-
 python main.py \
-        --experiment_no='hhm_tag<50'  \
-        --epochs=50 \
-        --epoch_step=45 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=999999 \
-        --data_split=200  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='hhm_tag<50'  \
+        --experiment_no='wcm_tag<50'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -58,19 +36,18 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_path='../datasets/stack-overflow2' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
         --intanceNum_limit=999999 \
-        --data_split=200  \
+        --data_split=1600  \
         --test_description=''  \
 
-
 python main.py \
-        --experiment_no='hhm_tag<50'  \
+        --experiment_no='wqb_tag<50'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -80,50 +57,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=999999 \
-        --data_split=400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='hhm_tag<50'  \
-        --epochs=100 \
-        --epoch_step=90 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=50  \
-        --intanceNum_limit=999999 \
-        --data_split=400  \
-        --test_description=''  \
-
-
-python main.py \
-        --experiment_no='hhm_tag<50'  \
-        --epochs=50 \
-        --epoch_step=45 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_path='../datasets/stack-overflow5000' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -134,7 +68,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='hhm_tag<50'  \
+        --experiment_no='wqb_tag<50'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
@@ -144,7 +78,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_path='../datasets/stack-overflow5000' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
