@@ -41,10 +41,10 @@ python main.py \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
-        --min_tagFrequence=25  \
-        --max_tagFrequence=75  \
+        --min_tagFrequence=0  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=1600  \
         --test_description=''  \
 
 
