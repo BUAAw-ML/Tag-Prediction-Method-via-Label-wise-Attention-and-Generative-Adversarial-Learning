@@ -569,7 +569,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:400,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=48.642 OP=0.304 OR=0.445 OF1=0.576 CP=0.714 CR=0.384 CF1=0.500|
 |L,U,T:400,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=50.098 OP=0.303 OR=0.441 OF1=0.566 CP=0.702 CR=0.389 CF1=0.500|
 |L,U,T:1600,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=59.645 OP=0.341 OR=0.548 OF1=0.646 CP=0.711 CR=0.538 CF1=0.612|
-|L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:30;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:30;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=58.790 OP=0.340 OR=0.568 OF1=0.638 CP=0.716 CR=0.527 CF1=0.607|
 |---|---|---|---|
 
 频率大于200后，去除频率大于5000的tag
