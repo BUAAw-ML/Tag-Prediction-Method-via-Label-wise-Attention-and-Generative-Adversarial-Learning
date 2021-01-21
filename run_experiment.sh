@@ -28,18 +28,18 @@
 
 python main.py \
         --experiment_no='zyz_test'  \
-        --epochs=50 \
-        --epoch_step=45 \
+        --epochs=100 \
+        --epoch_step=90 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow91' \
         --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
