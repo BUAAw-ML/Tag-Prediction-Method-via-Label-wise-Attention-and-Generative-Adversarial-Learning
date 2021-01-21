@@ -596,8 +596,8 @@ class dataEngine(Dataset):
 
     def filterTags_EurLex_RCV2_SO(self, file):
         tag_occurance = {}
-        ignored_tags = set()
-        # ignored_tags = set(['design-patterns', 'design', 'osx','internet-explorer' ])
+        # ignored_tags = set()
+        ignored_tags = set(['database','linux','winforms','performance','oop','flex','actionscript-3','wpf','visual-studio-2008','cocoa-touch','tsql', 'design-patterns', 'design', 'osx','internet-explorer'])
         with open(file, 'r') as f_tag:
             tags = f_tag.readlines()
             for tag in tags:
@@ -735,7 +735,7 @@ class dataEngine(Dataset):
 
         unlabeled_train_data = copy.deepcopy(train_data)
 
-        unlabeled_data_num = 6400
+        unlabeled_data_num = 1600
 
         if len(unlabeled_train_data) >= unlabeled_data_num:
             unlabeled_train_data = train_data[:unlabeled_data_num]
