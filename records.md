@@ -591,7 +591,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:400,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=54.740 OP=0.438 OR=0.453 OF1=0.576 CP=0.769 CR=0.441 CF1=0.560|
 |L,U,T:400,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=57.271 OP=0.461 OR=0.495 OF1=0.602 CP=0.752 CR=0.478 CF1=0.584|
 |L,U,T:1600,,（标签数：50）|Bert微调+多注意力|epoch:50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=67.767 OP=0.520 OR=0.595 OF1=0.683 CP=0.793 CR=0.594 CF1=0.679|
-|L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:30;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:1600,1600,（标签数：50）|Bert微调+多注意力+GAN|epoch:70;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=67.311 OP=0.512 OR=0.590 OF1=0.676 CP=0.784 CR=0.588 CF1=0.672|
 |---|---|---|---|
 
 其他试验：
