@@ -37,14 +37,14 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow91' \
+        --data_path='../datasets/stack-overflow-9.5-1' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
-        --data_split=200  \
+        --data_split=6400  \
         --test_description=''  \
 
 
