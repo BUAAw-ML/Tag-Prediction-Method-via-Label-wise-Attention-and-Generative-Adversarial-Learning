@@ -42,9 +42,9 @@ python main.py \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=99999  \
-        --intanceNum_limit=99999 \
-        --data_split=99999  \
+        --max_tagFrequence=999999  \
+        --intanceNum_limit=999999 \
+        --data_split=999999  \
         --test_description=''  \
 
 
