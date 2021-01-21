@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyz_allData'  \
+        --experiment_no='hhm_allData'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
