@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wqb_alldata'  \
+        --experiment_no='zyz'  \
         --epochs=50 \
         --epoch_step=45 \
         --device_ids=0 \
@@ -37,36 +37,16 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
+        --data_path='../datasets/stack-overflow-c' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
-        --max_tagFrequence=99999  \
+        --max_tagFrequence=50  \
         --intanceNum_limit=99999 \
-        --data_split=99999  \
+        --data_split=200  \
         --test_description=''  \
 
-python main.py \
-        --experiment_no='wqb_alldata'  \
-        --epochs=100 \
-        --epoch_step=90 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=99999  \
-        --intanceNum_limit=99999 \
-        --data_split=99999  \
-        --test_description=''  \
 
 #方法、epoch_step
 
