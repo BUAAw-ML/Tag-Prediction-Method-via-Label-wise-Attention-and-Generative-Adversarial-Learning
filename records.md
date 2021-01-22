@@ -601,8 +601,8 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 -过滤前两个 全部数据训练 2 epoch：map=53.747 OP=0.173 OR=0.469 OF1=0.599 CP=0.588 CR=0.385 CF1=0.465
 
 #0121-
-##Stack Overflow按tag频率50、100、150、200设置下
-频率大于200后，去除频率大于2000的tag
+##Stack Overflow按最终确认的数据进行的试验（去除频率小于200和大于2000的tag）
+
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
 |L,U,T: 200,    ,5198（标签数：50）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=45.644 OP=0.359 OR=0.353 OF1=0.474 CP=0.692 CR=0.331 CF1=0.448|
@@ -620,12 +620,15 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T: 200,    ,7873（标签数：200）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=23.148 OP=0.128 OR=0.103 OF1=0.179 CP=0.338 CR=0.081 CF1=0.130|
 |L,U,T: 200,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=29.326 OP=0.192 OR=0.131 OF1=0.222 CP=0.230 CR=0.111 CF1=0.150|
 |L,U,T: 400,    ,7873（标签数：200）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=37.064 OP=0.211 OR=0.281 OF1=0.402 CP=0.508 CR=0.230 CF1=0.317|
-|L,U,T: 400,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: 400,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=40.683 OP=0.242 OR=0.331 OF1=0.445 CP=0.500 CR=0.289 CF1=0.366|
 |L,U,T:1600,    ,7873（标签数：200）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
 |L,U,T:1600,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |L,U,T:6400,    ,7873（标签数：200）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
 |L,U,T:6400,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+
+#0122-
+##Stack Overflow
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
@@ -638,9 +641,6 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:6400,    ,7873（标签数：200）|Bert微调+多注意力    |epoch: 50;epoch_step:45;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
 |L,U,T:6400,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
-
-##Stack Overflow按tag频率50、100、150、200设置下
-
 
 
 ##AAPD
