@@ -26,7 +26,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -43,11 +43,11 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=200  \
+        --data_split=500  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -64,11 +64,11 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=200  \
+        --data_split=500  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -85,11 +85,11 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=400  \
+        --data_split=1000  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -106,11 +106,11 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=400  \
+        --data_split=1000  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -127,11 +127,11 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=1600  \
+        --data_split=5000  \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_alltags'  \
+        --experiment_no='_wqb_alltags'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -148,49 +148,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=1600  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_alltags'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/Freecode' \
-        --use_previousData=0 \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=999999  \
-        --intanceNum_limit=999999 \
-        --data_split=6400  \
-        --test_description=''  \
-
-python main.py \
-        --experiment_no='zyc_alltags'  \
-        --epochs=120 \
-        --epoch_step=110 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.001 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/Freecode' \
-        --use_previousData=0 \
-        --method='semiGAN_MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=999999  \
-        --intanceNum_limit=999999 \
-        --data_split=6400  \
+        --data_split=5000  \
         --test_description=''  \
 
 #方法、epoch_step

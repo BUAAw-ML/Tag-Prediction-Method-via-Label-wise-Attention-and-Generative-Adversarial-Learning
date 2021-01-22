@@ -642,6 +642,13 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:6400,1600,7873（标签数：200）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
 
+其他试验，对stackoverflow的tag按频率切分为前114和后114个，结果：
+- 前114个：map=27.115 OP=0.191 OR=0.167 OF1=0.270 CP=0.436 CR=0.131 CF1=0.201
+- 后114个：map=41.094 OP=0.360 OR=0.238 OF1=0.363 CP=0.494 CR=0.227 CF1=0.311
+这种现象在programmerweb数据集也存在，原因估计是前114个tag样本虽然多，但tag之间更不平衡。
+- 另外，又做了频率前40的tag的试验：map=48.881 OP=0.396 OR=0.375 OF1=0.515 CP=0.712 CR=0.372 CF1=0.489
+ 
+
 
 ##AAPD
 数据配置|模型方法|训练参数|实验结果|
