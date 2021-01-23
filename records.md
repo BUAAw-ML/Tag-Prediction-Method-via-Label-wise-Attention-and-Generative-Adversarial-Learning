@@ -639,7 +639,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:2000,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
 |L,U,T:2000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |L,U,T:5000,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=56.753 OP=0.303 OR=0.526 OF1=0.612 CP=0.643 CR=0.535 CF1=0.584|
-|L,U,T:5000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:5000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=55.247 OP=0.297 OR=0.507 OF1=0.598 CP=0.672 CR=0.494 CF1=0.569|
 |---|---|---|---|
 
 其他试验，对stackoverflow的tag按频率切分为前114和后114个，结果：
