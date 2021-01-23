@@ -665,3 +665,15 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |---|---|---|---|
 |L,U,T:36798,1600,3905（标签数：）|Bert微调+多注意力+GAN|epoch:100;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+
+其他试验，对StackOverflow，AAPD，Freecode进行了小样本训练：
+- StackOverflow 200 80epoch
+map=17.767 OP=0.071 OR=0.051 OF1=0.093 CP=0.296 CR=0.061 CF1=0.102
+map=20.930 OP=0.118 OR=0.037 OF1=0.070 CP=0.118 CR=0.035 CF1=0.054
+- AAPD 200 48epoch
+map=24.772 OP=0.002 OR=0.362 OF1=0.474 CP=0.331 CR=0.152 CF1=0.208
+map=28.122 OP=0.000 OR=0.402 OF1=0.499 CP=0.394 CR=0.166 CF1=0.234
+- Freecode 200 80epoch
+map=16.483 OP=0.026 OR=0.302 OF1=0.374 CP=0.239 CR=0.091 CF1=0.132
+map=18.142 OP=0.033 OR=0.169 OF1=0.273 CP=0.153 CR=0.038 CF1=0.061
+
