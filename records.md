@@ -632,14 +632,14 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|L,U,T: 500,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T: 500,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:1000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:1000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:2000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:2000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:5000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:5000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: 500,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: 500,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=39.283 OP=0.216 OR=0.263 OF1=0.382 CP=0.429 CR=0.237 CF1=0.306|
+|L,U,T:1000,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=48.834 OP=0.268 OR=0.388 OF1=0.513 CP=0.601 CR=0.363 CF1=0.453|
+|L,U,T:1000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:2000,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T:2000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:5000,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=56.753 OP=0.303 OR=0.526 OF1=0.612 CP=0.643 CR=0.535 CF1=0.584|
+|L,U,T:5000,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
 
 其他试验，对stackoverflow的tag按频率切分为前114和后114个，结果：
@@ -648,27 +648,32 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 这种现象在programmerweb数据集也存在，原因估计是前114个tag样本虽然多，但tag之间更不平衡。
 - 另外，又做了频率前40的tag的试验：map=48.881 OP=0.396 OR=0.375 OF1=0.515 CP=0.712 CR=0.372 CF1=0.489
  
-
+数据配置|模型方法|训练参数|实验结果|
+|---|---|---|---|
+|L,U,T:全部71285,,8019（标签数：）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=59.499 OP=0.306 OR=0.526 OF1=0.620 CP=0.683 CR=0.509 CF1=0.584|
+|---|---|---|---|
+|L,U,T:全部71285,1600,8019（标签数：）|Bert微调+多注意力+GAN|epoch:20;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|---|---|---|---|
 
 ##AAPD
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|L,U,T: 500,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T: 500,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:1000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:1000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:2000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:2000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
-|L,U,T:5000,    ,7873（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
-|L,U,T:5000,1600,7873（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: 500,    ,6207（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=32.098 OP=0.001 OR=0.444 OF1=0.550 CP=0.356 CR=0.280 CF1=0.314|
+|L,U,T: 500,1600,6207（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=35.993 OP=0.000 OR=0.462 OF1=0.559 CP=0.462 CR=0.248 CF1=0.323|
+|L,U,T:1000,    ,6207（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=38.756 OP=0.001 OR=0.523 OF1=0.601 CP=0.493 CR=0.303 CF1=0.375|
+|L,U,T:1000,1600,6207（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=39.911 OP=0.002 OR=0.508 OF1=0.598 CP=0.531 CR=0.301 CF1=0.384|
+|L,U,T:2000,    ,6207（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T:2000,1600,6207（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T:5000,    ,6207（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|map=47.499 OP=0.004 OR=0.583 OF1=0.648 CP=0.568 CR=0.399 CF1=0.469|
+|L,U,T:5000,1600,6207（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|map=50.101 OP=0.036 OR=0.588 OF1=0.649 CP=0.554 CR=0.420 CF1=0.478|
 |---|---|---|---|
 
 数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|L,U,T:,,（标签数：）|Bert微调+多注意力|epoch:45;epoch_step:40;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:全部,,（标签数：）|Bert微调+多注意力|epoch:60;epoch_step:50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=54.725 OP=0.000 OR=0.609 OF1=0.685 CP=0.551 CR=0.468 CF1=0.506|
 |---|---|---|---|
-|L,U,T:,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:20;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
+|L,U,T:全部,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:20;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01||
 |---|---|---|---|
 
 ##Freecode
