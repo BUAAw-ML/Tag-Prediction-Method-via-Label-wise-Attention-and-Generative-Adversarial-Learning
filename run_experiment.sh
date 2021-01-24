@@ -35,8 +35,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow>300' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/AAPD2000' \
         --use_previousData=0 \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
@@ -56,8 +56,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow>300' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/AAPD2000' \
         --use_previousData=0 \
         --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
