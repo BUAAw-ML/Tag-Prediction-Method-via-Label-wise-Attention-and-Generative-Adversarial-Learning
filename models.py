@@ -185,7 +185,7 @@ class MLPBert(nn.Module):
         for i in range(self.hidden_layer_num):
             x = self.hidden_list[i](x)
             x = self.act(x)
-        y = self.output(x)
+        y = torch.sigmoid(self.output(x))
         return y, y, y
 
     def get_config_optim(self, lr, lrp):
