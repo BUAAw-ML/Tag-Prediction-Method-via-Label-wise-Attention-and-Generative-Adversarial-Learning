@@ -35,10 +35,10 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/Freecode' \
-        --use_previousData=0 \
-        --model_type='MLPBert' \
+        --use_previousData=1 \
+        --model_type='MABert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
@@ -55,9 +55,10 @@ python main.py \
 #method: MultiLabelMAP semiGAN_MultiLabelMAP
 #overlength_handle: truncation  skip
 
-#苏州服务器上数据：
+#苏州服务器上数据：TrainTest_programWeb_freecode_AAPD
 #../datasets/AAPD
 #../datasets/Freecode
+#../datasets/TREC-IS
 
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
