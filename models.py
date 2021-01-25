@@ -186,7 +186,7 @@ class MLPBert(nn.Module):
             x = self.hidden_list[i](x)
             x = self.act(x)
         y = self.output(x)
-        return y
+        return y, y, y
 
     def get_config_optim(self, lr, lrp):
         return [
