@@ -26,7 +26,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_test'  \
+        --experiment_no='zyc_MLPBert'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
