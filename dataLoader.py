@@ -244,8 +244,8 @@ class dataEngine(Dataset):
 
         lengths = np.array([len(e) for e in inputs])
         max_len = np.max(lengths)  #_to_max_length=True , truncation=True
-        # inputs = [tokenizer.prepare_for_model(e, max_length=max_len+2, pad_to_max_length=True) for e in inputs]
-        inputs = [tokenizer.prepare_for_model(e, max_length=max_len + 2, pad_to_max_length=True, truncation=True) for e
+        inputs = [tokenizer.prepare_for_model(e, max_length=max_len+2, pad_to_max_length=True) for e in inputs]
+        # inputs = [tokenizer.prepare_for_model(e, max_length=max_len + 2, pad_to_max_length=True, truncation=True) for e
                   in inputs]
 
         ids = torch.LongTensor([e['input_ids'] for e in inputs])
