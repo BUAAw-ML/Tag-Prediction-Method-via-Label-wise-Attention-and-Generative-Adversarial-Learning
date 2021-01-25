@@ -36,7 +36,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/Freecode' \
+        --data_path='../datasets/TREC-IS' \
         --use_previousData=0 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
