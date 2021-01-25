@@ -38,7 +38,7 @@ python main.py \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/Freecode' \
         --use_previousData=1 \
-        --model_type='MABert' \
+        --model_type='MLPBert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \

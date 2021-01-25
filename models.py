@@ -174,6 +174,7 @@ class MLPBert(nn.Module):
         self.act = nn.ReLU()
 
     def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
+
         token_feat = self.bert(ids,
                                token_type_ids=token_type_ids,
                                attention_mask=attention_mask)[0]
