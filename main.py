@@ -129,6 +129,11 @@ criterion = nn.BCELoss() #nn.MultiLabelSoftMarginLoss()#nn.CrossEntropyLoss()#
 model = {}
 optimizer = {}
 
+model['Generator'] = Generator(bert)
+# define optimizer
+optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
+                                         momentum=args.momentum, weight_decay=args.weight_decay)
+
 if args.model_type == 'MLPBert':
     model['Classifier'] = MLPBert(bert, num_classes=len(dataset.tag2id), hidden_dim=512, hidden_layer_num=1, bert_trainable=True)
 
@@ -138,12 +143,8 @@ if args.model_type == 'MLPBert':
     engine = MultiLabelMAPEngine(state)
 
 elif args.model_type == 'MABert':
-    model['Generator'] = Generator(bert)
-    model['Classifier'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
-    # define optimizer
-    optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
-                                             momentum=args.momentum, weight_decay=args.weight_decay)
+    model['Classifier'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
     optimizer['Classifier'] = torch.optim.SGD(model['Classifier'].get_config_optim(args.D_lr, args.B_lr),
                                 momentum=args.momentum, weight_decay=args.weight_decay)
