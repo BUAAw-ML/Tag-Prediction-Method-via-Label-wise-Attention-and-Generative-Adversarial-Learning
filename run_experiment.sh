@@ -36,7 +36,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
@@ -56,13 +56,12 @@ python main.py \
 #overlength_handle: truncation  skip
 
 #苏州服务器上数据：
-#../datasets/stack-overflow2000
 #../datasets/AAPD
 #../datasets/Freecode
 
 #../datasets/EUR-Lex  (TrainTestTextTag)
 #../datasets/RCV2  (TrainTestTextTag)
-#../datasets/stack-overflow  (TrainTestTextTag)
+#../datasets/stack-overflow2000 (TrainTestTextTag)
 
 #../datasets/ag-news
 
