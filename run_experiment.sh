@@ -33,10 +33,10 @@ python main.py \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.0001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/TREC-IS' \
+        --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
@@ -49,14 +49,14 @@ python main.py \
 
 
 #方法、epoch_step
-
+# MLPBert, MABert
 #batch-size：1，4，8，16
 #data_type: All  TrainTest  TrainTestTextTag
 #method: MultiLabelMAP semiGAN_MultiLabelMAP
 #overlength_handle: truncation  skip
 
 #苏州服务器上数据：
-#../datasets/ProgrammerWeb/programweb-data.csv  programweb-category
+#../datasets/stack-overflow2000
 #../datasets/AAPD
 #../datasets/Freecode
 
