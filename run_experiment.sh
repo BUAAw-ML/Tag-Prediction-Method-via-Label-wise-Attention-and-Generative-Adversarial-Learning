@@ -27,18 +27,18 @@
 
 python main.py \
         --experiment_no='zyc_test'  \
-        --epochs=60 \
-        --epoch_step=50 \
+        --epochs=100 \
+        --epoch_step=90 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
-        --D-lr=0.001 \
-        --B-lr=0.0001 \
+        --D-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/TREC-IS' \
         --use_previousData=0 \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
