@@ -26,7 +26,7 @@
 #        --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_MABert'  \
+        --experiment_no='wcm_MABert'  \
         --epochs=20 \
         --epoch_step=17 \
         --device_ids=0 \
@@ -36,7 +36,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
@@ -48,7 +48,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_MABert'  \
+        --experiment_no='wcm_MABert'  \
         --epochs=60 \
         --epoch_step=55 \
         --device_ids=0 \
@@ -58,7 +58,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/RCV2' \
+        --data_path='../datasets/EUR-Lex' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='semiGAN_MultiLabelMAP' \
