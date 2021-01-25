@@ -160,7 +160,7 @@ class MABert(nn.Module):
         # print("similarity {}".format(torch.mean(torch.mean(tag_embedding, -1))))
 
         masks = torch.unsqueeze(attention_mask, 1)  # N, 1, L  .bool() .byte()
-        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((1 - masks.bool()), torch.tensor(-np.inf))
+        attention = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill((~masks.bool()), torch.tensor(-np.inf))
 
         similarity = (torch.matmul(token_feat, tag_embedding.transpose(0, 1))).transpose(1, 2).masked_fill(
                     (1 - masks.byte()), torch.tensor(0))
