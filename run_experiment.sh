@@ -38,7 +38,7 @@ python main.py \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/TREC-IS' \
         --use_previousData=0 \
-        --model_type='MLPBert'
+        --model_type='MLPBert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
