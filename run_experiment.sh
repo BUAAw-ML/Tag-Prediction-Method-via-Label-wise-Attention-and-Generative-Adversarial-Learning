@@ -33,7 +33,7 @@ python main.py \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.01 \
-        --B-lr=0.001 \
+        --B-lr=0.0001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/TREC-IS' \
