@@ -826,7 +826,7 @@ map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476
 |L,U,T: 48633,    ,6207（标签数：54）|OCD               | |62.9 51.5 30.7|
 |L,U,T: 48633,    ,6207（标签数：54）|OCD               | |62.9 51.5 30.7|
 |---|---|---|---|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|70.1 54.4 58.0 |
 |---|---|---|---|
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|68.5 50.6 54.7|
 |---|---|---|---|
