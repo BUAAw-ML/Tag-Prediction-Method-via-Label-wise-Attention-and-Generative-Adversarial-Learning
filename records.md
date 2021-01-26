@@ -655,6 +655,9 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:全部71285,1600,8019（标签数：）|Bert微调+多注意力+GAN|epoch:20;epoch_step:90;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.01|map=61.509 OP=0.313 OR=0.591 OF1=0.645 CP=0.682 CR=0.575 CF1=0.624|
 |---|---|---|---|
 
+MLPBert：
+- （60epoch 50step）map=47.215 OP=0.277 OR=0.333 OF1=0.475 CP=0.616 CR=0.298 CF1=0.402
+
 ##AAPD
 
 |数据配置|模型方法|训练参数|实验结果|
@@ -772,3 +775,8 @@ map=18.142 OP=0.033 OR=0.169 OF1=0.273 CP=0.153 CR=0.038 CF1=0.061
 |L,U,T:5000,    ,12303（标签数：140）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
 |L,U,T:5000,1600,12303（标签数：140）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
+
+##RCV2
+- Bert微调+多注意力：
+map=60.341 OP=0.019 OR=0.728 OF1=0.789 CP=0.539 CR=0.392 CF1=0.454
+map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476

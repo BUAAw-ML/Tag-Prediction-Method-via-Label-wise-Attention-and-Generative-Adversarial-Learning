@@ -48,27 +48,6 @@ python main.py \
         --data_split=999999  \
         --test_description=''  \
 
-python main.py \
-        --experiment_no='hhm_MLPBert'  \
-        --epochs=60 \
-        --epoch_step=50 \
-        --device_ids=0 \
-        --batch-size=4 \
-        --G-lr=0.001 \
-        --D-lr=0.1 \
-        --B-lr=0.01 \
-        --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow600-' \
-        --use_previousData=0 \
-        --model_type='MLPBert' \
-        --method='MultiLabelMAP' \
-        --overlength_handle='truncation' \
-        --min_tagFrequence=0  \
-        --max_tagFrequence=999999  \
-        --intanceNum_limit=999999 \
-        --data_split=999999  \
-        --test_description=''  \
 
 #方法、epoch_step
 # MLPBert, MABert
