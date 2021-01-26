@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyc_MABert'  \
+        --experiment_no='zyc_MABert2'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -49,7 +49,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyc_MABert'  \
+        --experiment_no='zyc_MABert2'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
