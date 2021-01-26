@@ -36,7 +36,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000-600' \
         --use_previousData=0 \
         --model_type='MLPBert' \
@@ -58,7 +58,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow600-' \
         --use_previousData=0 \
         --model_type='MLPBert' \
