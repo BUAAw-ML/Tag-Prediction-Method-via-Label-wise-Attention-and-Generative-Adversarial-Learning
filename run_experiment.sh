@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyc_MABert'  \
+        --experiment_no='wqb_MABert'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -37,7 +37,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/AAPD' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
