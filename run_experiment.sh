@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='hhm_MLPBert'  \
+        --experiment_no='wqb_MLPBert'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
