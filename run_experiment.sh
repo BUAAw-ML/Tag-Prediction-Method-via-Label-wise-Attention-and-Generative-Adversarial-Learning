@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyz_MLPBert'  \
+        --experiment_no='zyz_MLPBert2'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -49,7 +49,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='zyz_MLPBert'  \
+        --experiment_no='zyz_MLPBert2'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -58,7 +58,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
         --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MLPBert' \
