@@ -31,7 +31,7 @@ python main.py \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
-        --batch-size=8 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
