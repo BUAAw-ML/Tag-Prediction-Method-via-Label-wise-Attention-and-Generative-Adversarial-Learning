@@ -37,7 +37,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000-600' \
+        --data_path='../datasets/stack-overflow600-' \
         --use_previousData=0 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
