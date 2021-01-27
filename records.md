@@ -681,6 +681,7 @@ label和unlabel分开训练，并加上无监督损失D_L_unsupervised2
 |L,U,T:5000,1600,12303（标签数：140）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
 |---|---|---|---|
 
+#0123-
 ##Stack Overflow 2000
 
 |数据配置|模型方法|训练参数|实验结果|
@@ -825,6 +826,7 @@ map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476
 |---|---|---|---|
 |L,U,T: 48633,    ,6207（标签数：54）|OCD               | |62.9 51.5 30.7|
 |L,U,T: 48633,    ,6207（标签数：54）|OCD               | |62.9 51.5 30.7|
+|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |62.9 52.1 31.2|
 |---|---|---|---|
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|70.1 54.4 58.0 |
 |---|---|---|---|
@@ -849,7 +851,7 @@ map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476
 
 |数据配置|模型方法|训练参数|实验结果|
 |---|---|---|---|
-|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|60.4 59.1 59.2|
 |---|---|---|---|
 |L,U,T: 500,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|69.1 68.5 69.1|
 |---|---|---|---|
