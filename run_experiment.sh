@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wqb_MABert3'  \
+        --experiment_no='zyz_MABert3'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -37,7 +37,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/TREC-IS' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
@@ -49,7 +49,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_MABert3'  \
+        --experiment_no='zyz_MABert3'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -59,7 +59,7 @@ python main.py \
         --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/TREC-IS' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='semiGAN_MultiLabelMAP' \
