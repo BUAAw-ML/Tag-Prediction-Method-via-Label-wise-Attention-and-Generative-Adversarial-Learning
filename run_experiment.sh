@@ -27,11 +27,11 @@
 
 
 python main.py \
-        --experiment_no='wqb_MABert2'  \
+        --experiment_no='wqb_MABert3'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
-        --batch-size=8 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -49,11 +49,11 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_MABert2'  \
+        --experiment_no='wqb_MABert3'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
-        --batch-size=8 \
+        --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.001 \
