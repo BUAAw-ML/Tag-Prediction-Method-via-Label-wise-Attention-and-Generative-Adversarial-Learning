@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wqb_MABert-Finetune'  \
+        --experiment_no='zyc_MABert-Finetune'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -36,8 +36,8 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
-        --data_type='TrainTestTextTag' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_type='TrainTest_programWeb_freecode_AAPD' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
@@ -49,7 +49,7 @@ python main.py \
         --test_description=''  \
 
 python main.py \
-        --experiment_no='wqb_MABert-Finetune'  \
+        --experiment_no='zyc_MABert-Finetune'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -59,7 +59,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/AAPD' \
+        --data_path='../datasets/TREC-IS' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
@@ -69,7 +69,6 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description=''  \
-
 
 #方法、epoch_step
 # MLPBert, MABert
