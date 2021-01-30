@@ -790,108 +790,131 @@ map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476
 
 ##Stack Overflow 2000
 
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: 71285,    ,8019（标签数：228）|OCD               | |Micro F1=46.3 Macro F1=48.1 map=25.6|
-|L,U,T: 71285,    ,8019（标签数：228）|OCD               | ||
-|L,U,T: 71285,    ,8019（标签数：228）|OCD               | ||
+|L,U,T: 71285,    ,8019（标签数：228）|OCD               | |Micro F1=46.3 Macro F1=48.1 map=25.6||
+|L,U,T: 71285,    ,8019（标签数：228）|OCD               | |||
+|L,U,T: 71285,    ,8019（标签数：228）|OCD               | |||
 |---|---|---|---|
-|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=47.5 CF1=40.2 map=47.2|
-|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=44.4 CF1=34.0 map=42.2|
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=13.4 CF1=6.6 map=28.9|OF1=13.4 CF1=6.6 map=28.8|
 |---|---|---|---|
-|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=62.0 CF1=58.4 map=59.5|
-|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=63.1 CF1=59.2 map=60.5|
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=47.5 CF1=40.2 map=47.2|OF1=47.5 CF1=39.4 map=47.0|
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=44.4 CF1=34.0 map=42.2|OF1=44.4 CF1=34.0 map=42.2|
 |---|---|---|---|
-|L,U,T: 71285,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=64.5 CF1=62.4 map=61.5|
-|L,U,T: 71285,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=64.7 CF1=62.5 map=61.7|
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=62.0 CF1=58.4 map=59.5||
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=62.6 CF1=58.3 map=58.6|
+|L,U,T: 71285,    ,8019（标签数：228）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=63.1 CF1=59.2 map=60.5|OF1=63.1 CF1=59.2 map=59.7|
+|---|---|---|---|
+|L,U,T: 71285,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=64.5 CF1=62.4 map=61.5||
+|L,U,T: 71285,1600,8019（标签数：228）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=64.7 CF1=62.5 map=61.7|OF1=64.7 CF1=62.3 map=61.7|
+|---|---|---|---|
+|L,U,T: 71285,1600,8019（标签数：228）|Bert微调+多注意力+GAN(sigmoid)|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||OF1=60.1 CF1=55.0 map=55.5|
 |---|---|---|---|
 
 ##Freecode
 
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5|
-|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5|
-|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5|
+|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5||
+|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5||
+|L,U,T: 36798,    ,3905（标签数：124）|OCD               | |Micro F1=44.2 Macro F1=33.2 map=15.5||
 |---|---|---|---|
-|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=46.0 CF1=31.6 map=37.0|
-|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=49.3 CF1=35.9 map=42.6|
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+MLP(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=29.7 CF1=11.1 map=31.5|
 |---|---|---|---|
-|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=49.5 CF1=38.1 map=40.2|
-|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=50.7 CF1=39.0 map=45.6|
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=46.0 CF1=31.6 map=37.0|OF1=46.0 CF1=30.9 map=34.1|
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=49.3 CF1=35.9 map=42.6|OF1=49.3 CF1=35.7 map=37.1|
 |---|---|---|---|
-|L,U,T: 36798,1600,3905（标签数：124）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=49.9 CF1=36.0 map=46.3|
-|L,U,T: 36798,1600,3905（标签数：124）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=54.3 CF1=42.9 map=45.8|
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=49.5 CF1=38.1 map=40.2||
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
+|L,U,T: 36798,    ,3905（标签数：124）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=50.7 CF1=39.0 map=45.6|OF1=50.7 CF1=39.0 map=37.5|
+|---|---|---|---|
+|L,U,T: 36798,1600,3905（标签数：124）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=49.9 CF1=36.0 map=46.3||
+|L,U,T: 36798,1600,3905（标签数：124）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=54.3 CF1=42.9 map=45.8|OF1=54.3 CF1=42.9 map=44.6|
+|---|---|---|---|
+|L,U,T: 36798,1600,3905（标签数：124）|Bert微调+多注意力+GAN(sigmoid)|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||OF1=56.2 CF1=46.6 map=44.2|
 |---|---|---|---|
 
 ##TREC-IS
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1=31.1 Macro F1=25.2 map=14.0|
-|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1=31.1 Macro F1=25.2 map=14.0|
-|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1= Macro F1= map=|
+|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1=31.1 Macro F1=25.2 map=14.0||
+|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1=31.1 Macro F1=25.2 map=14.0||
+|L,U,T: 29059,    ,8179（标签数：25）|OCD               | |Micro F1= Macro F1= map=||
 |---|---|---|---|
-|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.1 CF1=19.0 map=19.8|
-|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.3 CF1=18.9 map=20.7|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+MLP(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=21.8 CF1=15.9 map=22.7|
 |---|---|---|---|
-|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.7 CF1=21.3 map=23.3|
-|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=31.8 CF1=25.6 map=25.3|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.1 CF1=19.0 map=19.8|OF1=30.1 CF1=17.3 map=17.3|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.3 CF1=18.9 map=20.7|OF1=30.3 CF1=17.8 map=17.3|
 |---|---|---|---|
-|L,U,T: 29059,1600,8179（标签数：25）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=37.5 CF1=26.8 map=25.0|
-|L,U,T: 29059,1600,8179（标签数：25）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=33.8 CF1=25.9 map=24.0|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=30.7 CF1=21.3 map=23.3|OF1=30.7 CF1=17.8 map=16.7|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=25.2 CF1=23.3 map=24.5|
+|L,U,T: 29059,    ,8179（标签数：25）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=31.8 CF1=25.6 map=25.3|OF1=31.9 CF1=23.4 map=20.2|
+|---|---|---|---|
+|L,U,T: 29059,1600,8179（标签数：25）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=37.5 CF1=26.8 map=25.0|OF1=37.5 CF1=24.7 map=21.8|
+|L,U,T: 29059,1600,8179（标签数：25）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=33.8 CF1=25.9 map=24.0|OF1=33.8 CF1=24.7 map=21.4|
+|---|---|---|---|
+|L,U,T: 29059,1600,8179（标签数：25）|Bert微调+多注意力+GAN(sigmoid)|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=29.0 CF1=22.5 map=25.3|OF1=29.0 CF1=8.1 map=9.9|
 |---|---|---|---|
 
 ##AAPD
 
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=51.5 map=30.7|
-|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=51.5 map=30.7|
-|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=52.1 map=31.2|
+|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=51.5 map=30.7||
+|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=51.5 map=30.7||
+|L,U,T: 48633,    ,6207（标签数：54）|OCD               | |Micro F1=62.9 Macro F1=52.1 map=31.2||
 |---|---|---|---|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=70.1 CF1=54.4 map=58.0|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.3 map=56.3|
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
 |---|---|---|---|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.6 map=54.7|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=69.3 CF1=51.2 map=57.4|
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=70.1 CF1=54.4 map=58.0||
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.3 map=56.3|OF1=68.5 CF1=48.9 map=56.1|
 |---|---|---|---|
-|L,U,T: 48633,1600,6207（标签数：54）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.2 CF1=54.7 map=58.8|
-|L,U,T: 48633,1600,6207（标签数：54）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.4 CF1=56.0 map=59.6|
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.6 map=54.7||
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=68.5 CF1=48.8 map=54.8|
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=69.3 CF1=51.2 map=57.4|OF1=69.3 CF1=49.8 map=57.4|
+|---|---|---|---|
+|L,U,T: 48633,1600,6207（标签数：54）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.2 CF1=54.7 map=58.8||
+|L,U,T: 48633,1600,6207（标签数：54）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.4 CF1=56.0 map=59.6|OF1=70.4 CF1=53.5 map=59.5|
+|---|---|---|---|
+|L,U,T: 48633,1600,6207（标签数：54）|Bert微调+多注意力+GAN(sigmoid)|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||OF1=68.1 CF1=52.8 map=55.0|
 |---|---|---|---|
 
 
 ##Stack Overflow 2000-600
 
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=50.3 Macro F1=55.3 map=31.6|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=50.3 Macro F1=55.3 map=31.6|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1= Macro F1= map=|
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=50.3 Macro F1=55.3 map=31.6||
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=50.3 Macro F1=55.3 map=31.6||
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1= Macro F1= map=||
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.4 CF1=68.7 map=72.5|
-|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.4 CF1=68.7 map=72.5||
+|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=71.5 CF1=72.3 map=76.2|
-|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=71.5 CF1=72.3 map=76.2|OF1=71.5 CF1=72.3 map=75.9|
+|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
 |---|---|---|---|
-|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=73.0 CF1=74.3 map=77.2|
-|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=73.0 CF1=74.3 map=77.2|OF1=73.0 CF1=74.1 map=76.7|
+|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|||
 |---|---|---|---|
 
 ##Stack Overflow 600-
 
-|数据配置|模型方法|训练参数|实验结果|
+|数据配置|模型方法|训练参数|实验结果|实验结果（整体最高）|
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=45.1 Macro F1=50.8 map=27.2|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=45.1 Macro F1=50.8 map=27.2|
-|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1= Macro F1= map=|
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=45.1 Macro F1=50.8 map=27.2||
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1=45.1 Macro F1=50.8 map=27.2||
+|L,U,T: ,    ,（标签数：）|OCD               | |Micro F1= Macro F1= map=||
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=60.4 CF1=59.1 59.2|
-|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=60.4 CF1=59.1 map=59.2|OF1=60.4 CF1=59.1 map=59.0|
+|L,U,T: ,    ,（标签数：）|Bert微调+MLP      |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
 |---|---|---|---|
-|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=69.1 CF1=68.5 69.1|
-|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||
+|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 30;epoch_step: 27;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=69.1 CF1=68.5 map=69.1|OF1=69.1 CF1=68.5 map=68.3|
+|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=69.0 CF1=68.5 map=68.5|
+|L,U,T: ,    ,（标签数：）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|||
 |---|---|---|---|
-|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.2 CF1=69.6 71.2|
-|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||
+|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|OF1=70.2 CF1=69.6 map=71.2|OF1=70.2 CF1=69.4 map=70.3|
+|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001|||
+|---|---|---|---|
+|L,U,T: ,1600,（标签数：）|Bert微调+多注意力+GAN(sigmoid)|epoch:120;epoch_step:110;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1,B0.001||OF1=70.0 CF1=69.0 map=70.2|
 |---|---|---|---|
