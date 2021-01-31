@@ -28,7 +28,7 @@
 
 python main.py \
         --experiment_no='zyz_MultiLabelMAP_noFT_example'  \
-        --epochs=1 \
+        --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
         --batch-size=4 \
@@ -45,7 +45,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=1000  \
+        --data_split=999999  \
         --test_description='' \
         --resume='' #./result/20210131/wqb_example_stack-overflow2000/checkpoint.pth.tar
 
