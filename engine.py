@@ -287,7 +287,7 @@ class Engine(object):
                             [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j].data.cpu().numpy())
                              for index in sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:5]]
                             ])
-            print(ids[i][0])
+            print(ids[i])
             print(attention[i][0])
         # print(result)
             with open('testResult.json', 'w') as f:
