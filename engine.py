@@ -276,13 +276,12 @@ class Engine(object):
         print(attention.shape)
 
         for i in range(len(dscp_tokens)):
-            buf = []
             for j in range(len(dscp_tokens[i])):
-                buf.append([dscp_tokens[i][j],
+                result.append([dscp_tokens[i][j],
                             [(self.state['id2tag'][tagid], attention[i][tagid][j]) for tagid in range(len(self.state['id2tag']))]])
             print(attention[i][0][len(dscp_tokens[i])])
         with open('testResult.json', 'a') as f:
-            json.dump(buf, f)
+            json.dump(result, f)
 
     # def recordResult(self, target, output):
     #     result = []
