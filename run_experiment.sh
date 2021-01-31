@@ -28,7 +28,7 @@
 
 python main.py \
         --experiment_no='wqb_example'  \
-        --epochs=2 \
+        --epochs=3 \
         --epoch_step=4 \
         --device_ids=0 \
         --batch-size=4 \
@@ -46,7 +46,8 @@ python main.py \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
         --data_split=1000  \
-        --test_description=''  \
+        --test_description='' \
+        --resume='./result/20210131/wqb_example_stack-overflow2000/checkpoint.pth.tar'
 
 #方法、epoch_step
 # MLPBert, MABert
