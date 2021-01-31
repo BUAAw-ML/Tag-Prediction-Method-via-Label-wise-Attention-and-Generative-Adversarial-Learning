@@ -38,14 +38,14 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
-        --use_previousData=1 \
+        --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=200  \
+        --data_split=1000  \
         --test_description=''  \
 
 #方法、epoch_step
