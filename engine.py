@@ -310,7 +310,8 @@ class Engine(object):
             # print(ids[i])
             # print(attention[i][0][len(dscp_tokens[i])+2])
         # print(result)
-        with open('testResult_.json', 'a') as f:
+
+        with open(os.path.join(self.state['experiment_no'], 'testResult.json') , 'a') as f:
             json.dump(result, f)
 
     # def recordResult(self, target, output):

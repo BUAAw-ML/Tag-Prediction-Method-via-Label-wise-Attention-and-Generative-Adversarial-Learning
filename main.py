@@ -116,7 +116,7 @@ state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': a
          'save_model_path': args.save_model_path, 'log_dir': log_dir, 'workers': args.workers,
          'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
-         'result_file': fo, 'method': args.method}
+         'result_file': fo, 'method': args.method, 'experiment_no':args.experiment_no}
 
 if args.evaluate:
     state['evaluate'] = True
