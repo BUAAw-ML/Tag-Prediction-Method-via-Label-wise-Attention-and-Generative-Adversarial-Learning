@@ -343,7 +343,7 @@ class MultiLabelMAPEngine(Engine):
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
-        dscp_tokens = dscp_tokens.cuda(self.state['device_ids'][0])
+        dscp_tokens = dscp_tokens #.cuda(self.state['device_ids'][0])
 
         if training:
             self.state['train_iters'] += 1
