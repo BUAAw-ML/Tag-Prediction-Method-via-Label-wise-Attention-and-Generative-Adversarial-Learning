@@ -127,6 +127,19 @@ class Engine(object):
                                                  batch_size=self.state['batch_size'], shuffle=False,
                                                  num_workers=1, collate_fn=dataset.collate_fn) #self.state['workers']
 
+        # optionally resume from a checkpoint
+        if self._state('resume') is not None:
+            if os.path.isfile(self.state['resume']):
+                print("=> loading checkpoint '{}'".format(self.state['resume']))
+                checkpoint = torch.load(self.state['resume'])
+                self.state['start_epoch'] = checkpoint['epoch']
+                self.state['best_score'] = checkpoint['best_score']
+                model.load_state_dict(checkpoint['state_dict'])
+                print("=> loaded checkpoint '{}' (epoch {})"
+                      .format(self.state['evaluate'], checkpoint['epoch']))
+            else:
+                print("=> no checkpoint found at '{}'".format(self.state['resume']))
+
         if self.state['use_gpu']:
             # train_loader.pin_memory = True
             # val_loader.pin_memory = True
@@ -166,7 +179,13 @@ class Engine(object):
             prec1 = self.validate(val_loader, model, criterion, epoch)
 
             # remember best prec@1 and save checkpoint
-            # is_best = prec1 > self.state['best_score']
+            is_best = prec1['OF1'] > self.state['best_score']['OF1']
+            self.save_checkpoint({
+                'epoch': epoch + 1,
+                # 'arch': self._state('arch'),
+                'state_dict': model.state_dict() if self.state['use_gpu'] else model.state_dict(),
+                'best_score': self.state['best_score'],
+            }, is_best)
 
             self.state['best_score']['map'] = max(prec1['map'], self.state['best_score']['map'])
             if prec1['OF1'] >= self.state['best_score']['OF1']:
@@ -308,6 +327,7 @@ class Engine(object):
     #         json.dump(result, f)
 
     def save_checkpoint(self, state, is_best, filename='checkpoint.pth.tar'):
+
         if self._state('save_model_path') is not None:
             filename_ = filename
             filename = os.path.join(self.state['save_model_path'], filename_)
@@ -315,6 +335,7 @@ class Engine(object):
                 os.makedirs(self.state['save_model_path'])
         print('save model {filename}'.format(filename=filename))
         torch.save(state, filename)
+
         if is_best:
             filename_best = 'model_best.pth.tar'
             if self._state('save_model_path') is not None:
@@ -327,6 +348,7 @@ class Engine(object):
                                              'model_best_{score:.4f}.pth.tar'.format(score=state['best_score']))
                 shutil.copyfile(filename, filename_best)
                 self.state['filename_previous_best'] = filename_best
+
 
     def adjust_learning_rate(self, optimizer):
         """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
