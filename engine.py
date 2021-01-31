@@ -288,7 +288,7 @@ class Engine(object):
                              for index in sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:5]]
                             ])
             # print(ids[i])
-            print(attention[i][0][len(dscp_tokens[i])+2])
+            # print(attention[i][0][len(dscp_tokens[i])+2])
         # print(result)
             with open('testResult.json', 'w') as f:
                 json.dump(result, f)
