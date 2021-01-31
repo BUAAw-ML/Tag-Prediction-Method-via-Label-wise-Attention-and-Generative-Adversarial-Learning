@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='hhm_MABert400'  \
+        --experiment_no='zyz_MABert400'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
@@ -37,7 +37,7 @@ python main.py \
         --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTest_programWeb_freecode_AAPD' \
-        --data_path='../datasets/AAPD' \
+        --data_path='../datasets/TREC-IS' \
         --use_previousData=0 \
         --model_type='MABert' \
         --method='semiGAN_MultiLabelMAP' \
