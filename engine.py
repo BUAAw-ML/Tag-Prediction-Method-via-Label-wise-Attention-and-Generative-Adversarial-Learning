@@ -271,27 +271,28 @@ class Engine(object):
         return score
 
     def recordResult(self, ids, dscp_tokens, attention, target, output):
-
+        result = []
         print(ids.shape)
         print(attention.shape)
 
         for i in range(len(dscp_tokens)):
-            result = []
+            buf = []
             print(self.state['dscp'][i])
             print(dscp_tokens[i])
             print(len(dscp_tokens[i]))
             for j in range(len(dscp_tokens[i])):
-                result.append([dscp_tokens[i][j],
+                buf.append([dscp_tokens[i][j],
                             [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j+1].data.cpu().numpy())
                              for (index, value) in enumerate(target[i]) if value == 1],
                             [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j+1].data.cpu().numpy())
                              for index in sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:5]]
                             ])
+            result.append(buf)
             # print(ids[i])
             # print(attention[i][0][len(dscp_tokens[i])+2])
         # print(result)
-            with open('testResult.json', 'w') as f:
-                json.dump(result, f)
+        with open('testResult.json', 'w') as f:
+            json.dump(result, f)
 
     # def recordResult(self, target, output):
     #     result = []
