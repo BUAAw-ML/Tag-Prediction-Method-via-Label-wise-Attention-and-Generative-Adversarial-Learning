@@ -52,7 +52,7 @@ class MABert(nn.Module):
         #             (1 - masks.byte()), torch.tensor(0))
         # print("similarity {}".format(torch.mean(torch.sum(similarity, -1))))
 
-        attention = F.softmax(attention, -1)
+        attention = F.softmax(attention, -1) #N, labels_num, L
 
         # print("1 {}".format(torch.max(torch.max(attention,-1)[0],-1)[1]))
         # print("2 {}".format(torch.max(torch.max(attention, -1)[0], -1)[0]))
@@ -81,7 +81,7 @@ class MABert(nn.Module):
         # prob = self.output(prob)
 
 
-        return prob[:,1], logit, prob[:,0]
+        return prob[:,1], logit, prob[:,0], attention
 
     def get_config_optim(self, lr, lrp):
         return [

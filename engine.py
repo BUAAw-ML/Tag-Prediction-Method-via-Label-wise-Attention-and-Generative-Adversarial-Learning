@@ -125,7 +125,7 @@ class Engine(object):
 
         val_loader = torch.utils.data.DataLoader(dataset.test_data,
                                                  batch_size=self.state['batch_size'], shuffle=False,
-                                                 num_workers=self.state['workers'], collate_fn=dataset.collate_fn)
+                                                 num_workers=1, collate_fn=dataset.collate_fn) #self.state['workers']
 
         if self.state['use_gpu']:
             # train_loader.pin_memory = True
@@ -252,11 +252,12 @@ class Engine(object):
             if self.state['use_gpu']:
                 self.state['target'] = self.state['target'].cuda(self.state['device_ids'][0])
 
-            output = self.on_forward(False, model, criterion, data_loader)
+            output, ids, dscp_tokens, attention = self.on_forward(False, model, criterion, data_loader)
 
-            #record the detials of the result:
-            # if epoch == self.state['max_epochs'] - 1:
-            #     self.recordResult(target, output)
+            # record the detials of the result:
+            if epoch == self.state['max_epochs'] - 1:
+                # self.recordResult(target, output)
+                self.recordResult(ids, dscp_tokens, attention)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
@@ -269,18 +270,33 @@ class Engine(object):
 
         return score
 
-    def recordResult(self, target, output):
+    def recordResult(self, ids, dscp_tokens, attention):
         result = []
-        for i in range(len(target)):
-            buf = [self.state['dscp'][i],
-                   [self.state['id2tag'][index] for (index, value) in enumerate(target[i]) if value == 1],
-                   [self.state['id2tag'][index] for index in
-                    sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:10]]]
-            if buf[2][0] not in buf[1]:
-                result.append(buf)
+        print(ids)
+        print(dscp_tokens)
+        print(attention)
 
-        with open('testResult.json', 'a') as f:
-            json.dump(result, f)
+        print(ids.shape)
+        print(dscp_tokens.shape)
+        print(attention.shape)
+
+        exit()
+
+        # with open('testResult.json', 'a') as f:
+        #     json.dump(result, f)
+
+    # def recordResult(self, target, output):
+    #     result = []
+    #     for i in range(len(target)):
+    #         buf = [self.state['dscp'][i],
+    #                [self.state['id2tag'][index] for (index, value) in enumerate(target[i]) if value == 1],
+    #                [self.state['id2tag'][index] for index in
+    #                 sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:10]]]
+    #         if buf[2][0] not in buf[1]:
+    #             result.append(buf)
+    #
+    #     with open('testResult.json', 'a') as f:
+    #         json.dump(result, f)
 
     def save_checkpoint(self, state, is_best, filename='checkpoint.pth.tar'):
         if self._state('save_model_path') is not None:
@@ -337,7 +353,7 @@ class MultiLabelMAPEngine(Engine):
         z = torch.rand(ids.shape[0], 1, 768).type(torch.FloatTensor).cuda(self.state['device_ids'][0])
         x_g = model['Generator'](z, self.state['encoded_tag'], self.state['tag_mask'])
 
-        _, logits, _ = model['Classifier'](ids, token_type_ids, attention_mask,
+        _, logits, _, attention = model['Classifier'](ids, token_type_ids, attention_mask,
                                                                       self.state['encoded_tag'],
                                                                       self.state['tag_mask'], x_g.detach())
 
@@ -351,7 +367,7 @@ class MultiLabelMAPEngine(Engine):
             nn.utils.clip_grad_norm_(optimizer['Classifier'].param_groups[0]["params"], max_norm=10.0)
             optimizer['Classifier'].step()
         else:
-            return self.state['output'] #, ids, dscp_tokens
+            return self.state['output'], ids, dscp_tokens, attention
 
     def on_start_epoch(self, training, model, criterion, data_loader, optimizer=None, display=True):
         Engine.on_start_epoch(self, training, model, criterion, data_loader, optimizer)
