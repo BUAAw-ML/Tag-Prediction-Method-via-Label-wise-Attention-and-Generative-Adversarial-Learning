@@ -257,7 +257,7 @@ class Engine(object):
             # record the detials of the result:
             if epoch == self.state['max_epochs'] - 1:
                 # self.recordResult(target, output)
-                self.recordResult(ids, dscp_tokens, attention)
+                self.recordResult(ids, dscp_tokens, attention, target)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
@@ -270,22 +270,24 @@ class Engine(object):
 
         return score
 
-    def recordResult(self, ids, dscp_tokens, attention):
-        result = []
+    def recordResult(self, ids, dscp_tokens, attention, target):
+
         print(ids.shape)
         print(attention.shape)
 
         for i in range(len(dscp_tokens)):
+            result = []
+            print(self.state['dscp'])
             print(dscp_tokens[i])
             print(len(dscp_tokens[i]))
             for j in range(len(dscp_tokens[i])):
                 result.append([dscp_tokens[i][j],
-                            [self.state['id2tag'][tagid] + ": {:.2f}".format(attention[i][tagid][j].data.cpu().numpy())
-                             for tagid in range(len(self.state['id2tag']))]])
+                            [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j].data.cpu().numpy())
+                             for (index, value) in enumerate(target[i]) if value == 1]])
             print(attention[i][0][len(dscp_tokens[i])])
         # print(result)
-        with open('testResult.json', 'a') as f:
-            json.dump(result, f)
+            with open('testResult.json', 'a') as f:
+                json.dump(result, f)
         exit()
 
     # def recordResult(self, target, output):
