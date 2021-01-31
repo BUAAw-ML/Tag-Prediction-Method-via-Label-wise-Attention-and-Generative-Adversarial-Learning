@@ -101,7 +101,7 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
             file1 = os.path.join(data_path, 'test_texts.txt')
             file2 = os.path.join(data_path, 'test_labels.txt')
-            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2, 50, 60)
+            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2, 53, 59)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
