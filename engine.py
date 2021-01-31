@@ -289,7 +289,7 @@ class Engine(object):
                                 ])
             print(attention[i][0][len(dscp_tokens[i])])
         # print(result)
-            with open('testResult.json', 'a') as f:
+            with open('testResult.json', 'w') as f:
                 json.dump(result, f)
         exit()
 
