@@ -99,9 +99,9 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             # dataset.train_data = data[ind[:split]].tolist()
             # dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
-            file1 = os.path.join(data_path, 'test_texts-caseStudy.txt')
-            file2 = os.path.join(data_path, 'test_labels-caseStudy.txt')
-            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2)
+            file1 = os.path.join(data_path, 'test_texts.txt')
+            file2 = os.path.join(data_path, 'test_labels.txt')
+            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2, 50, 90)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
@@ -625,7 +625,7 @@ class dataEngine(Dataset):
 
         print(self.use_tags)
 
-    def load_EurLex_RCV2_SO(self, file1, file2):
+    def load_EurLex_RCV2_SO(self, file1, file2, minwords=0, maxwords=1000):
         data = []
 
         f_text = open(file1, 'r')
@@ -642,6 +642,9 @@ class dataEngine(Dataset):
                     dscp_tokens = dscp_tokens[:510]
                 else:
                     continue
+
+            if len(dscp_tokens) > maxwords or len(dscp_tokens) < minwords:
+                continue
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
