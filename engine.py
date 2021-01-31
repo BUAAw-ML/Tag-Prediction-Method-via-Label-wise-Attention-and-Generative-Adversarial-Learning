@@ -280,10 +280,10 @@ class Engine(object):
             print(len(dscp_tokens[i]))
             for j in range(len(dscp_tokens[i])):
                 result.append([dscp_tokens[i][j],
-                            [self.state['id2tag'][tagid]+':'+"{:.2f}".format(attention[i][tagid][j].data.cpu().numpy())
+                            [self.state['id2tag'][tagid] + ": {:.2f}".format(attention[i][tagid][j].data.cpu().numpy())
                              for tagid in range(len(self.state['id2tag']))]])
             print(attention[i][0][len(dscp_tokens[i])])
-        print(result)
+        # print(result)
         with open('testResult.json', 'a') as f:
             json.dump(result, f)
         exit()
