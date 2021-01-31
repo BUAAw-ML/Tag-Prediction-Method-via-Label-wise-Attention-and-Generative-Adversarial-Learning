@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyc_example'  \
+        --experiment_no='zyc_MABert_example'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
