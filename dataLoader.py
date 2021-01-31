@@ -99,8 +99,8 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
             # dataset.train_data = data[ind[:split]].tolist()
             # dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
-            file1 = os.path.join(data_path, 'test_texts.txt')
-            file2 = os.path.join(data_path, 'test_labels.txt')
+            file1 = os.path.join(data_path, 'test_texts-caseStudy.txt')
+            file2 = os.path.join(data_path, 'test_labels-caseStudy.txt')
             dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))

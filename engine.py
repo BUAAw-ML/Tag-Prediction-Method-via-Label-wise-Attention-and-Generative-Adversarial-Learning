@@ -284,14 +284,13 @@ class Engine(object):
                 result.append([dscp_tokens[i][j],
                             [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j].data.cpu().numpy())
                              for (index, value) in enumerate(target[i]) if value == 1],
-                               [self.state['id2tag'][index] for index in
-                                  sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:10]]
-                                ])
+                            [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j].data.cpu().numpy())
+                             for index in sorted(range(len(output[i])), key=lambda k: output[i][k], reverse=True)[:5]]
+                            ])
             print(attention[i][0][len(dscp_tokens[i])])
         # print(result)
             with open('testResult.json', 'w') as f:
                 json.dump(result, f)
-        exit()
 
     # def recordResult(self, target, output):
     #     result = []
