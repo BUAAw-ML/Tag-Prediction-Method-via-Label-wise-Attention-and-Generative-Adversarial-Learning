@@ -276,9 +276,12 @@ class Engine(object):
         print(attention.shape)
 
         for i in range(len(dscp_tokens)):
+            print(dscp_tokens[i])
+            print(len(dscp_tokens[i]))
             for j in range(len(dscp_tokens[i])):
                 result.append([dscp_tokens[i][j],
-                            [self.state['id2tag'][tagid]+str(attention[i][tagid][j]) for tagid in range(len(self.state['id2tag']))]])
+                            [self.state['id2tag'][tagid]+':'+str(attention[i][tagid][j].data.cpu())
+                             for tagid in range(len(self.state['id2tag']))]])
             print(attention[i][0][len(dscp_tokens[i])])
         print(result)
         with open('testResult.json', 'a') as f:
