@@ -27,20 +27,20 @@
 
 
 python main.py \
-        --experiment_no='zyc_example'  \
-        --epochs=5 \
-        --epoch_step=4 \
+        --experiment_no='wqb_example'  \
+        --epochs=40 \
+        --epoch_step=37 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --model_type='MABert' \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
