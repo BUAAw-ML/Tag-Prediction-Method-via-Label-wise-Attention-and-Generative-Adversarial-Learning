@@ -39,7 +39,7 @@ python main.py \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
-        --model_type='MLPBert' \
+        --model_type='MABert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \

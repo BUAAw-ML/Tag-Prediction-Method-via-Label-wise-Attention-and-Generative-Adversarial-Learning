@@ -134,7 +134,8 @@ class Engine(object):
                 checkpoint = torch.load(self.state['resume'])
                 self.state['start_epoch'] = checkpoint['epoch']
                 self.state['best_score'] = checkpoint['best_score']
-                model.load_state_dict(checkpoint['state_dict'])
+                model['Generator'].load_state_dict(checkpoint['state_dict-Generator'])
+                model['Classifier'].load_state_dict(checkpoint['state_dict-Classifier'])
                 print("=> loaded checkpoint '{}' (epoch {})"
                       .format(self.state['evaluate'], checkpoint['epoch']))
             else:
@@ -183,7 +184,8 @@ class Engine(object):
             self.save_checkpoint({
                 'epoch': epoch + 1,
                 # 'arch': self._state('arch'),
-                'state_dict': model.state_dict() if self.state['use_gpu'] else model.state_dict(),
+                'state_dict-Generator': model['Generator'].state_dict() if self.state['use_gpu'] else model['Generator'].state_dict(),
+                'state_dict-Classifier': model['Classifier'].state_dict() if self.state['use_gpu'] else model['Classifier'].state_dict(),
                 'best_score': self.state['best_score'],
             }, is_best)
 
