@@ -255,9 +255,9 @@ class Engine(object):
             output, ids, dscp_tokens, attention = self.on_forward(False, model, criterion, data_loader)
 
             # record the detials of the result:
-            if epoch == self.state['max_epochs'] - 1:
-                # self.recordResult(target, output)
-                self.recordResult(ids, dscp_tokens, attention)
+            # if epoch == self.state['max_epochs'] - 1:
+            #     # self.recordResult(target, output)
+            #     self.recordResult(ids, dscp_tokens, attention)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
