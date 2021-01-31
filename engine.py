@@ -515,7 +515,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                 nn.utils.clip_grad_norm_(optimizer['Classifier'].param_groups[0]["params"], max_norm=10.0)
                 optimizer['Classifier'].step()
 
-            flatten, _, prob = model['Classifier'](ids, token_type_ids, attention_mask,
+            flatten, _, prob, _ = model['Classifier'](ids, token_type_ids, attention_mask,
                                                self.state['encoded_tag'],
                                                self.state['tag_mask'], x_g)
 
