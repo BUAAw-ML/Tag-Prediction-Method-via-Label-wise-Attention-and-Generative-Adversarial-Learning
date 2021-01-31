@@ -867,7 +867,7 @@ map=64.564 OP=0.018 OR=0.751 OF1=0.808 CP=0.562 CR=0.413 CF1=0.476
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=70.1 CF1=54.4 map=58.0||
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+MLP       |epoch: 60;epoch_step: 50;batch-size:8;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.3 map=56.3|OF1=68.5 CF1=48.9 map=56.1|
 |---|---|---|---|
-|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=44.1 CF1=16.6 map=38.9||
+|L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力(no-finetune)|epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=45.1 CF1=16.8 map=39.1|
 |---|---|---|---|
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01|OF1=68.5 CF1=50.6 map=54.7||
 |L,U,T: 48633,    ,6207（标签数：54）|Bert微调+多注意力    |epoch: 60;epoch_step: 50;batch-size:4;optimizer:SGD;learning-rate:G0.001,D0.1, B0.01||OF1=68.5 CF1=48.8 map=54.8|

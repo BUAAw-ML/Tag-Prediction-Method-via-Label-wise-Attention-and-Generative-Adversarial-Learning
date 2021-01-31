@@ -241,6 +241,8 @@ class dataEngine(Dataset):
     def collate_fn(self, batch):
         # construct input
         inputs = [e['dscp_ids'] for e in batch]  #e['title_ids'] +
+        dscp_tokens = [e['dscp_tokens'] for e in batch]
+
 
         lengths = np.array([len(e) for e in inputs])
         max_len = np.max(lengths)  #_to_max_length=True , truncation=True
@@ -259,7 +261,7 @@ class dataEngine(Dataset):
         label_mask = torch.tensor([e['label'] for e in batch]).byte()
         label_mask = torch.nonzero(label_mask).squeeze(-1)
 
-        return (ids, token_type_ids, attention_mask, label_mask), tags, dscp
+        return (ids, token_type_ids, attention_mask, dscp_tokens), tags, dscp
 
     @classmethod
     def get_tfidf_dict(cls, document):
