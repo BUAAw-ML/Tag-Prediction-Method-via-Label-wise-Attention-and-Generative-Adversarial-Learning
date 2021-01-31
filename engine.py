@@ -272,14 +272,14 @@ class Engine(object):
 
     def recordResult(self, ids, dscp_tokens, attention, target, output):
         result = []
-        print(ids.shape)
-        print(attention.shape)
+        # print(ids.shape)
+        # print(attention.shape)
 
         for i in range(len(dscp_tokens)):
             buf = []
-            print(self.state['dscp'][i])
-            print(dscp_tokens[i])
-            print(len(dscp_tokens[i]))
+            # print(self.state['dscp'][i])
+            # print(dscp_tokens[i])
+            # print(len(dscp_tokens[i]))
             for j in range(len(dscp_tokens[i])):
                 buf.append([dscp_tokens[i][j],
                             [self.state['id2tag'][index] + ": {:.2f}".format(attention[i][index][j+1].data.cpu().numpy())

@@ -27,9 +27,9 @@
 
 
 python main.py \
-        --experiment_no='wqb_example'  \
-        --epochs=8 \
-        --epoch_step=7 \
+        --experiment_no='zyc_MLPBert_example'  \
+        --epochs=5 \
+        --epoch_step=4 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
@@ -39,8 +39,8 @@ python main.py \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
-        --model_type='MABert' \
-        --method='semiGAN_MultiLabelMAP' \
+        --model_type='MLPBert' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
