@@ -38,7 +38,7 @@ python main.py \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
-        --use_previousData=1 \
+        --use_previousData=0 \
         --model_type='MABert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
