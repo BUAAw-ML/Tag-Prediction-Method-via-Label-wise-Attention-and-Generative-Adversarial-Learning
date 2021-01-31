@@ -462,10 +462,11 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
     def on_forward(self, training, model, criterion, data_loader, optimizer=None, display=True,
                    semi_supervised=False):
         target_var = self.state['target']
-        ids, token_type_ids, attention_mask, label_mask = self.state['input']
+        ids, token_type_ids, attention_mask, dscp_tokens = self.state['input']
         ids = ids.cuda(self.state['device_ids'][0])
         token_type_ids = token_type_ids.cuda(self.state['device_ids'][0])
         attention_mask = attention_mask.cuda(self.state['device_ids'][0])
+        dscp_tokens = dscp_tokens
 
         if training:
             self.state['train_iters'] += 1
@@ -482,7 +483,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
         x_g = model['Generator'](z, self.state['encoded_tag'], self.state['tag_mask'])
 
         # -----------train enc-----------
-        flatten, logits, prob = model['Classifier'](ids, token_type_ids, attention_mask,
+        flatten, logits, prob, attention = model['Classifier'](ids, token_type_ids, attention_mask,
                                                 self.state['encoded_tag'],
                                                 self.state['tag_mask'], x_g.detach())  #
 
@@ -528,7 +529,7 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
             self.state['loss'] = [d_loss, g_loss]
 
         if not training:
-            return self.state['output']
+            return self.state['output'], ids, dscp_tokens, attention
 
     def on_end_batch(self, training, model, criterion, data_loader, optimizer=None, display=True):
 
