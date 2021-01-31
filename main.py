@@ -49,7 +49,7 @@ parser.add_argument('--data_type', default='All', type=str,
                     help='The type of data')
 parser.add_argument('--data_path', default='../datasets/AAPD/aapd2.csv', type=str,
                     help='path of data')
-parser.add_argument('--bert_trainable', default=True, type=bool,
+parser.add_argument('--bert_trainable', default=False, type=bool,
                     help='bert_trainable')
 parser.add_argument('--use_previousData', default=0, type=int,
                     help='use_previousData')
