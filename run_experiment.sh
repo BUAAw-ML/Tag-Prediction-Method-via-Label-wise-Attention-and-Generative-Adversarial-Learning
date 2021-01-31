@@ -27,8 +27,8 @@
 
 
 python main.py \
-        --experiment_no='zyc_example'  \
-        --epochs=5 \
+        --experiment_no='wqb_example'  \
+        --epochs=1 \
         --epoch_step=4 \
         --device_ids=0 \
         --batch-size=4 \
