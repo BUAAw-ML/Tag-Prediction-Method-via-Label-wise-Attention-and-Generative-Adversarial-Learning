@@ -283,6 +283,7 @@ class Engine(object):
         print(result)
         with open('testResult.json', 'a') as f:
             json.dump(result, f)
+        exit()
 
     # def recordResult(self, target, output):
     #     result = []
