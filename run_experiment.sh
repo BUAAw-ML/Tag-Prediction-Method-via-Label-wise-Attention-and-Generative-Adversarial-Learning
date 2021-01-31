@@ -28,10 +28,10 @@
 
 python main.py \
         --experiment_no='wqb_test'  \
-        --epochs=1 \
+        --epochs=2 \
         --epoch_step=50 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
@@ -45,7 +45,7 @@ python main.py \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
-        --data_split=1000  \
+        --data_split=999999  \
         --test_description=''  \
 
 #方法、epoch_step
