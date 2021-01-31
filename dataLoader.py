@@ -645,7 +645,7 @@ class dataEngine(Dataset):
 
             if len(dscp_tokens) > maxwords or len(dscp_tokens) < minwords:
                 continue
-            if len(dscp_tokens) < 70 and len(dscp_tokens) > 68:
+            if len(dscp_tokens) < 60 and len(dscp_tokens) > 58:
                 print(text)
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
