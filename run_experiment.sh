@@ -47,7 +47,7 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='./result/20210131/hhm_test/model_best.pth.tar' # \
+        --resume='./result/20210131/hhm_test/model_best.pth.tar'  \
         --evaluate=True
 
 #方法、epoch_step
