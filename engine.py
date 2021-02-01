@@ -276,7 +276,7 @@ class Engine(object):
             output, ids, dscp_tokens, attention = self.on_forward(False, model, criterion, data_loader)
 
             # record the detials of the result:
-            if epoch == self.state['max_epochs'] - 1:
+            if epoch == self.state['max_epochs'] - 1 or self.state['evaluate']:
                 # self.recordResult(target, output)
                 self.recordResult(ids, dscp_tokens, attention, target, output)
 

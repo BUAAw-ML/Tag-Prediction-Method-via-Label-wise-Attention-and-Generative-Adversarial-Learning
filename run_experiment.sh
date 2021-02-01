@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='zyz_MultiLabelMAP_noFT_example'  \
+        --experiment_no='hhm_test'  \
         --epochs=60 \
         --epoch_step=50 \
         --device_ids=0 \
@@ -47,7 +47,8 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='' #./result/20210131/wqb_example_stack-overflow2000/checkpoint.pth.tar
+        --resume='./result/20210131/hhm/model_best.pth.tar' # \
+        --evaluate=True
 
 #方法、epoch_step
 # MLPBert, MABert
