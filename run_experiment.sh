@@ -27,8 +27,8 @@
 
 
 python main.py \
-        --experiment_no='zyz_semiGAN_MultiLabelMAP_example'  \
-        --epochs=1 \
+        --experiment_no='test_semiGAN_MultiLabelMAP_example'  \
+        --epochs=34 \
         --epoch_step=50 \
         --device_ids=0 \
         --batch-size=4 \
@@ -47,7 +47,7 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='./result/20210201/hhm_test_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'   #  \
+        --resume='./result/20210201/test_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'   #  \
 #        --evaluate=False
 
 #方法、epoch_step
