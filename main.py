@@ -41,8 +41,10 @@ parser.add_argument('--print-freq', '-p', default=1000, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH', #
                     help='path to latest checkpoint (default: none)')
-parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
-                    help='evaluate model on validation set')
+# parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
+#                     help='evaluate model on validation set')
+parser.add_argument('--evaluate', default=False, type=bool,
+                    help='evaluate')
 parser.add_argument('--save_model_path', default='./checkpoint', type=str,
                     help='path to save checkpoint (default: none)')
 parser.add_argument('--data_type', default='All', type=str,
@@ -123,8 +125,8 @@ state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': a
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
          'result_file': fo, 'method': args.method, 'result_path_method': result_method_path}
 
-if args.evaluate:
-    state['evaluate'] = True
+# if args.evaluate:
+#     state['evaluate'] = True
 
 bert = BertModel.from_pretrained('bert-base-uncased')
 
