@@ -28,8 +28,8 @@
 
 python main.py \
         --experiment_no='test_semiGAN_MultiLabelMAP_example'  \
-        --epochs=34 \
-        --epoch_step=50 \
+        --epochs=20 \
+        --epoch_step=19 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
