@@ -47,8 +47,8 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='' \  #./result/20210201/hhm_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'  \
-        --evaluate=False
+        --resume=''   #./result/20210201/hhm_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'  \
+#        --evaluate=False
 
 #方法、epoch_step
 # MLPBert, MABert
