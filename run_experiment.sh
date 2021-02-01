@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wcm_semiGAN_MultiLabelMAP_example'  \
+        --experiment_no='zyz_semiGAN_MultiLabelMAP_example'  \
         --epochs=1 \
         --epoch_step=50 \
         --device_ids=0 \
