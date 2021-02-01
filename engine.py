@@ -157,7 +157,7 @@ class Engine(object):
             criterion = criterion.cuda(self.state['device_ids'][0])
 
         if self.state['evaluate']:
-            self.validate(val_loader, model, criterion)
+            self.validate(val_loader, model, criterion, self.state['start_epoch'])
             return
 
         # TODO define optimizer
