@@ -36,8 +36,8 @@ class Engine(object):
         if self._state('device_ids') is None:
             self.state['device_ids'] = None
 
-        if self._state('evaluate') is None:
-            self.state['evaluate'] = False
+        # if self._state('evaluate') is None:
+        #     self.state['evaluate'] = False
 
         if self._state('start_epoch') is None:
             self.state['start_epoch'] = 0
