@@ -27,20 +27,20 @@
 
 
 python main.py \
-        --experiment_no='hhm_MultiLabelMAP_example'  \
-        --epochs=3 \
+        --experiment_no='wcm_semiGAN_MultiLabelMAP_example'  \
+        --epochs=15 \
         --epoch_step=50 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --model_type='MABert' \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
