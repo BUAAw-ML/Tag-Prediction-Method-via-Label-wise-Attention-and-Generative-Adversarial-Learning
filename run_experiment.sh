@@ -27,7 +27,7 @@
 
 
 python main.py \
-        --experiment_no='wcm_generateEmbedding'  \
+        --experiment_no='zyc_generateEmbedding_detach'  \
         --epochs=120 \
         --epoch_step=110 \
         --device_ids=0 \
