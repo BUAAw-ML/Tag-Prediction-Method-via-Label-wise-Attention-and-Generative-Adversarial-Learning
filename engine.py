@@ -181,14 +181,14 @@ class Engine(object):
             prec1 = self.validate(val_loader, model, criterion, epoch)
 
             # remember best prec@1 and save checkpoint
-            is_best = prec1['OF1'] > self.state['best_score']['OF1']
-            self.save_checkpoint({
-                'epoch': epoch + 1,
-                # 'arch': self._state('arch'),
-                'state_dict-Generator': model['Generator'].state_dict() if self.state['use_gpu'] else model['Generator'].state_dict(),
-                'state_dict-Classifier': model['Classifier'].state_dict() if self.state['use_gpu'] else model['Classifier'].state_dict(),
-                'best_score': self.state['best_score'],
-            }, is_best)
+            # is_best = prec1['OF1'] > self.state['best_score']['OF1']
+            # self.save_checkpoint({
+            #     'epoch': epoch + 1,
+            #     # 'arch': self._state('arch'),
+            #     'state_dict-Generator': model['Generator'].state_dict() if self.state['use_gpu'] else model['Generator'].state_dict(),
+            #     'state_dict-Classifier': model['Classifier'].state_dict() if self.state['use_gpu'] else model['Classifier'].state_dict(),
+            #     'best_score': self.state['best_score'],
+            # }, is_best)
 
             self.state['best_score']['map'] = max(prec1['map'], self.state['best_score']['map'])
             if prec1['OF1'] >= self.state['best_score']['OF1']:
