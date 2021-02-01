@@ -47,7 +47,7 @@ python main.py \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='./result/20210201/hhm_MultiLabelMAP_example_stack-overflow2000/model_best.pth.tar'  \
+        --resume='./result/20210201/hhm_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'  \
         --evaluate=True
 
 #方法、epoch_step
