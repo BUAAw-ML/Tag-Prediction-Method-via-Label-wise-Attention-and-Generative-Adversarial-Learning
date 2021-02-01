@@ -28,26 +28,26 @@
 
 python main.py \
         --experiment_no='wcm_semiGAN_MultiLabelMAP_example'  \
-        --epochs=15 \
+        --epochs=1 \
         --epoch_step=50 \
         --device_ids=0 \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --model_type='MABert' \
-        --method='semiGAN_MultiLabelMAP' \
+        --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume=''   #./result/20210201/hhm_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'  \
+        --resume='./result/20210201/hhm_test_MultiLabelMAP_example_stack-overflow2000/checkpoint.pth.tar'   #  \
 #        --evaluate=False
 
 #方法、epoch_step
