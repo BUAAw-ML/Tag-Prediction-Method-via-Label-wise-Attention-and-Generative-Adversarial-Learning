@@ -144,7 +144,7 @@ class MABert(nn.Module):
         # prob = torch.max(pred[:,:self.num_classes],-1)[0] - 0.5
         # prob = self.relu(prob)
 
-        return prob[:,1], logit, prob[:,0]
+        return prob[:,1], logit, prob[:,0], attention
 
     # def forward(self, ids, token_type_ids, attention_mask, encoded_tag, tag_mask, feat):
     #     token_feat = self.bert(ids,
