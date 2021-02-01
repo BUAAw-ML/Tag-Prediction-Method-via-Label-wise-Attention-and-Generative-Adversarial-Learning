@@ -157,7 +157,8 @@ class Engine(object):
             criterion = criterion.cuda(self.state['device_ids'][0])
 
         if self.state['evaluate']:
-            self.validate(val_loader, model, criterion, self.state['start_epoch'])
+            self.state['epoch'] = self.state['epoch']
+            self.validate(val_loader, model, criterion, self.state['epoch'])
             return
 
         # TODO define optimizer
@@ -276,9 +277,9 @@ class Engine(object):
             output, ids, dscp_tokens, attention = self.on_forward(False, model, criterion, data_loader)
 
             # record the detials of the result:
-            if epoch == self.state['max_epochs'] - 1 or self.state['evaluate']:
-                # self.recordResult(target, output)
-                self.recordResult(ids, dscp_tokens, attention, target, output)
+            # if epoch == self.state['max_epochs'] - 1 or self.state['evaluate']:
+            #     # self.recordResult(target, output)
+            #     self.recordResult(ids, dscp_tokens, attention, target, output)
 
             # measure elapsed time
             self.state['batch_time_current'] = time.time() - end
