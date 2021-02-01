@@ -34,20 +34,20 @@ python main.py \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
+        --B-lr=0.001 \
         --save_model_path='./checkpoint' \
         --data_type='TrainTestTextTag' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
         --model_type='MABert' \
-        --method='MultiLabelMAP' \
+        --method='semiGAN_MultiLabelMAP' \
         --overlength_handle='truncation' \
         --min_tagFrequence=0  \
         --max_tagFrequence=999999  \
         --intanceNum_limit=999999 \
         --data_split=999999  \
         --test_description='' \
-        --resume='./result/20210131/hhm/model_best.pth.tar' # \
+        --resume='./result/20210131/hhm_test/model_best.pth.tar' # \
         --evaluate=True
 
 #方法、epoch_step
