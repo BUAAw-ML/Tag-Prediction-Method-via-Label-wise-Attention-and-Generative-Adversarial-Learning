@@ -8,7 +8,7 @@ python main.py \
         --batch-size=4 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \ #According to the relevant literature, generative adversarial learning requires a smaller learning rate
+        --B-lr=0.001 \  #According to the relevant literature, generative adversarial learning requires a smaller learning rate
         --data_type='TrainTest_pkl' \
         --data_path='../datasets/Freecode' \
         --use_previousData=0 \
