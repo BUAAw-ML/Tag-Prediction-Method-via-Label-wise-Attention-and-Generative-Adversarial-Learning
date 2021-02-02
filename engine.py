@@ -151,14 +151,14 @@ class Engine(object):
 
         optimizer = {}
 
-        # According to the relevant literature, generative adversarial learning requires a smaller learning rate
-        if self.state['method'] == 'GAN_MultiLabelMAP':
-            self.state['B_lr'] *= 0.1
-
         optimizer['Generator'] = torch.optim.SGD(
             [{'params': model['Generator'].parameters(), 'lr': self.state['G_lr']}],
             momentum=0.9, weight_decay=1e-4)
         print("B_lr {}".format(self.state['B_lr']))
+
+        # According to the relevant literature, generative adversarial learning requires a smaller learning rate
+        if self.state['method'] == 'GAN_MultiLabelMAP':
+            self.state['B_lr'] *= 0.1
 
         optimizer['Classifier'] = torch.optim.SGD(
             model['Classifier'].get_config_optim(self.state['D_lr'], self.state['B_lr']),
