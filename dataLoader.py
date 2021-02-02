@@ -8,9 +8,7 @@ import torch
 from torch.utils.data import Dataset
 from transformers import BertTokenizer
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
 
-# from word_embedding import *
 import pickle
 import json
 
@@ -149,22 +147,6 @@ class dataEngine(Dataset):
         dscp = [e['dscp'] for e in batch]
 
         return (ids, token_type_ids, attention_mask, dscp_tokens), tags, dscp
-
-    @classmethod
-    def get_tfidf_dict(cls, document):
-        tfidf_dict = {}
-        tfidf_model = TfidfVectorizer(sublinear_tf=True,
-                                        strip_accents='unicode',
-                                        analyzer='word',
-                                        token_pattern=r'\w{1,}',
-                                        stop_words='english',
-                                        ngram_range=(1, 1),
-                                        max_features=10000).fit(document)
-        for item in tfidf_model.vocabulary_:
-            tfidf_dict[item] = tfidf_model.idf_[tfidf_model.vocabulary_[item]]
-
-        return tfidf_dict
-
 
     def filter_pkl(self, file):
         tag_occurance = {}

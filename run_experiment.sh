@@ -21,7 +21,7 @@
 #        --resume=''
 
 python main.py \
-        --experiment_no='wcm_MultiLabelMAP'  \
+        --experiment_no='hhm_MultiLabelMAP'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
@@ -29,8 +29,8 @@ python main.py \
         --G-lr=0.001 \
         --D-lr=0.1 \
         --B-lr=0.01 \
-        --data_type='TrainTest_text' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_type='TrainTest_pkl' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='LABert' \
         --method='MultiLabelMAP' \
