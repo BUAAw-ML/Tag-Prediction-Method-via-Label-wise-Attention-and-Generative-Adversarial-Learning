@@ -52,7 +52,7 @@ parser.add_argument('--bert_trainable', default=True, type=bool,
                     help='bert_trainable')
 parser.add_argument('--use_previousData', default=0, type=int,
                     help='use_previousData')
-parser.add_argument('--model_type', default='MABert', type=str,
+parser.add_argument('--model_type', default='LABert', type=str,
                     help='The type of model to train')
 parser.add_argument('--method', default='MultiLabelMAP', type=str,
                     help='Method')
@@ -139,9 +139,9 @@ if args.model_type == 'MLPBert':
 
     engine = MultiLabelMAPEngine(state)
 
-elif args.model_type == 'MABert':
+elif args.model_type == 'LABert':
 
-    model['Classifier'] = MABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
+    model['Classifier'] = LABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
     optimizer['Classifier'] = torch.optim.SGD(model['Classifier'].get_config_optim(args.D_lr, args.B_lr),
                                 momentum=args.momentum, weight_decay=args.weight_decay)

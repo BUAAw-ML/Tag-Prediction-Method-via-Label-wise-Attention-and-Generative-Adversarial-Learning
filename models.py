@@ -7,9 +7,9 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 
 
-class MABert(nn.Module):
+class LABert(nn.Module):
     def __init__(self, bert, num_classes, bert_trainable=True, device=0):
-        super(MABert, self).__init__()
+        super(LABert, self).__init__()
 
         self.add_module('bert', bert)
         if not bert_trainable:
