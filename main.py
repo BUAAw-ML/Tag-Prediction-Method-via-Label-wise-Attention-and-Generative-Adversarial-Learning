@@ -81,11 +81,11 @@ method_str = args.experiment_no + '_' + args.data_path.split("/")[-1]
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 print('#' * 100 + '\n')
 fo.write('#' * 100 + '\n')
-setting_str = 'Setting: \t batch-size: {} \t epoch_step: {}'\
+setting_str = 'Setting: \t batch-size: {} \t epoch_step: {} \t epochs: {}'\
               '\ndevice_ids: {} \t data_path: {} \t bert_trainable: {}' \
               '\nuse_previousData: {} \t method: {} \t overlength_handle: {} \t data_split: {} \n' \
               'experiment_no: {} \t test_description: {} \t model_type: {} \t evaluate: {}\n'.format(
-                args.batch_size, args.epoch_step,
+                args.batch_size, args.epoch_step, args.epochs,
                 args.device_ids, args.data_path, args.bert_trainable,
                 args.use_previousData, args.method, args.overlength_handle, args.data_split,
                 args.experiment_no, args.test_description, args.model_type, args.evaluate)
@@ -122,7 +122,6 @@ criterion = nn.BCELoss()
 model = {}
 
 model['Generator'] = Generator()
-# define optimizer
 
 if args.model_type == 'MLPBert':
     model['Classifier'] = MLPBert(bert, num_classes=len(dataset.tag2id), hidden_dim=512, hidden_layer_num=1, bert_trainable=True)
