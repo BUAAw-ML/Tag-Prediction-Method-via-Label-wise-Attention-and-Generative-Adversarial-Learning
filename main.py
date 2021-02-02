@@ -32,10 +32,10 @@ parser.add_argument('--D-lr', '--Discriminator-learning-rate', default=0.1, type
                     metavar='LR', help='learning rate for pre-trained layers')
 parser.add_argument('--B-lr', '--Bert-learning-rate', default=0.001, type=float,
                     metavar='LR', help='learning rate for pre-trained layers')
-parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
-                    help='momentum')
-parser.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
-                    metavar='W', help='weight decay (default: 1e-4)')
+# parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
+#                     help='momentum')
+# parser.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
+#                     metavar='W', help='weight decay (default: 1e-4)')
 parser.add_argument('--print-freq', '-p', default=1000, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH', #
@@ -113,8 +113,8 @@ fo.write(data_size)
 
 state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
          'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
-         'save_model_path': args.save_model_path, 'log_dir': log_dir, 'workers': args.workers,
-         'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
+         'save_model_path': args.save_model_path, 'log_dir': log_dir, 'workers': args.workers, 'epoch_step': args.epoch_step,
+          'D_lr': args.D_lr, 'B_lr': args.B_lr, 'G_lr': args.G_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
          'result_file': fo, 'method': args.method}
 
@@ -124,18 +124,12 @@ bert = BertModel.from_pretrained('bert-base-uncased')
 criterion = nn.BCELoss()
 
 model = {}
-optimizer = {}
 
 model['Generator'] = Generator()
 # define optimizer
-optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
-                                         momentum=args.momentum, weight_decay=args.weight_decay)
 
 if args.model_type == 'MLPBert':
     model['Classifier'] = MLPBert(bert, num_classes=len(dataset.tag2id), hidden_dim=512, hidden_layer_num=1, bert_trainable=True)
-
-    optimizer['Classifier'] = torch.optim.SGD(model['Classifier'].get_config_optim(args.D_lr, args.B_lr),
-                                              momentum=args.momentum, weight_decay=args.weight_decay)
 
     engine = MultiLabelMAPEngine(state)
 
@@ -143,14 +137,11 @@ elif args.model_type == 'LABert':
 
     model['Classifier'] = LABert(bert, num_classes=len(dataset.tag2id), bert_trainable=args.bert_trainable, device=args.device_ids[0])
 
-    optimizer['Classifier'] = torch.optim.SGD(model['Classifier'].get_config_optim(args.D_lr, args.B_lr),
-                                momentum=args.momentum, weight_decay=args.weight_decay)
-
     if args.method == 'MultiLabelMAP':
         engine = MultiLabelMAPEngine(state)
     elif args.method == 'GAN_MultiLabelMAP':
         engine = semiGAN_MultiLabelMAPEngine(state)
 
-engine.learning(model, criterion, dataset, optimizer)
+engine.learning(model, criterion, dataset)
 
 fo.close()

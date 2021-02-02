@@ -101,7 +101,7 @@ class Engine(object):
             self.state['loss'].backward()
             optimizer.step()
 
-    def learning(self, model, criterion, dataset, optimizer=None):
+    def learning(self, model, criterion, dataset):
         ### data loading code ###
         train_loader = torch.utils.data.DataLoader(dataset.train_data,
                                                    batch_size=self.state['batch_size'], shuffle=False,
@@ -149,6 +149,21 @@ class Engine(object):
             self.validate(val_loader, model, criterion, self.state['epoch'])
             return
 
+        optimizer = {}
+
+        # According to the relevant literature, generative adversarial learning requires a smaller learning rate
+        if self.state['method'] == 'GAN_MultiLabelMAP':
+            self.state['B_lr'] *= 0.1
+
+        optimizer['Generator'] = torch.optim.SGD(
+            [{'params': model['Generator'].parameters(), 'lr': self.state['G_lr']}],
+            momentum=0.9, weight_decay=1e-4)
+        print("B_lr {}".format(self.state['B_lr']))
+
+        optimizer['Classifier'] = torch.optim.SGD(
+            model['Classifier'].get_config_optim(self.state['D_lr'], self.state['B_lr']),
+            momentum=0.9, weight_decay=1e-4)
+
         for epoch in range(self.state['start_epoch'], self.state['max_epochs']):
             self.state['epoch'] = epoch
             lr = self.adjust_learning_rate(optimizer)
@@ -166,7 +181,7 @@ class Engine(object):
             prec1 = self.validate(val_loader, model, criterion, epoch)
 
             # remember best OF1 and save checkpoint
-            # is_best = prec1['map'] > self.state['best_score']['map']
+            # is_best = prec1['OF1'] > self.state['best_score']['OF1']
             # self.save_checkpoint({
             #     'epoch': epoch + 1,
             #     # 'arch': self._state('arch'),
@@ -175,7 +190,7 @@ class Engine(object):
             #     'best_score': self.state['best_score'],
             # }, is_best)
 
-            if prec1['map'] >= self.state['best_score']['map']:
+            if prec1['OF1'] >= self.state['best_score']['OF1']:
                 self.state['best_score']['OF1'] = prec1['OF1']
                 self.state['best_score']['OP'] = prec1['OP']
                 self.state['best_score']['OR'] = prec1['OR']

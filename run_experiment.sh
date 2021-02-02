@@ -1,12 +1,12 @@
 # Experiment runner script
 
-#According to the relevant literature, generative adversarial learning requires a smaller learning rate
+
 #python main.py \
 #        --experiment_no='zyc_GAN_MultiLabelMAP'  \
 #        --epochs=100 \
 #        --epoch_step=90 \
 #        --device_ids=0 \
-#        --batch-size=4 \
+#        --batch-size=8 \
 #        --G-lr=0.001 \
 #        --D-lr=0.1 \
 #        --B-lr=0.001 \
@@ -22,14 +22,14 @@
 #        --resume=''
 
 python main.py \
-        --experiment_no='wqb_MultiLabelMAP'  \
-        --epochs=100 \
-        --epoch_step=90 \
+        --experiment_no='wcm_MultiLabelMAP'  \
+        --epochs=50 \
+        --epoch_step=40 \
         --device_ids=0 \
-        --batch-size=4 \
+        --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --data_type='TrainTest_pkl' \
         --data_path='../datasets/Freecode' \
         --use_previousData=0 \
