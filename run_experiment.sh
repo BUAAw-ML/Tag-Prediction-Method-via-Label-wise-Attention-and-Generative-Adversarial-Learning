@@ -32,7 +32,7 @@ python main.py \
         --B-lr=0.01 \
         --data_type='TrainTest_pkl' \
         --data_path='../datasets/Freecode' \
-        --use_previousData=0 \
+        --use_previousData=1 \
         --model_type='MLPBert' \
         --method='MultiLabelMAP' \
         --overlength_handle='truncation' \
