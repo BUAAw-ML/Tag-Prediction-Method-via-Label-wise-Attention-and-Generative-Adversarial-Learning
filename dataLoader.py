@@ -10,19 +10,17 @@ from transformers import BertTokenizer
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from word_embedding import *
+# from word_embedding import *
 import pickle
 import json
 
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-token_table = {'ecommerce': 'electronic commerce'}
-
+# token_table = {'ecommerce': 'electronic commerce'}
 
 def load_data(data_config, data_path=None, data_type='allData', use_previousData=False):
     cache_file_head = data_path.split("/")[-1]
 
     if use_previousData:
-
         print("load dataset from cache")
         dataset = dataEngine.from_dict(torch.load(os.path.join('cache', cache_file_head + '.dataset')))
         encoded_tag, tag_mask = torch.load(os.path.join('cache', cache_file_head + '.encoded_tag')), \
@@ -35,73 +33,27 @@ def load_data(data_config, data_path=None, data_type='allData', use_previousData
 
         dataset = dataEngine(data_config=data_config)
 
-        if data_type == 'All':
-
-            data = dataset.load_programWeb_AAPD(data_path)
-
-            data = np.array(data)
-            ind = np.random.RandomState(seed=10).permutation(len(data))
-
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.8)
-            split3 = int(len(data) * 1)
-
-            dataset.train_data = data[ind[:split]].tolist()
-            dataset.unlabeled_train_data = data[ind[:split2]].tolist()
-            dataset.test_data = data[ind[split2:split3]].tolist()
-
-
-        elif data_type == 'TrainTest_programWeb_freecode_AAPD':
-
+        if data_type == 'TrainTest_pkl':
             file = os.path.join(data_path, 'train.pkl')
-            dataset.filter_tags_programWeb_freecode_AAPD(file)
-            data = dataset.load_TrainTest_programWeb_freecode_AAPD(file)
+            dataset.filter_pkl(file)
+            data = dataset.load_pkl(file)
             dataset.train_data, dataset.unlabeled_train_data = dataset.data_preprocess(data)
 
             file = os.path.join(data_path, 'test.pkl')
-            dataset.test_data = dataset.load_TrainTest_programWeb_freecode_AAPD(file)
+            dataset.test_data = dataset.load_pkl(file)
 
-        elif data_type == 'TrainTest_agNews':
-
-            file = os.path.join(data_path, 'train.csv')
-            data = dataset.load_agNews(file)
-
-            data = np.array(data)
-            ind = np.random.RandomState(seed=10).permutation(len(data))
-            split = int(len(data) * data_config['data_split'])
-            split2 = int(len(data) * 0.3)
-
-            # dataset.train_data = data[ind[:split]].tolist()
-            # dataset.unlabeled_train_data = data[ind[:500]].tolist()
-            dataset.train_data = data[ind].tolist()
-
-            file = os.path.join(data_path, 'test.csv')
-            dataset.test_data = dataset.load_agNews(file, train=False)
-            dataset.unlabeled_train_data = dataset.test_data[:500]
-            # tdate = dataset.load_agNews(file)
-            # tdate = np.array(tdate)
-            # ind = np.random.RandomState(seed=10).permutation(len(tdate))
-            # dataset.test_data = data[ind[:1]].tolist()
-
-        elif data_type == 'TrainTestTextTag':
+        elif data_type == 'TrainTest_text':
 
             file1 = os.path.join(data_path, 'train_texts.txt')
             file2 = os.path.join(data_path, 'train_labels.txt')
-            dataset.filterTags_EurLex_RCV2_SO(file2)
+            dataset.filterTags_text(file2)
             data = dataset.load_EurLex_RCV2_SO(file1, file2)
 
             dataset.train_data, dataset.unlabeled_train_data = dataset.data_preprocess(data)
-            # data = np.array(data)
-            # ind = np.random.RandomState(seed=10).permutation(len(data))
-            # split = int(len(data) * data_config['data_split'])
-            # split2 = int(len(data) * 0.5)
-            # 
-            # dataset.train_data = data[ind[:split]].tolist()
-            # dataset.unlabeled_train_data = data[ind[split:]].tolist()
 
             file1 = os.path.join(data_path, 'test_texts.txt')
             file2 = os.path.join(data_path, 'test_labels.txt')
-            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2, 53, 59)
+            dataset.test_data = dataset.load_EurLex_RCV2_SO(file1, file2)
 
         torch.save(dataset.to_dict(), os.path.join('cache', cache_file_head + '.dataset'))
         encoded_tag, tag_mask = dataset.encode_tag()
@@ -156,44 +108,6 @@ class dataEngine(Dataset):
         }
         return data_dict
 
-    def stat_cooccurence(cls, data, tags_num):
-
-        co_occur_mat = torch.zeros(size=(tags_num, tags_num))
-        for i in range(len(data)):
-            tag_ids = data[i]['tag_ids']
-            for t1 in range(len(tag_ids)):
-                for t2 in range(len(tag_ids)):
-                    #if tag_ids[t1] != tag_ids[t2]:
-                    co_occur_mat[tag_ids[t1], tag_ids[t2]] += 1
-
-        return co_occur_mat
-
-    #directly input relations between tags
-    def similar_net(cls, csvfile, tag2id):
-
-        tags_num = len(tag2id)
-        co_occur_mat = torch.zeros(size=(tags_num, tags_num))
-        i = 0
-        with open(csvfile, newline='') as f:
-            reader = csv.reader(f, delimiter=',')
-            next(reader)
-            for row in reader:
-                if len(row) != 3:
-                    continue
-                tag1, similar, tag2 = row
-
-                if tag1 not in tag2id or tag2 not in tag2id:
-                    i += 1
-                    continue
-
-                tag1 = tag1.strip()
-                tag2 = tag2.strip()
-
-                co_occur_mat[tag2id[tag1], tag2id[tag2]] += float(similar)
-
-        print(i)
-        return co_occur_mat
-
     def get_tags_num(self):
         return len(self.tag2id)
 
@@ -214,30 +128,6 @@ class dataEngine(Dataset):
             padded_tag_ids[i, :len(tag_ids[i])] = torch.tensor(tag_ids[i])
         return padded_tag_ids, mask
 
-    #directly obtain pretrained-embeddings for tags
-    def obtain_tag_embedding(self, wv='glove', model_path='data'):
-
-        if wv == 'glove':
-            save_file = os.path.join('data', 'word_embedding_model', 'glove_word2vec_wordnet.pkl')
-            if not os.path.exists(save_file):
-                word_vectors = get_glove_dict(model_path)
-        else:
-            raise NotImplementedError
-
-        if not os.path.exists(save_file):
-            tag_list = []
-            for i in range(self.get_tags_num()):
-                tag = self.id2tag[i]
-                tag_list.append(tag)
-            print(tag_list)
-
-            print('obtain semantic word embedding', save_file)
-            embed_text_file(tag_list, word_vectors, save_file)
-        else:
-            print('Embedding existed :', save_file, 'Skip!!!')
-
-        return save_file
-
     def collate_fn(self, batch):
         # construct input
         inputs = [e['dscp_ids'] for e in batch]  #e['title_ids'] +
@@ -245,8 +135,7 @@ class dataEngine(Dataset):
 
 
         lengths = np.array([len(e) for e in inputs])
-        max_len = np.max(lengths)  #_to_max_length=True , truncation=True
-        # inputs = [tokenizer.prepare_for_model(e, max_length=max_len+2, pad_to_max_length=True) for e in inputs]
+        max_len = np.max(lengths)
         inputs = [tokenizer.prepare_for_model(e, max_length=max_len + 2, pad_to_max_length=True, truncation=True) for e in inputs]
 
         ids = torch.LongTensor([e['input_ids'] for e in inputs])
@@ -258,8 +147,6 @@ class dataEngine(Dataset):
             tags[i, batch[i]['tag_ids']] = 1.
 
         dscp = [e['dscp'] for e in batch]
-        label_mask = torch.tensor([e['label'] for e in batch]).byte()
-        label_mask = torch.nonzero(label_mask).squeeze(-1)
 
         return (ids, token_type_ids, attention_mask, dscp_tokens), tags, dscp
 
@@ -278,181 +165,16 @@ class dataEngine(Dataset):
 
         return tfidf_dict
 
-    def load_programWeb_AAPD(self, f):
-        data = []
 
-        document = []
-        tag_occurance = {}
-        # csv.field_size_limit(sys.maxsize)
-        with open(f, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)
-            for row in reader:
-
-                if len(row) != 4:
-                    continue
-                _, _, _, tag = row
-
-                tag = tag.strip().split('###')
-                tag = [t for t in tag if t != '']
-
-                for t in tag:
-                    if t not in tag_occurance:
-                        tag_occurance[t] = 1
-                    else:
-                        tag_occurance[t] += 1
-
-        # ignored_tags = set(['Tools','Applications','Other', 'API', 'Software-as-a-Service','Platform-as-a-Service',
-        # 'Data-as-a-Service'])  #
-        for tag in tag_occurance:
-            if self.data_config['min_tagFrequence'] <= tag_occurance[tag] <= self.data_config['max_tagFrequence']:
-                self.use_tags[item[0]] = item[1]
-
-        print('Total number of tags: {}'.format(len(tag_occurance)))
-        print(sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True))
-
-        with open(f, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)
-            for row in reader:
-
-                if len(row) != 4:
-                    continue
-                id, title, dscp, tag = row
-
-                title_tokens = tokenizer.tokenize(title.strip())
-                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
-
-                if len(dscp_tokens) > 510:
-                    if self.data_config['overlength_handle'] == 'truncation':
-                        dscp_tokens = dscp_tokens[:510]
-                    else:
-                        continue
-
-                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-
-                tag = tag.strip().split('###')
-                tag = [t for t in tag if t != '']
-
-                if self.use_tags is not None:
-                    tag = [t for t in tag if t in self.use_tags]
-
-                # if len(set(tag)) < 2:
-                #     continue
-
-                if len(tag) == 0:
-                    continue
-
-                for t in tag:
-                    if t not in self.tag2id:
-                        tag_id = len(self.tag2id)
-                        self.tag2id[t] = tag_id
-                        self.id2tag[tag_id] = t
-
-                tag_ids = [self.tag2id[t] for t in tag]
-
-                data.append({
-                    'id': int(id),
-                    'dscp_ids': dscp_ids,
-                    'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
-                    'dscp': dscp
-                })
-
-        print("The number of tags for training: {}".format(len(self.tag2id)))
-        # os.makedirs('cache', exist_ok=True)
-
-        return data
-
-    def load_freecode(self, file):
-        data = []
-
-        document = []
-        tag_occurance = {}
-        # csv.field_size_limit(sys.maxsize)
-        with open(file, newline='') as f:
-            reader = json.load(f)
-            for row in reader:
-
-                tag = row["tags"]
-
-                for t in tag:
-                    if t not in tag_occurance:
-                        tag_occurance[t] = 1
-                    else:
-                        tag_occurance[t] += 1
-
-        print('Total number of tags: {}'.format(len(tag_occurance)))
-        tags = sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True)
-
-        print(tags)
-
-        for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
-            self.use_tags[item[0]] = item[1]
-
-        with open(file, newline='') as f:
-            reader = json.load(f)
-            for row in reader:
-
-                title = row["name"]
-                dscp = row["description"]
-                tag = row["tags"]
-
-                title_tokens = tokenizer.tokenize(title.strip())
-                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
-
-                if len(dscp_tokens) > 510:
-                    if self.data_config['overlength_handle'] == 'truncation':
-                        dscp_tokens = dscp_tokens[:510]
-                    else:
-                        continue
-
-                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-
-                if self.use_tags is not None:
-                    tag = [t for t in tag if t in self.use_tags]
-
-                if len(tag) == 0:
-                    continue
-
-                for t in tag:
-                    if t not in self.tag2id:
-                        tag_id = len(self.tag2id)
-                        self.tag2id[t] = tag_id
-                        self.id2tag[tag_id] = t
-
-                tag_ids = [self.tag2id[t] for t in tag]
-
-                data.append({
-                    'id': 0,
-                    'dscp_ids': dscp_ids,
-                    'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
-                    'dscp': dscp
-                })
-
-        print("The number of tags for training: {}".format(len(self.tag2id)))
-
-        return data
-
-    def filter_tags_programWeb_freecode_AAPD(self, file):
+    def filter_pkl(self, file):
         tag_occurance = {}
         ignored_tags = set()
-        # ignored_tags = set(['Tools', 'Applications', 'Other', 'API', 'Platform-as-a-Service',
-        #                     'Data-as-a-Service', 'Database', 'Application Development', 'Text', 'Business', 'Location',
-        #                     'Office', 'Content'])
 
-        with open(file,'rb') as pklfile:
+        with open(file, 'rb') as pklfile:
             reader = pickle.load(pklfile)
             for row in reader:
 
-                # if len(row) != 4:
-                #     continue
-
                 tag = row["tags"]
-
-                # tag = [t for t in tag if t != '']
-
                 tag = list(set(tag))
 
                 for t in tag:
@@ -463,6 +185,7 @@ class dataEngine(Dataset):
                     else:
                         tag_occurance[t] += 1
 
+
         print('Total number of tags: {}'.format(len(tag_occurance)))
         tags = sorted(tag_occurance.items(), key=lambda x: x[1], reverse=True)
 
@@ -471,13 +194,9 @@ class dataEngine(Dataset):
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
             self.use_tags[item[0]] = item[1]
 
-    def load_TrainTest_programWeb_freecode_AAPD(self, file):
+    def load_pkl(self, file):
         data = []
-        document = []
 
-        taglen = 0
-        item = 0
-        i=0
         with open(file, 'rb') as pklfile:
 
             reader = pickle.load(pklfile)
@@ -496,7 +215,6 @@ class dataEngine(Dataset):
                 dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
 
                 if len(dscp_tokens) > 510:
-                    i+=1
                     if self.data_config['overlength_handle'] == 'truncation':
                         dscp_tokens = dscp_tokens[:510]
                     else:
@@ -509,8 +227,6 @@ class dataEngine(Dataset):
 
                 if len(tag) == 0:
                     continue
-                taglen += len(tag)
-                item += 1
 
                 for t in tag:
                     if t not in self.tag2id:
@@ -525,82 +241,16 @@ class dataEngine(Dataset):
                     'dscp_ids': dscp_ids,
                     'dscp_tokens': dscp_tokens,
                     'tag_ids': tag_ids,
-                    'dscp': dscp,
-                    'label': 1
-                })
-
-        print("The number of tags for training: {}".format(len(self.tag2id)))
-        # print(self.id2tag)
-        print("taglen: {}".format(taglen/item))
-        print(i)
-        print(item)
-        return data
-
-    def load_agNews(self, file, train =True):
-        data = []
-
-        tag_occurance = {}
-
-        tag_occurance['1'] = 0
-        tag_occurance['2'] = 0
-        tag_occurance['3'] = 0
-        tag_occurance['4'] = 0
-
-        with open(file, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            # next(reader)
-            for row in reader:
-
-                if len(row) != 3:
-                    continue
-                tag, title, dscp = row
-
-                title_tokens = tokenizer.tokenize(title.strip())
-                dscp_tokens = title_tokens + tokenizer.tokenize(dscp.strip())
-
-                if len(dscp_tokens) > 510:
-                    if self.data_config['overlength_handle'] == 'truncation':
-                        dscp_tokens = dscp_tokens[:510]
-                    else:
-                        continue
-
-                dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
-
-                tag = tag.strip()
-                tag = [t for t in tag if t != '']
-
-                for t in tag:
-                    if t not in self.tag2id:
-                        tag_id = len(self.tag2id)
-                        self.tag2id[t] = tag_id
-                        self.id2tag[tag_id] = t
-                        # tag_occurance[tag[0]] = 0
-
-                tag_ids = [self.tag2id[t] for t in tag]
-                tag_occurance[tag[0]] += 1
-                assert len(tag) == 1
-
-                if tag_occurance[tag[0]] > 2500 and train:
-                    continue
-
-                data.append({
-                    'id': int(0),
-                    'dscp_ids': dscp_ids,
-                    'dscp_tokens': dscp_tokens,
-                    'tag_ids': tag_ids,
                     'dscp': dscp
                 })
 
-
-
         print("The number of tags for training: {}".format(len(self.tag2id)))
 
         return data
 
-    def filterTags_EurLex_RCV2_SO(self, file):
+    def filterTags_text(self, file):
         tag_occurance = {}
         ignored_tags = set()
-        # ignored_tags = set(['database','linux','winforms','performance','oop','flex','actionscript-3','wpf','visual-studio-2008','cocoa-touch','tsql', 'design-patterns', 'design', 'osx','internet-explorer'])
         with open(file, 'r') as f_tag:
             tags = f_tag.readlines()
             for tag in tags:
@@ -623,9 +273,7 @@ class dataEngine(Dataset):
         for item in tags[self.data_config['min_tagFrequence']:self.data_config['max_tagFrequence']]:
             self.use_tags[item[0]] = item[1]
 
-        print(self.use_tags)
-
-    def load_EurLex_RCV2_SO(self, file1, file2, minwords=0, maxwords=1000):
+    def load_EurLex_RCV2_SO(self, file1, file2):
         data = []
 
         f_text = open(file1, 'r')
@@ -642,9 +290,6 @@ class dataEngine(Dataset):
                     dscp_tokens = dscp_tokens[:510]
                 else:
                     continue
-
-            if len(dscp_tokens) > maxwords or len(dscp_tokens) < minwords:
-                continue
 
             dscp_ids = tokenizer.convert_tokens_to_ids(dscp_tokens)
 
@@ -674,8 +319,7 @@ class dataEngine(Dataset):
                 'dscp_ids': dscp_ids,
                 'dscp_tokens': dscp_tokens,
                 'tag_ids': tag_ids,
-                'dscp': text,
-                'label': 1
+                'dscp': text
             })
 
         print("The number of tags for training: {}".format(len(self.tag2id)))
@@ -685,15 +329,15 @@ class dataEngine(Dataset):
         f_tag.close()
 
         return data
-    
+
     def data_preprocess(self, data):
         train_data = []
-        unlabeled_train_data = []
         
         data = np.array(data)
         ind = np.random.RandomState(seed=10).permutation(len(data))
         data = data[ind]
 
+        #### If we use only partial training data, this ensures that the training set contains samples of each tag###
         for tag in self.use_tags.keys():
             self.use_tags[tag] *= self.data_config['data_split'] / len(data) if self.data_config['data_split'] < len(data) else 1
 
@@ -736,11 +380,8 @@ class dataEngine(Dataset):
             train_data.extend(candidate)
             train_data.extend(rest[:int(self.data_config['data_split'] - len(train_data))])
 
-        # if self.data_config['method'] == 'semiGAN_MultiLabelMAP':
-        #     unlabeled_train_data.extend(rest[int(self.data_config['data_split'] - len(train_data)):400])
-
+        ###unlabeled_train_data is used for generative adversarial learning, which use train data without labels###
         unlabeled_train_data = copy.deepcopy(train_data)
-
         unlabeled_data_num = 1600
 
         if len(unlabeled_train_data) >= unlabeled_data_num:
@@ -748,10 +389,6 @@ class dataEngine(Dataset):
 
         while len(unlabeled_train_data) < unlabeled_data_num:
             unlabeled_train_data.extend(train_data)
-
-        # for item in unlabeled_train_data:
-        #     item['label'] = 0
-        #     train_data.append(item)
 
         train_data = np.array(train_data)
         ind = np.random.RandomState(seed=10).permutation(len(train_data))

@@ -189,55 +189,12 @@ class AveragePrecisionMeter(object):
             Np[k] = np.sum(scores >= 0.5)
             Nc[k] = np.sum(targets * (scores >= 0.5))
 
-        for i in range(len(scores_)):
-            max_value = max(scores_[i])
-            for j in range(len(scores_[i])):
-                if max_value == scores_[i][j]:
-                    scores_[i][j] = 1
-                else:
-                    scores_[i][j] = 0
-        acc = accuracy_score(targets_,scores_)
-        # Np[Np == 0] = 1
         OP = np.sum(Nc) / np.sum(Np + 1e-5)
         OR = np.sum(Nc) / np.sum(Ng + 1e-5)
         OF1 = (2 * OP * OR) / (OP + OR + 1e-5)
-
-        P = Nc / (Np + 1e-5)
-        R = Nc / (Ng + 1e-5)
-
-        # print(P)
-        # print(R)
-        # print((2 * P * R) / (P + R + 1e-5))
-        # print('_______')
 
         CP = np.sum(Nc / (Np + 1e-5)) / n_class
         CR = np.sum(Nc / (Ng + 1e-5)) / n_class
         CF1 = (2 * CP * CR) / (CP + CR + 1e-5)
         
-        return acc, OR, OF1, CP, CR, CF1
-
-
-def gen_A(num_classes, t, co_occur_mat):
-    import pickle
-    _adj = co_occur_mat.numpy()
-    print("the number of directed edges in the graph: {}".format(np.sum(_adj >= t) - num_classes))
-    _nums = _adj.diagonal()
-    _nums = _nums[:, np.newaxis]
-    _adj = _adj / _nums
-    _adj[_adj < t] = 0
-    _adj[_adj >= t] = 1
-    _adj = _adj * 0.25 / (_adj.sum(0, keepdims=True) + 1e-6)
-    _adj = _adj + np.identity(num_classes, np.int)
-    return _adj
-
-
-def gen_adj(A):
-    D = torch.pow(A.sum(1), -0.5)
-    D = torch.diag(D)
-    adj = torch.matmul(torch.matmul(A, D).t(), D)
-    return adj
-
-
-def prepareData():
-
-    return
+        return OP, OR, OF1, CP, CR, CF1

@@ -10,7 +10,6 @@ import datetime
 import warnings
 warnings.filterwarnings('ignore')
 
-
 parser = argparse.ArgumentParser(description='Training Super-parameters')
 
 parser.add_argument('-seed', default=0, type=int, metavar='N',
@@ -41,8 +40,6 @@ parser.add_argument('--print-freq', '-p', default=1000, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH', #
                     help='path to latest checkpoint (default: none)')
-# parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
-#                     help='evaluate model on validation set')
 parser.add_argument('--evaluate', default=False, type=bool,
                     help='evaluate')
 parser.add_argument('--save_model_path', default='./checkpoint', type=str,
@@ -67,7 +64,7 @@ parser.add_argument('--max_tagFrequence', default=100000, type=int,
                     help='max_tagFrequence')
 parser.add_argument('--intanceNum_limit', default=2000, type=int,
                     help='max_tagFrequence')
-parser.add_argument('--data_split', default=0.5, type=float,
+parser.add_argument('--data_split', default=999999, type=float,
                     help='data_split')
 parser.add_argument('--experiment_no', default='01', type=str,
                     help='experiment_no')
@@ -84,10 +81,6 @@ log_dir = os.path.join(result_path, 'logs')
 if not os.path.exists(result_path):
     os.makedirs(result_path)
 method_str = args.experiment_no + '_' + args.data_path.split("/")[-1]
-
-result_method_path = os.path.join(result_path, method_str)
-if not os.path.exists(result_method_path):
-    os.makedirs(result_method_path)
 
 fo = open(os.path.join(result_path, method_str + '.txt'), "a+")
 print('#' * 100 + '\n')
@@ -120,23 +113,20 @@ fo.write(data_size)
 
 state = {'batch_size': args.batch_size, 'max_epochs': args.epochs, 'evaluate': args.evaluate,
          'resume': args.resume, 'num_classes': dataset.get_tags_num(), 'difficult_examples': False,
-         'save_model_path': result_method_path, 'log_dir': log_dir, 'workers': args.workers,
+         'save_model_path': args.save_model_path, 'log_dir': log_dir, 'workers': args.workers,
          'epoch_step': args.epoch_step, 'lr': args.D_lr, 'encoded_tag': encoded_tag, 'tag_mask': tag_mask,
          'device_ids': args.device_ids, 'print_freq': args.print_freq, 'id2tag': dataset.id2tag,
-         'result_file': fo, 'method': args.method, 'result_path_method': result_method_path}
-
-# if args.evaluate:
-#     state['evaluate'] = True
+         'result_file': fo, 'method': args.method}
 
 bert = BertModel.from_pretrained('bert-base-uncased')
 
 # define loss function (criterion)
-criterion = nn.BCELoss() #nn.MultiLabelSoftMarginLoss()#nn.CrossEntropyLoss()#
+criterion = nn.BCELoss()
 
 model = {}
 optimizer = {}
 
-model['Generator'] = Generator(bert)
+model['Generator'] = Generator()
 # define optimizer
 optimizer['Generator'] = torch.optim.SGD([{'params': model['Generator'].parameters(), 'lr': args.G_lr}],
                                          momentum=args.momentum, weight_decay=args.weight_decay)
@@ -158,7 +148,7 @@ elif args.model_type == 'MABert':
 
     if args.method == 'MultiLabelMAP':
         engine = MultiLabelMAPEngine(state)
-    elif args.method == 'semiGAN_MultiLabelMAP':
+    elif args.method == 'GAN_MultiLabelMAP':
         engine = semiGAN_MultiLabelMAPEngine(state)
 
 engine.learning(model, criterion, dataset, optimizer)
