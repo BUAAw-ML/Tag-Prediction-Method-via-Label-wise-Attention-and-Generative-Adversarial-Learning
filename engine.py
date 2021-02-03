@@ -12,6 +12,7 @@ import json
 
 tqdm.monitor_interval = 0
 
+
 class Engine(object):
     def __init__(self, state={}):
         self.writer = SummaryWriter(state['log_dir'])
@@ -108,11 +109,11 @@ class Engine(object):
                                                    num_workers=self.state['workers'],
                                                    collate_fn=dataset.collate_fn)
 
-        #for generative adversarial learning, which use train data without labels
+        # for generative adversarial learning, which use train data without labels
         unlabeled_train_loader = torch.utils.data.DataLoader(dataset.unlabeled_train_data,
-                                                   batch_size=self.state['batch_size'], shuffle=False,
-                                                   num_workers=self.state['workers'],
-                                                   collate_fn=dataset.collate_fn)
+                                                             batch_size=self.state['batch_size'], shuffle=False,
+                                                             num_workers=self.state['workers'],
+                                                             collate_fn=dataset.collate_fn)
 
         val_loader = torch.utils.data.DataLoader(dataset.test_data,
                                                  batch_size=self.state['batch_size'], shuffle=False,
@@ -154,7 +155,6 @@ class Engine(object):
         optimizer['Generator'] = torch.optim.SGD(
             [{'params': model['Generator'].parameters(), 'lr': self.state['G_lr']}],
             momentum=0.9, weight_decay=1e-4)
-        print("B_lr {}".format(self.state['B_lr']))
 
         # According to the relevant literature, generative adversarial learning requires a smaller learning rate
         if self.state['method'] == 'GAN_MultiLabelMAP':
@@ -246,7 +246,7 @@ class Engine(object):
             self.on_end_batch(True, model, criterion, data_loader, optimizer)
 
         self.on_end_epoch(True, model, criterion, data_loader, optimizer)
-    
+
     @torch.no_grad()
     def validate(self, data_loader, model, criterion, epoch):
         # switch to evaluate mode
@@ -343,8 +343,8 @@ class MultiLabelMAPEngine(Engine):
         x_g = model['Generator'](z)
 
         _, logits, _ = model['Classifier'](ids, token_type_ids, attention_mask,
-                                                                      self.state['encoded_tag'],
-                                                                      self.state['tag_mask'], x_g.detach())
+                                           self.state['encoded_tag'],
+                                           self.state['tag_mask'], x_g.detach())
 
         self.state['output'] = logits
 
@@ -370,13 +370,13 @@ class MultiLabelMAPEngine(Engine):
         if display:
             if training:
                 reselt_str = 'Epoch: [{0}]\t Loss {loss:.4f}\t mAP {map:.3f} \n ' \
-                'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f}'.format(
-                self.state['epoch'], loss=loss, map=map, OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1)
+                             'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f}'.format(
+                    self.state['epoch'], loss=loss, map=map, OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1)
 
             else:
                 reselt_str = 'Test: \t Loss {loss:.4f}\t mAP {map:.3f} \n' \
-                'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f} \n' \
-                'OP_3: {OP_3:.4f}\t OR_3: {OR_3:.4f}\t OF1_3: {OF1_3:.4f}\t CP_3: {CP_3:.4f}\t CR_3: {CR_3:.4f}\t CF1_3: {CF1_3:.4f}'.format(
+                             'OP: {OP:.4f}\t OR: {OR:.4f}\t OF1: {OF1:.4f}\t CP: {CP:.4f}\t CR: {CR:.4f}\t CF1: {CF1:.4f} \n' \
+                             'OP_3: {OP_3:.4f}\t OR_3: {OR_3:.4f}\t OF1_3: {OF1_3:.4f}\t CP_3: {CP_3:.4f}\t CR_3: {CR_3:.4f}\t CF1_3: {CF1_3:.4f}'.format(
                     loss=loss, map=map, OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1,
                     OP_3=OP_k, OR_3=OR_k, OF1_3=OF1_k, CP_3=CP_k, CR_3=CR_k, CF1_3=CF1_k)
 
@@ -461,8 +461,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
 
         # -----------train enc-----------
         flatten, logits, prob = model['Classifier'](ids, token_type_ids, attention_mask,
-                                                self.state['encoded_tag'],
-                                                self.state['tag_mask'], x_g.detach())  #
+                                                    self.state['encoded_tag'],
+                                                    self.state['tag_mask'], x_g.detach())  #
 
         self.state['output'] = logits
 
@@ -490,8 +490,8 @@ class semiGAN_MultiLabelMAPEngine(MultiLabelMAPEngine):
                 optimizer['Classifier'].step()
 
             flatten, _, prob = model['Classifier'](ids, token_type_ids, attention_mask,
-                                               self.state['encoded_tag'],
-                                               self.state['tag_mask'], x_g)
+                                                   self.state['encoded_tag'],
+                                                   self.state['tag_mask'], x_g)
             g_loss = -1 * torch.mean(torch.log(prob + epsilon))
             if training:
                 optimizer['Generator'].zero_grad()
