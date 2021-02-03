@@ -28,7 +28,7 @@ python main.py \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.001 \
+        --B-lr=0.01 \
         --data_type='TrainTest_text' \
         --data_path='../datasets/stack-overflow2000' \
         --use_previousData=0 \
