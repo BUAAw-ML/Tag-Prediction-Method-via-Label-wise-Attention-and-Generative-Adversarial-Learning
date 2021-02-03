@@ -21,16 +21,16 @@
 #        --resume=''
 
 python main.py \
-        --experiment_no='zyc_LABert'  \
+        --experiment_no='wqb_LABert'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
         --batch-size=8 \
         --G-lr=0.001 \
         --D-lr=0.1 \
-        --B-lr=0.01 \
-        --data_type='TrainTest_text' \
-        --data_path='../datasets/stack-overflow2000' \
+        --B-lr=0.001 \
+        --data_type='TrainTest_pkl' \
+        --data_path='../datasets/Freecode' \
         --use_previousData=0 \
         --model_type='LABert' \
         --method='MultiLabelMAP' \
