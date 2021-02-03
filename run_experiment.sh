@@ -30,7 +30,7 @@ python main.py \
         --D-lr=0.1 \
         --B-lr=0.001 \
         --data_type='TrainTest_text' \
-        --data_path='../datasets/stack-overflow2000' \
+        --data_path='../datasets/stack-overflow' \
         --use_previousData=0 \
         --model_type='LABert' \
         --method='MultiLabelMAP' \
