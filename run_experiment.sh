@@ -21,7 +21,7 @@
 #        --resume=''
 
 python main.py \
-        --experiment_no='zyz_LABert_Blr0.001'  \
+        --experiment_no='zyc_LABert'  \
         --epochs=50 \
         --epoch_step=40 \
         --device_ids=0 \
