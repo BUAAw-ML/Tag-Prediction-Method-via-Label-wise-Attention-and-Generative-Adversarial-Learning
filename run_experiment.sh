@@ -1,7 +1,7 @@
 # Experiment runner script
 
 python main.py \
-        --experiment_no='GAN_MultiLabelMAP'  \
+        --experiment_no='wcm_GAN_MultiLabelMAP'  \
         --epochs=100 \
         --epoch_step=90 \
         --device_ids=0 \
